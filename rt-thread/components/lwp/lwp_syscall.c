@@ -1450,7 +1450,7 @@ rt_thread_t sys_thread_create(void *arg[])
     thread->user_entry = (void (*)(void *))arg[1];
     thread->user_stack = (void *)user_stack;
     thread->user_stack_size = (uint32_t)arg[4];
-    rt_memset(thread->user_stack, '#', thread->user_stack_size);
+    memset(thread->user_stack, '#', thread->user_stack_size);
 #endif /* ARCH_MM_MMU */
 
     thread->lwp = (void*)lwp;
@@ -2337,7 +2337,7 @@ int sys_execve(const char *path, char *const argv[], char *const envp[])
         SET_ERRNO(ENOMEM);
         goto quit;
     }
-    rt_memset(new_lwp, 0, sizeof(struct rt_lwp));
+    memset(new_lwp, 0, sizeof(struct rt_lwp));
     new_lwp->ref = 1;
     lwp_user_object_lock_init(new_lwp);
     ret = lwp_user_space_init(new_lwp, 0);
@@ -2422,12 +2422,12 @@ int sys_execve(const char *path, char *const argv[], char *const envp[])
 
         _swap_lwp_data(lwp, new_lwp, void *, args);
 
-        rt_memset(&thread->signal_mask, 0, sizeof(thread->signal_mask));
-        rt_memset(&thread->signal_mask_bak, 0, sizeof(thread->signal_mask_bak));
+        memset(&thread->signal_mask, 0, sizeof(thread->signal_mask));
+        memset(&thread->signal_mask_bak, 0, sizeof(thread->signal_mask_bak));
         lwp->sa_flags = 0;
-        rt_memset(&lwp->signal_mask, 0, sizeof(lwp->signal_mask));
-        rt_memset(&lwp->signal_mask_bak, 0, sizeof(lwp->signal_mask_bak));
-        rt_memset(lwp->signal_handler, 0, sizeof(lwp->signal_handler));
+        memset(&lwp->signal_mask, 0, sizeof(lwp->signal_mask));
+        memset(&lwp->signal_mask_bak, 0, sizeof(lwp->signal_mask_bak));
+        memset(lwp->signal_handler, 0, sizeof(lwp->signal_handler));
 
         /* to do: clsoe files with flag CLOEXEC */
 
@@ -3525,7 +3525,7 @@ int sys_getaddrinfo(const char *nodename,
             goto exit;
         }
 
-        rt_memset(k_hints, 0x0, sizeof(struct addrinfo));
+        memset(k_hints, 0x0, sizeof(struct addrinfo));
         k_hints->ai_flags    = hints->ai_flags;
         k_hints->ai_family   = hints->ai_family;
         k_hints->ai_socktype = hints->ai_socktype;

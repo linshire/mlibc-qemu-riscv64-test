@@ -265,7 +265,7 @@ int dfs_elm_mkfs(rt_device_t dev_id, const char *fs_name)
     /* [IN] Format options */
     /* [-]  Working buffer */
     /* [IN] Size of working buffer */
-    rt_memset(&opt, 0, sizeof(opt));
+    memset(&opt, 0, sizeof(opt));
     opt.fmt = FM_ANY|FM_SFD;
     result = f_mkfs(logic_nbr, &opt, work, FF_MAX_SS);
     rt_free(work); work = RT_NULL;
@@ -814,7 +814,7 @@ int dfs_elm_stat(struct dfs_filesystem *fs, const char *path, struct stat *st)
             tmp >>= 6;
             hour = tmp & 0x1F;          /* bit[15:11] Hour(0..23) */
 
-            rt_memset(&tm_file, 0, sizeof(tm_file));
+            memset(&tm_file, 0, sizeof(tm_file));
             tm_file.tm_year = year - 1900; /* Years since 1900 */
             tm_file.tm_mon  = mon - 1;     /* Months *since* january: 0-11 */
             tm_file.tm_mday = day;         /* Day of the month: 1-31 */
@@ -926,7 +926,7 @@ DRESULT disk_ioctl(BYTE drv, BYTE ctrl, void *buff)
     {
         struct rt_device_blk_geometry geometry;
 
-        rt_memset(&geometry, 0, sizeof(geometry));
+        memset(&geometry, 0, sizeof(geometry));
         rt_device_control(device, RT_DEVICE_CTRL_BLK_GETGEOME, &geometry);
 
         *(DWORD *)buff = geometry.sector_count;
@@ -937,7 +937,7 @@ DRESULT disk_ioctl(BYTE drv, BYTE ctrl, void *buff)
     {
         struct rt_device_blk_geometry geometry;
 
-        rt_memset(&geometry, 0, sizeof(geometry));
+        memset(&geometry, 0, sizeof(geometry));
         rt_device_control(device, RT_DEVICE_CTRL_BLK_GETGEOME, &geometry);
 
         *(WORD *)buff = (WORD)(geometry.bytes_per_sector);
@@ -946,7 +946,7 @@ DRESULT disk_ioctl(BYTE drv, BYTE ctrl, void *buff)
     {
         struct rt_device_blk_geometry geometry;
 
-        rt_memset(&geometry, 0, sizeof(geometry));
+        memset(&geometry, 0, sizeof(geometry));
         rt_device_control(device, RT_DEVICE_CTRL_BLK_GETGEOME, &geometry);
 
         *(DWORD *)buff = geometry.block_size / geometry.bytes_per_sector;

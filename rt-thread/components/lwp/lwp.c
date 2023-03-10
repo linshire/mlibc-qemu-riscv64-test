@@ -1297,9 +1297,9 @@ pid_t lwp_execve(char *filename, int debug, int argc, char **argv, char **envp)
                                        (uint32_t)lwp->data_entry) : RT_NULL;
             thread->user_stack_size = app_head->stack_size;
             /* init data area */
-            rt_memset(lwp->data_entry, 0, lwp->data_size);
+            memset(lwp->data_entry, 0, lwp->data_size);
             /* init user stack */
-            rt_memset(thread->user_stack, '#', thread->user_stack_size);
+            memset(thread->user_stack, '#', thread->user_stack_size);
 #endif /* not defined ARCH_MM_MMU */
             rt_list_insert_after(&lwp->t_grp, &thread->sibling);
 

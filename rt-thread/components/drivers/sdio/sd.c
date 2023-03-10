@@ -170,13 +170,13 @@ static rt_int32_t mmcsd_switch(struct rt_mmcsd_card *card)
     if (card->scr.sd_version < SCR_SPEC_VER_1)
         goto err;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_SWITCH;
     cmd.arg = 0x00FFFFF1;
     cmd.flags = RESP_R1 | CMD_ADTC;
 
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     mmcsd_set_data_timeout(&data, card);
 
@@ -185,7 +185,7 @@ static rt_int32_t mmcsd_switch(struct rt_mmcsd_card *card)
     data.flags = DATA_DIR_READ;
     data.buf = (rt_uint32_t *)buf;
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -200,13 +200,13 @@ static rt_int32_t mmcsd_switch(struct rt_mmcsd_card *card)
     if (buf[13] & 0x02)
         card->hs_max_data_rate = 50000000;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_SWITCH;
     cmd.arg = 0x80FFFFF1;
     cmd.flags = RESP_R1 | CMD_ADTC;
 
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     mmcsd_set_data_timeout(&data, card);
 
@@ -215,7 +215,7 @@ static rt_int32_t mmcsd_switch(struct rt_mmcsd_card *card)
     data.flags = DATA_DIR_READ;
     data.buf = (rt_uint32_t *)buf;
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -296,7 +296,7 @@ rt_err_t mmcsd_send_app_cmd(struct rt_mmcsd_host *host,
      */
     for (i = 0; i <= retry; i++)
     {
-        rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
+        memset(&req, 0, sizeof(struct rt_mmcsd_req));
 
         err = mmcsd_app_cmd(host, card);
         if (err)
@@ -310,9 +310,9 @@ rt_err_t mmcsd_send_app_cmd(struct rt_mmcsd_host *host,
             continue;
         }
 
-        rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
+        memset(&req, 0, sizeof(struct rt_mmcsd_req));
 
-        rt_memset(cmd->resp, 0, sizeof(cmd->resp));
+        memset(cmd->resp, 0, sizeof(cmd->resp));
 
         req.cmd = cmd;
         //cmd->data = NULL;
@@ -339,7 +339,7 @@ rt_err_t mmcsd_app_set_bus_width(struct rt_mmcsd_card *card, rt_int32_t width)
     rt_err_t err;
     struct rt_mmcsd_cmd cmd;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_APP_SET_BUS_WIDTH;
     cmd.flags = RESP_R1 | CMD_AC;
@@ -371,7 +371,7 @@ rt_err_t mmcsd_send_app_op_cond(struct rt_mmcsd_host *host,
     rt_uint32_t i;
     rt_err_t err = RT_EOK;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_APP_OP_COND;
     if (controller_is_spi(host))
@@ -448,7 +448,7 @@ rt_err_t mmcsd_get_card_addr(struct rt_mmcsd_host *host, rt_uint32_t *rca)
     rt_err_t err;
     struct rt_mmcsd_cmd cmd;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_SEND_RELATIVE_ADDR;
     cmd.arg = 0;
@@ -480,9 +480,9 @@ rt_int32_t mmcsd_get_scr(struct rt_mmcsd_card *card, rt_uint32_t *scr)
     if (err)
         return err;
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -550,7 +550,7 @@ static rt_int32_t mmcsd_sd_init_card(struct rt_mmcsd_host *host,
         err = -RT_ENOMEM;
         goto err;
     }
-    rt_memset(card, 0, sizeof(struct rt_mmcsd_card));
+    memset(card, 0, sizeof(struct rt_mmcsd_card));
 
     card->card_type = CARD_TYPE_SD;
     card->host = host;

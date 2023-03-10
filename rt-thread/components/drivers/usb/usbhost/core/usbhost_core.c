@@ -34,7 +34,7 @@ uinst_t rt_usbh_alloc_instance(uhcd_t uhcd)
         if(dev[i].status != DEV_STATUS_IDLE) continue;
 
         /* initialize the usb device instance */
-        rt_memset(&dev[i], 0, sizeof(struct uinstance));
+        memset(&dev[i], 0, sizeof(struct uinstance));
 
         dev[i].status = DEV_STATUS_BUSY;
         dev[i].index = i + 1;
@@ -96,7 +96,7 @@ rt_err_t rt_usbh_attatch_instance(uinst_t device)
 
     RT_ASSERT(device != RT_NULL);
 
-    rt_memset(&cfg_desc, 0, sizeof(struct uconfig_descriptor));
+    memset(&cfg_desc, 0, sizeof(struct uconfig_descriptor));
     dev_desc = &device->dev_desc;
 
     /* alloc address 0 ep0 pipe*/
@@ -166,7 +166,7 @@ rt_err_t rt_usbh_attatch_instance(uinst_t device)
     {
         return RT_ENOMEM;
     }
-    rt_memset(device->cfg_desc, 0, cfg_desc.wTotalLength);
+    memset(device->cfg_desc, 0, cfg_desc.wTotalLength);
 
     /* get full configuration descriptor */
     ret = rt_usbh_get_descriptor(device, USB_DESC_TYPE_CONFIGURATION,
@@ -292,7 +292,7 @@ rt_err_t rt_usbh_detach_instance(uinst_t device)
         rt_list_remove(l);
         rt_usb_hcd_free_pipe(device->hcd,rt_list_entry(l,struct upipe,list));
     }
-    rt_memset(device, 0, sizeof(struct uinstance));
+    memset(device, 0, sizeof(struct uinstance));
 
     return RT_EOK;
 }

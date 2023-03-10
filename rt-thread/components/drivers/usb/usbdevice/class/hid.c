@@ -650,7 +650,7 @@ static void rt_usb_hid_init(struct ufunction *func)
 {
     struct hid_s *hiddev;
     hiddev = (struct hid_s *)func->user_data;
-    rt_memset(&hiddev->parent, 0, sizeof(hiddev->parent));
+    memset(&hiddev->parent, 0, sizeof(hiddev->parent));
 
 #ifdef RT_USING_DEVICE_OPS
     hiddev->parent.ops   = &hid_device_ops;
@@ -702,7 +702,7 @@ ufunction_t rt_usbd_function_hid_create(udevice_t device)
 
     /* allocate memory for cdc vcom data */
     data = (struct hid_s*)rt_malloc(sizeof(struct hid_s));
-    rt_memset(data, 0, sizeof(struct hid_s));
+    memset(data, 0, sizeof(struct hid_s));
     func->user_data = (void*)data;
 
     /* create an interface object */

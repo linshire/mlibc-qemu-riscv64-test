@@ -465,7 +465,7 @@ static int wifi_join(int argc, char *argv[])
     const char *key = RT_NULL;
     struct rt_wlan_cfg_info cfg_info;
 
-    rt_memset(&cfg_info, 0, sizeof(cfg_info));
+    memset(&cfg_info, 0, sizeof(cfg_info));
     if (argc ==  2)
     {
 #ifdef RT_WLAN_CFG_ENABLE
@@ -592,7 +592,7 @@ static int wifi_debug_save_cfg(int argc, char *argv[])
     int len;
     char *ssid = RT_NULL, *password = RT_NULL;
 
-    rt_memset(&cfg_info, 0, sizeof(cfg_info));
+    memset(&cfg_info, 0, sizeof(cfg_info));
     INVALID_INFO(&cfg_info.info);
     if (argc == 2)
     {

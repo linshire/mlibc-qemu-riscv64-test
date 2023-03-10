@@ -942,7 +942,7 @@ int ulog_tag_lvl_filter_set(const char *tag, rt_uint32_t level)
             tag_lvl = (ulog_tag_lvl_filter_t)rt_malloc(sizeof(struct ulog_tag_lvl_filter));
             if (tag_lvl)
             {
-                rt_memset(tag_lvl->tag, 0 , sizeof(tag_lvl->tag));
+                memset(tag_lvl->tag, 0 , sizeof(tag_lvl->tag));
                 rt_strncpy(tag_lvl->tag, tag, ULOG_FILTER_TAG_MAX_LEN);
                 tag_lvl->level = level;
                 rt_slist_append(ulog_tag_lvl_list_get(), &tag_lvl->list);

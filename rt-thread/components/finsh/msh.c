@@ -284,7 +284,7 @@ static int _msh_exec_cmd(char *cmd, rt_size_t length, int *retp)
         return -RT_ERROR;
 
     /* split arguments */
-    rt_memset(argv, 0x00, sizeof(argv));
+    memset(argv, 0x00, sizeof(argv));
     argc = msh_split(cmd, length, argv);
     if (argc == 0)
         return -RT_ERROR;
@@ -435,7 +435,7 @@ int _msh_exec_lwp(int debug, char *cmd, rt_size_t length)
         return -1;
 
     /* split arguments */
-    rt_memset(argv, 0x00, sizeof(argv));
+    memset(argv, 0x00, sizeof(argv));
     argc = msh_split(cmd, length, argv);
     if (argc == 0)
         return -1;

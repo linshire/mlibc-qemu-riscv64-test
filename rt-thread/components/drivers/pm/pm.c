@@ -992,7 +992,7 @@ void rt_system_pm_init(const struct rt_pm_ops *ops,
     /* register PM device to the system */
     rt_device_register(device, "pm", RT_DEVICE_FLAG_RDWR);
 
-    rt_memset(pm->modes, 0, sizeof(pm->modes));
+    memset(pm->modes, 0, sizeof(pm->modes));
     pm->sleep_mode = _pm_default_sleep;
 
     /* when system power on, set default sleep modes */

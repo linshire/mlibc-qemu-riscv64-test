@@ -45,7 +45,7 @@ void zr_start(char *path)
         rt_kprintf("zf: out of memory\r\n");
         return;
     }
-    rt_memset(zf, 0, sizeof(struct zfile));
+    memset(zf, 0, sizeof(struct zfile));
     zf->fname = path;
     zf->fd = -1;
     res = zrec_files(zf);
@@ -273,7 +273,7 @@ static rt_err_t zget_file_info(char *name, struct zfile *zf)
         rt_free(full_path);
         return -RT_ERROR;
     }
-    rt_memset(full_path,0,len);
+    memset(full_path,0,len);
 
     for (i=0,ptr=zf->fname;i<len-strlen(name)-2;i++)
          full_path[i] = *ptr++;

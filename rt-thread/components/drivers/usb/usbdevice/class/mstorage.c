@@ -268,7 +268,7 @@ static rt_ssize_t _inquiry_cmd(ufunction_t func, ustorage_cbw_t cbw)
     *(rt_uint32_t*)&buf[0] = 0x0 | (0x80 << 8);
     *(rt_uint32_t*)&buf[4] = 31;
 
-    rt_memset(&buf[8], 0x20, 28);
+    memset(&buf[8], 0x20, 28);
     rt_memcpy(&buf[8], "RTT", 3);
     rt_memcpy(&buf[16], "USB Disk", 8);
 
@@ -1113,7 +1113,7 @@ ufunction_t rt_usbd_function_mstorage_create(udevice_t device)
 
     /* allocate memory for mass storage function data */
     data = (struct mstorage*)rt_malloc(sizeof(struct mstorage));
-    rt_memset(data, 0, sizeof(struct mstorage));
+    memset(data, 0, sizeof(struct mstorage));
     func->user_data = (void*)data;
 
     /* create an interface object */

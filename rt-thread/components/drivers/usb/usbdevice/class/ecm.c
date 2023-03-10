@@ -575,7 +575,7 @@ ufunction_t rt_usbd_function_ecm_create(udevice_t device)
     rt_usbd_device_set_qualifier(device, &dev_qualifier);
     _ecm_eth= rt_malloc(sizeof(struct rt_ecm_eth));
     RT_ASSERT(_ecm_eth != RT_NULL);
-    rt_memset(_ecm_eth, 0, sizeof(struct rt_ecm_eth));
+    memset(_ecm_eth, 0, sizeof(struct rt_ecm_eth));
     cdc->user_data = _ecm_eth;
 
     _ecm_eth->func = cdc;

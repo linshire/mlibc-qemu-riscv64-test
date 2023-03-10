@@ -65,7 +65,7 @@ rt_err_t rt_prio_queue_init(struct rt_prio_queue *que,
 {
     RT_ASSERT(que);
 
-    rt_memset(que, 0, sizeof(*que));
+    memset(que, 0, sizeof(*que));
 
     rt_list_init(&(que->suspended_pop_list));
 

@@ -233,7 +233,7 @@ void finsh_set_device(const char *device_name)
         }
 
         /* clear line buffer before switch to new device */
-        rt_memset(shell->line, 0, sizeof(shell->line));
+        memset(shell->line, 0, sizeof(shell->line));
         shell->line_curpos = shell->line_position = 0;
 
         shell->device = dev;
@@ -370,7 +370,7 @@ static void finsh_wait_auth(void)
             rt_kprintf("Sorry, try again.\n");
             cur_pos = 0;
             input_finish = RT_FALSE;
-            rt_memset(password, '\0', FINSH_PASSWORD_MAX);
+            memset(password, '\0', FINSH_PASSWORD_MAX);
         }
     }
 }
@@ -419,7 +419,7 @@ static void shell_push_history(struct finsh_shell *shell)
                     rt_memcpy(&shell->cmd_history[index][0],
                            &shell->cmd_history[index + 1][0], FINSH_CMD_SIZE);
                 }
-                rt_memset(&shell->cmd_history[index][0], 0, FINSH_CMD_SIZE);
+                memset(&shell->cmd_history[index][0], 0, FINSH_CMD_SIZE);
                 rt_memcpy(&shell->cmd_history[index][0], shell->line, shell->line_position);
 
                 /* it's the maximum history */
@@ -432,7 +432,7 @@ static void shell_push_history(struct finsh_shell *shell)
             if (shell->history_count == 0 || memcmp(&shell->cmd_history[shell->history_count - 1], shell->line, FINSH_CMD_SIZE))
             {
                 shell->current_history = shell->history_count;
-                rt_memset(&shell->cmd_history[shell->history_count][0], 0, FINSH_CMD_SIZE);
+                memset(&shell->cmd_history[shell->history_count][0], 0, FINSH_CMD_SIZE);
                 rt_memcpy(&shell->cmd_history[shell->history_count][0], shell->line, shell->line_position);
 
                 /* increase count and set current history position */
@@ -642,7 +642,7 @@ void finsh_thread_entry(void *parameter)
             msh_exec(shell->line, shell->line_position);
 
             rt_kprintf(FINSH_PROMPT);
-            rt_memset(shell->line, 0, sizeof(shell->line));
+            memset(shell->line, 0, sizeof(shell->line));
             shell->line_curpos = shell->line_position = 0;
             continue;
         }

@@ -300,7 +300,7 @@ rt_err_t rt_usbh_storage_read10(struct uhintf* intf, rt_uint8_t *buffer,
     RT_DEBUG_LOG(RT_DEBUG_USB, ("rt_usbh_storage_read10\n"));
 
     /* construct the command block wrapper */
-    rt_memset(&cmd, 0, sizeof(struct ustorage_cbw));
+    memset(&cmd, 0, sizeof(struct ustorage_cbw));
     cmd.signature = CBW_SIGNATURE;
     cmd.tag = CBW_TAG_VALUE;
     cmd.xfer_len = SECTOR_SIZE * count;
@@ -346,7 +346,7 @@ rt_err_t rt_usbh_storage_write10(struct uhintf* intf, rt_uint8_t *buffer,
     RT_DEBUG_LOG(RT_DEBUG_USB, ("rt_usbh_storage_write10\n"));
 
     /* construct the command block wrapper */
-    rt_memset(&cmd, 0, sizeof(struct ustorage_cbw));
+    memset(&cmd, 0, sizeof(struct ustorage_cbw));
     cmd.signature = CBW_SIGNATURE;
     cmd.tag = CBW_TAG_VALUE;
     cmd.xfer_len = SECTOR_SIZE * count;
@@ -390,7 +390,7 @@ rt_err_t rt_usbh_storage_request_sense(struct uhintf* intf, rt_uint8_t* buffer)
     RT_DEBUG_LOG(RT_DEBUG_USB, ("rt_usbh_storage_request_sense\n"));
 
     /* construct the command block wrapper */
-    rt_memset(&cmd, 0, sizeof(struct ustorage_cbw));
+    memset(&cmd, 0, sizeof(struct ustorage_cbw));
     cmd.signature = CBW_SIGNATURE;
     cmd.tag = CBW_TAG_VALUE;
     cmd.xfer_len = 18;
@@ -426,7 +426,7 @@ rt_err_t rt_usbh_storage_test_unit_ready(struct uhintf* intf)
     RT_DEBUG_LOG(RT_DEBUG_USB, ("rt_usbh_storage_test_unit_ready\n"));
 
     /* construct the command block wrapper */
-    rt_memset(&cmd, 0, sizeof(struct ustorage_cbw));
+    memset(&cmd, 0, sizeof(struct ustorage_cbw));
     cmd.signature = CBW_SIGNATURE;
     cmd.tag = CBW_TAG_VALUE;
     cmd.xfer_len = 0;
@@ -462,7 +462,7 @@ rt_err_t rt_usbh_storage_inquiry(struct uhintf* intf, rt_uint8_t* buffer)
     RT_DEBUG_LOG(RT_DEBUG_USB, ("rt_usbh_storage_inquiry\n"));
 
     /* construct the command block wrapper */
-    rt_memset(&cmd, 0, sizeof(struct ustorage_cbw));
+    memset(&cmd, 0, sizeof(struct ustorage_cbw));
     cmd.signature = CBW_SIGNATURE;
     cmd.tag = CBW_TAG_VALUE;
     cmd.xfer_len = 36;
@@ -499,7 +499,7 @@ rt_err_t rt_usbh_storage_get_capacity(struct uhintf* intf, rt_uint8_t* buffer)
     RT_DEBUG_LOG(RT_DEBUG_USB, ("rt_usbh_storage_get_capacity\n"));
 
     /* construct the command block wrapper */
-    rt_memset(&cmd, 0, sizeof(struct ustorage_cbw));
+    memset(&cmd, 0, sizeof(struct ustorage_cbw));
     cmd.signature = CBW_SIGNATURE;
     cmd.tag = CBW_TAG_VALUE;
     cmd.xfer_len = 8;
@@ -546,7 +546,7 @@ static rt_err_t rt_usbh_storage_enable(void* arg)
     RT_ASSERT(stor != RT_NULL);
 
     /* initilize the data structure */
-    rt_memset(stor, 0, sizeof(struct ustor));
+    memset(stor, 0, sizeof(struct ustor));
     intf->user_data = (void*)stor;
 
     for(i=0; i<intf->intf_desc->bNumEndpoints; i++)

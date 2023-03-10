@@ -468,7 +468,7 @@ struct dfs_ramfs *dfs_ramfs_create(rt_uint8_t *pool, rt_size_t size)
     ramfs->memheap.parent.type = RT_Object_Class_MemHeap | RT_Object_Class_Static;
 
     /* initialize root directory */
-    rt_memset(&(ramfs->root), 0x00, sizeof(ramfs->root));
+    memset(&(ramfs->root), 0x00, sizeof(ramfs->root));
     rt_list_init(&(ramfs->root.list));
     ramfs->root.size = 0;
     strcpy(ramfs->root.name, ".");

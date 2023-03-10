@@ -1020,7 +1020,7 @@ static void _bus_in_entry(void *param)
 {
     rt_sem_init(&_bus_in_sem, "vbus", 0, RT_IPC_FLAG_FIFO);
     rt_event_init(&_bus_in_event, "vbus", RT_IPC_FLAG_FIFO);
-    rt_memset(_bus_in_action, 0, sizeof(_bus_in_action));
+    memset(_bus_in_action, 0, sizeof(_bus_in_action));
 
     while (rt_sem_take(&_bus_in_sem,
                        RT_WAITING_FOREVER) == RT_EOK)
@@ -1143,8 +1143,8 @@ int rt_vbus_init(void *outr, void *inr)
     RT_VBUS_OUT_RING = outr;
     RT_VBUS_IN_RING  = inr;
 
-    rt_memset(RT_VBUS_OUT_RING, 0, sizeof(*RT_VBUS_OUT_RING));
-    rt_memset(RT_VBUS_IN_RING,  0, sizeof(*RT_VBUS_IN_RING));
+    memset(RT_VBUS_OUT_RING, 0, sizeof(*RT_VBUS_OUT_RING));
+    memset(RT_VBUS_IN_RING,  0, sizeof(*RT_VBUS_IN_RING));
     _chn_status[0] = RT_VBUS_CHN_ST_ESTABLISHED;
     for (i = 1; i < ARRAY_SIZE(_chn_status); i++)
     {

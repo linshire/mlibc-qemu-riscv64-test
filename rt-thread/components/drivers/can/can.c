@@ -284,7 +284,7 @@ static rt_err_t rt_can_open(struct rt_device *dev, rt_uint16_t oflag)
             RT_ASSERT(rx_fifo != RT_NULL);
 
             rx_fifo->buffer = (struct rt_can_msg_list *)(rx_fifo + 1);
-            rt_memset(rx_fifo->buffer, 0, can->config.msgboxsz * sizeof(struct rt_can_msg_list));
+            memset(rx_fifo->buffer, 0, can->config.msgboxsz * sizeof(struct rt_can_msg_list));
             rt_list_init(&rx_fifo->freelist);
             rt_list_init(&rx_fifo->uselist);
             rx_fifo->freenumbers = can->config.msgboxsz;
@@ -316,7 +316,7 @@ static rt_err_t rt_can_open(struct rt_device *dev, rt_uint16_t oflag)
             RT_ASSERT(tx_fifo != RT_NULL);
 
             tx_fifo->buffer = (struct rt_can_sndbxinx_list *)(tx_fifo + 1);
-            rt_memset(tx_fifo->buffer, 0,
+            memset(tx_fifo->buffer, 0,
                     can->config.sndboxnumber * sizeof(struct rt_can_sndbxinx_list));
             rt_list_init(&tx_fifo->freelist);
             for (i = 0;  i < can->config.sndboxnumber; i++)
@@ -346,7 +346,7 @@ static rt_err_t rt_can_open(struct rt_device *dev, rt_uint16_t oflag)
 
         phdr = (struct rt_can_hdr *) rt_malloc(can->config.maxhdr * sizeof(struct rt_can_hdr));
         RT_ASSERT(phdr != RT_NULL);
-        rt_memset(phdr, 0, can->config.maxhdr * sizeof(struct rt_can_hdr));
+        memset(phdr, 0, can->config.maxhdr * sizeof(struct rt_can_hdr));
         for (i = 0;  i < can->config.maxhdr; i++)
         {
             rt_list_init(&phdr[i].list);
@@ -626,7 +626,7 @@ static rt_err_t rt_can_control(struct rt_device *dev,
                         rt_list_remove(can->hdr[pitem->hdr_bank].list.next);
                     }
                     rt_hw_interrupt_enable(level);
-                    rt_memset(&can->hdr[pitem->hdr_bank].filter, 0,
+                    memset(&can->hdr[pitem->hdr_bank].filter, 0,
                               sizeof(struct rt_can_filter_item));
                 }
                 else
@@ -739,7 +739,7 @@ rt_err_t rt_hw_can_register(struct rt_can_device    *can,
 
     can->status_indicate.ind  = RT_NULL;
     can->status_indicate.args = RT_NULL;
-    rt_memset(&can->status, 0, sizeof(can->status));
+    memset(&can->status, 0, sizeof(can->status));
 
     device->user_data   = data;
 

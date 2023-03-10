@@ -327,7 +327,7 @@ int dfs_mount(const char   *device_name,
         {
             /* The underlying device has error, clear the entry. */
             dfs_lock();
-            rt_memset(fs, 0, sizeof(struct dfs_filesystem));
+            memset(fs, 0, sizeof(struct dfs_filesystem));
 
             goto err1;
         }
@@ -343,7 +343,7 @@ int dfs_mount(const char   *device_name,
         /* mount failed */
         dfs_lock();
         /* clear filesystem table entry */
-        rt_memset(fs, 0, sizeof(struct dfs_filesystem));
+        memset(fs, 0, sizeof(struct dfs_filesystem));
 
         goto err1;
     }
@@ -407,7 +407,7 @@ int dfs_unmount(const char *specialfile)
         rt_free(fs->path);
 
     /* clear this filesystem table entry */
-    rt_memset(fs, 0, sizeof(struct dfs_filesystem));
+    memset(fs, 0, sizeof(struct dfs_filesystem));
 
     dfs_unlock();
     rt_free(fullpath);
@@ -596,7 +596,7 @@ int dfs_unmount_device(rt_device_t dev)
         rt_free(fs->path);
 
     /* clear this filesystem table entry */
-    rt_memset(fs, 0, sizeof(struct dfs_filesystem));
+    memset(fs, 0, sizeof(struct dfs_filesystem));
 
     dfs_unlock();
 

@@ -416,7 +416,7 @@ void *lwp_mmap2(void *addr, size_t length, int prot, int flags, int fd,
         {
             if ((flags & MAP_ANONYMOUS) != 0)
             {
-                rt_memset(ret, 0, length);
+                memset(ret, 0, length);
             }
         }
         else

@@ -105,7 +105,7 @@ rt_err_t rt_wlan_dev_connect(struct rt_wlan_device *device, struct rt_wlan_info 
         LOG_E("L:%d password or ssid is too long", __LINE__);
         return -RT_ERROR;
     }
-    rt_memset(&sta_info, 0, sizeof(struct rt_sta_info));
+    memset(&sta_info, 0, sizeof(struct rt_sta_info));
     rt_memcpy(&sta_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
     rt_memcpy(sta_info.bssid, info->bssid, RT_WLAN_BSSID_MAX_LENGTH);
     if (password != RT_NULL)
@@ -189,7 +189,7 @@ rt_err_t rt_wlan_dev_ap_start(struct rt_wlan_device *device, struct rt_wlan_info
         return -RT_ERROR;
     }
 
-    rt_memset(&ap_info, 0, sizeof(struct rt_ap_info));
+    memset(&ap_info, 0, sizeof(struct rt_ap_info));
     rt_memcpy(&ap_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
     if (password != RT_NULL)
     {
@@ -360,7 +360,7 @@ rt_err_t rt_wlan_dev_unregister_event_handler(struct rt_wlan_device *device, rt_
     {
         if (device->handler_table[event][i].handler == handler)
         {
-            rt_memset(&device->handler_table[event][i], 0, sizeof(struct rt_wlan_dev_event_desc));
+            memset(&device->handler_table[event][i], 0, sizeof(struct rt_wlan_dev_event_desc));
             rt_hw_interrupt_enable(level);
             return RT_EOK;
         }
@@ -945,7 +945,7 @@ rt_err_t rt_wlan_dev_register(struct rt_wlan_device *wlan, const char *name, con
         return RT_NULL;
     }
 
-    rt_memset(wlan, 0, sizeof(struct rt_wlan_device));
+    memset(wlan, 0, sizeof(struct rt_wlan_device));
 
 #ifdef RT_USING_DEVICE_OPS
     wlan->device.ops = &wlan_ops;

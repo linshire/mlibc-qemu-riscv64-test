@@ -49,7 +49,7 @@ int accept(int s, struct sockaddr *addr, socklen_t *addrlen)
                 rt_set_errno(-ENOMEM);
                 return -1;
             }
-            rt_memset(d->vnode, 0, sizeof(struct dfs_fnode));
+            memset(d->vnode, 0, sizeof(struct dfs_fnode));
             rt_list_init(&d->vnode->list);
 
             d->vnode->type = FT_SOCKET;
@@ -258,7 +258,7 @@ int socket(int domain, int type, int protocol)
     socket = sal_socket(domain, type, protocol);
     if (socket >= 0)
     {
-        rt_memset(d->vnode, 0, sizeof(struct dfs_fnode));
+        memset(d->vnode, 0, sizeof(struct dfs_fnode));
         rt_list_init(&d->vnode->list);
         /* this is a socket fd */
         d->vnode->type = FT_SOCKET;

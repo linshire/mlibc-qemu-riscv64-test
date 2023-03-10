@@ -341,7 +341,7 @@ rt_slab_t rt_slab_init(const char *name, void *begin_addr, rt_size_t size)
     RT_DEBUG_LOG(RT_DEBUG_SLAB, ("heap[0x%x - 0x%x], size 0x%x, 0x%x pages\n",
                                 begin_align, end_align, limsize, npages));
 
-    rt_memset(slab, 0, sizeof(*slab));
+    memset(slab, 0, sizeof(*slab));
     /* initialize slab memory object */
     rt_object_init(&(slab->parent.parent), RT_Object_Class_Memory, name);
     slab->parent.algorithm = "slab";
@@ -616,7 +616,7 @@ void *rt_slab_alloc(rt_slab_t m, rt_size_t size)
         }
 
         /* clear to zero */
-        rt_memset(z, 0, sizeof(struct rt_slab_zone));
+        memset(z, 0, sizeof(struct rt_slab_zone));
 
         /* offset of slab zone struct in zone */
         off = sizeof(struct rt_slab_zone);

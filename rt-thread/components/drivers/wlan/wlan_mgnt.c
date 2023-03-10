@@ -183,7 +183,7 @@ static void rt_wlan_mgnt_work(void *parameter)
     {
         struct rt_wlan_cfg_info cfg_info;
 
-        rt_memset(&cfg_info, 0, sizeof(cfg_info));
+        memset(&cfg_info, 0, sizeof(cfg_info));
         /* save config */
         if (rt_wlan_is_connected() == RT_TRUE)
         {
@@ -218,7 +218,7 @@ static rt_err_t rt_wlan_send_to_thread(rt_wlan_event_t event, void *buff, int le
         RT_WLAN_LOG_E("wlan mgnt send msg err! No memory");
         return -RT_ENOMEM;
     }
-    rt_memset(msg, 0, sizeof(struct rt_wlan_msg) + len);
+    memset(msg, 0, sizeof(struct rt_wlan_msg) + len);
     msg->event = event;
     if (len != 0)
     {
@@ -356,7 +356,7 @@ static void rt_wlan_auto_connect_run(struct rt_work *work, void *parameter)
     }
 
     /* Read the next configuration */
-    rt_memset(&cfg_info, 0, sizeof(struct rt_wlan_cfg_info));
+    memset(&cfg_info, 0, sizeof(struct rt_wlan_cfg_info));
     if (rt_wlan_cfg_read_index(&cfg_info, id ++) == 0)
     {
         RT_WLAN_LOG_D("read cfg fail");
@@ -375,7 +375,7 @@ static void rt_wlan_auto_connect_run(struct rt_work *work, void *parameter)
 exit:
     rt_mutex_release(&mgnt_mutex);
     level = rt_hw_interrupt_disable();
-    rt_memset(work, 0, sizeof(struct rt_work));
+    memset(work, 0, sizeof(struct rt_work));
     rt_hw_interrupt_enable(level);
 }
 
@@ -392,7 +392,7 @@ static void rt_wlan_cyclic_check(void *parameter)
         if(rt_work_submit(&work,RT_TICK_PER_SECOND) != RT_EOK)
         {
             level = rt_hw_interrupt_disable();
-            rt_memset(&work, 0, sizeof(struct rt_work));
+            memset(&work, 0, sizeof(struct rt_work));
             rt_hw_interrupt_enable(level);
         }
     }
@@ -430,7 +430,7 @@ static void rt_wlan_event_dispatch(struct rt_wlan_device *device, rt_wlan_dev_ev
 #ifdef RT_WLAN_CFG_ENABLE
         {
             struct rt_wlan_cfg_info cfg_info;
-            rt_memset(&cfg_info, 0, sizeof(cfg_info));
+            memset(&cfg_info, 0, sizeof(cfg_info));
             /* save config */
             if (rt_wlan_is_connected() == RT_TRUE)
             {
@@ -1043,8 +1043,8 @@ rt_err_t rt_wlan_connect_adv(struct rt_wlan_info *info, const char *password)
         if (err != RT_EOK)
         {
             rt_enter_critical();
-            rt_memset(&_sta_mgnt.info, 0, sizeof(struct rt_wlan_ssid));
-            rt_memset(&_sta_mgnt.key, 0, sizeof(struct rt_wlan_key));
+            memset(&_sta_mgnt.info, 0, sizeof(struct rt_wlan_ssid));
+            memset(&_sta_mgnt.key, 0, sizeof(struct rt_wlan_key));
             rt_exit_critical();
             _sta_mgnt.state &= ~RT_WLAN_STATE_CONNECTING;
             MGNT_UNLOCK();
@@ -1222,7 +1222,7 @@ rt_err_t rt_wlan_start_ap(const char *ssid, const char *password)
     }
     if (ssid == RT_NULL) return -RT_EINVAL;
 
-    rt_memset(&info, 0, sizeof(struct rt_wlan_info));
+    memset(&info, 0, sizeof(struct rt_wlan_info));
     RT_WLAN_LOG_D("%s is run ssid:%s password:%s", __FUNCTION__, ssid, password);
     if (password)
     {
@@ -1756,9 +1756,9 @@ int rt_wlan_init(void)
     /* Execute only once */
     if (_init_flag == 0)
     {
-        rt_memset(&_sta_mgnt, 0, sizeof(struct rt_wlan_mgnt_des));
-        rt_memset(&_ap_mgnt, 0, sizeof(struct rt_wlan_mgnt_des));
-        rt_memset(&sta_info, 0, sizeof(struct rt_wlan_sta_des));
+        memset(&_sta_mgnt, 0, sizeof(struct rt_wlan_mgnt_des));
+        memset(&_ap_mgnt, 0, sizeof(struct rt_wlan_mgnt_des));
+        memset(&sta_info, 0, sizeof(struct rt_wlan_sta_des));
         rt_mutex_init(&mgnt_mutex, "mgnt", RT_IPC_FLAG_FIFO);
         rt_mutex_init(&sta_info_mutex, "sta", RT_IPC_FLAG_FIFO);
         rt_mutex_init(&complete_mutex, "complete", RT_IPC_FLAG_FIFO);

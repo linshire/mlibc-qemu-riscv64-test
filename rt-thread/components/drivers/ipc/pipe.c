@@ -592,7 +592,7 @@ rt_pipe_t *rt_pipe_create(const char *name, int bufsz)
     pipe = (rt_pipe_t *)rt_malloc(sizeof(rt_pipe_t));
     if (pipe == RT_NULL) return RT_NULL;
 
-    rt_memset(pipe, 0, sizeof(rt_pipe_t));
+    memset(pipe, 0, sizeof(rt_pipe_t));
     pipe->is_named = RT_TRUE; /* initialize as a named pipe */
 #if defined(RT_USING_POSIX_DEVIO) && defined(RT_USING_POSIX_PIPE)
     pipe->pipeno = -1;

@@ -157,7 +157,7 @@ rt_err_t ping(char* target_name, rt_uint32_t times, rt_size_t size)
         size = PING_DATA_SIZE;
     }
 
-    rt_memset(&hint, 0, sizeof(hint));
+    memset(&hint, 0, sizeof(hint));
     /* convert URL to IP */
     if (lwip_getaddrinfo(target_name, NULL, &hint, &res) != 0)
     {

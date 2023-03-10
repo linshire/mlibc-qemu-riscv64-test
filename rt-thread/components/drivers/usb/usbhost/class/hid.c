@@ -319,7 +319,7 @@ static rt_err_t rt_usbh_hid_enable(void* arg)
     RT_ASSERT(hid != RT_NULL);
 
     /* initilize the data structure */
-    rt_memset(hid, 0, sizeof(struct uhid));
+    memset(hid, 0, sizeof(struct uhid));
     intf->user_data = (void*)hid;
     hid->protocal = protocal;
 

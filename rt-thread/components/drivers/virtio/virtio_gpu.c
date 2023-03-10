@@ -92,7 +92,7 @@ static void virtio_gpu_ctrl_send_command(struct virtio_gpu_device *virtio_gpu_de
     virtio_fill_desc(virtio_dev, VIRTIO_GPU_QUEUE_CTRL, idx[1],
             VIRTIO_VA2PA(addr) + cmd_len, res_len, VIRTQ_DESC_F_WRITE, 0);
 
-    rt_memset(ret_res, 0, res_len);
+    memset(ret_res, 0, res_len);
 
     virtio_gpu_dev->info[idx[0]].ctrl_valid = RT_TRUE;
 
@@ -203,7 +203,7 @@ static rt_err_t virtio_gpu_unref_resource(struct virtio_gpu_device *virtio_gpu_d
     struct virtio_gpu_ctrl_hdr res;
     struct virtio_gpu_resource_unref req;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
 
     req.hdr.type = VIRTIO_GPU_CMD_RESOURCE_UNREF;
     req.resource_id = resource_id;
@@ -228,7 +228,7 @@ static rt_err_t virtio_gpu_attach_backing_resource(struct virtio_gpu_device *vir
         struct virtio_gpu_mem_entry mem;
     } req;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
 
     req.req.hdr.type = VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING;
     req.req.resource_id = resource_id;
@@ -253,7 +253,7 @@ static rt_err_t virtio_gpu_set_scanout(struct virtio_gpu_device *virtio_gpu_dev,
     struct virtio_gpu_ctrl_hdr res;
     struct virtio_gpu_set_scanout req;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
 
     req.hdr.type = VIRTIO_GPU_CMD_SET_SCANOUT;
     req.r.x = 0;
@@ -279,7 +279,7 @@ static rt_err_t virtio_gpu_flush_resource(struct virtio_gpu_device *virtio_gpu_d
     struct virtio_gpu_ctrl_hdr res;
     struct virtio_gpu_resource_flush req;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
 
     req.hdr.type = VIRTIO_GPU_CMD_RESOURCE_FLUSH;
     req.r.x = x;
@@ -304,7 +304,7 @@ static rt_err_t virtio_gpu_transfer_to_host_2d(struct virtio_gpu_device *virtio_
     struct virtio_gpu_ctrl_hdr res;
     struct virtio_gpu_transfer_to_host_2d req;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
 
     req.hdr.type = VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D;
     req.r.x = x;
@@ -342,7 +342,7 @@ static rt_err_t virtio_gpu_update_cursor(struct virtio_gpu_device *virtio_gpu_de
 {
     struct virtio_gpu_update_cursor req;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
 
     req.hdr.type = VIRTIO_GPU_CMD_UPDATE_CURSOR;
     req.pos.scanout_id = scanout_id;
@@ -360,7 +360,7 @@ static rt_err_t virtio_gpu_cursor_move(struct virtio_gpu_device *virtio_gpu_dev,
 {
     struct virtio_gpu_update_cursor req;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
 
     req.hdr.type = VIRTIO_GPU_CMD_MOVE_CURSOR;
     req.pos.scanout_id = scanout_id;
@@ -399,7 +399,7 @@ static rt_err_t virtio_gpu_get_display_info(struct virtio_gpu_device *virtio_gpu
     struct virtio_gpu_ctrl_hdr req;
     struct virtio_gpu_resp_display_info info;
 
-    rt_memset(&req, 0, sizeof(req));
+    memset(&req, 0, sizeof(req));
     req.type = VIRTIO_GPU_CMD_GET_DISPLAY_INFO;
 
     virtio_gpu_ctrl_send_command(virtio_gpu_dev, &req, sizeof(req), &info, sizeof(info));

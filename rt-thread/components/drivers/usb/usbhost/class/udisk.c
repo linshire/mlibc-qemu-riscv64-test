@@ -255,7 +255,7 @@ rt_err_t rt_udisk_run(struct uhintf* intf)
     }
 
     i = 0;
-    rt_memset(stor->capicity, 0, sizeof(stor->capicity));
+    memset(stor->capicity, 0, sizeof(stor->capicity));
 
     /* get storage capacity */
     while((ret = rt_usbh_storage_get_capacity(intf,
@@ -288,7 +288,7 @@ rt_err_t rt_udisk_run(struct uhintf* intf)
         return -RT_ERROR;
     }
 
-    rt_memset(sector, 0, SECTOR_SIZE);
+    memset(sector, 0, SECTOR_SIZE);
 
     RT_DEBUG_LOG(RT_DEBUG_USB, ("read partition table\n"));
 
@@ -311,7 +311,7 @@ rt_err_t rt_udisk_run(struct uhintf* intf)
         if (ret == RT_EOK)
         {
             struct ustor_data* data = rt_malloc(sizeof(struct ustor_data));
-            rt_memset(data, 0, sizeof(struct ustor_data));
+            memset(data, 0, sizeof(struct ustor_data));
             data->intf = intf;
             data->udisk_id = udisk_get_id();
             rt_snprintf(dname, 6, "ud%d-%d", data->udisk_id, i);
@@ -349,7 +349,7 @@ rt_err_t rt_udisk_run(struct uhintf* intf)
             if(i == 0)
             {
                 struct ustor_data* data = rt_malloc(sizeof(struct ustor_data));
-                rt_memset(data, 0, sizeof(struct ustor_data));
+                memset(data, 0, sizeof(struct ustor_data));
                 data->udisk_id = udisk_get_id();
 
                 /* there is no partition table */

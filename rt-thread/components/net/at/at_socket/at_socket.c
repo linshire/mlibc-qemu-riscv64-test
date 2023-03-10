@@ -540,7 +540,7 @@ static int free_socket(struct at_socket *sock)
         rt_hw_interrupt_enable(level);
     }
 
-    rt_memset(sock, 0x00, sizeof(struct at_socket));
+    memset(sock, 0x00, sizeof(struct at_socket));
 
     return 0;
 }
@@ -775,7 +775,7 @@ static void at_connect_notice_cb(struct at_socket *sock, at_socket_evt_t event, 
     LOG_D("ACCEPT BASE SOCKET: %d", base_socket);
     new_sock->user_data = (void *)base_socket;
     socket_info = rt_malloc(AT_SOCKET_INFO_LEN);
-    rt_memset(socket_info, 0, AT_SOCKET_INFO_LEN);
+    memset(socket_info, 0, AT_SOCKET_INFO_LEN);
     rt_sprintf(socket_info, "SOCKET:%d", new_sock->socket);
 
     /* find out the listen socket */
@@ -1568,7 +1568,7 @@ int at_getaddrinfo(const char *nodename, const char *servname,
     {
         return EAI_MEMORY;
     }
-    rt_memset(ai, 0, total_size);
+    memset(ai, 0, total_size);
     /* cast through void* to get rid of alignment warnings */
     sa = (struct sockaddr_storage *) (void *) ((uint8_t *) ai + sizeof(struct addrinfo));
     struct sockaddr_in *sa4 = (struct sockaddr_in *) sa;

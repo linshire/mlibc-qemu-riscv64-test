@@ -129,7 +129,7 @@ rt_device_t rt_device_create(int type, int attach_size)
     device = (rt_device_t)rt_malloc(size);
     if (device)
     {
-        rt_memset(device, 0x0, sizeof(struct rt_device));
+        memset(device, 0x0, sizeof(struct rt_device));
         device->type = (enum rt_device_class_type)type;
     }
 

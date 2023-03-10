@@ -32,7 +32,7 @@ struct rt_link_receive_buffer *rt_link_hw_buffer_init(void *parameter)
     rx_buffer = rt_malloc(sizeof(struct rt_link_receive_buffer));
     if (rx_buffer != RT_NULL)
     {
-        rt_memset(rx_buffer, 0, sizeof(struct rt_link_receive_buffer));
+        memset(rx_buffer, 0, sizeof(struct rt_link_receive_buffer));
         rx_buffer->read_point = rx_buffer->data;
         rx_buffer->write_point = rx_buffer->data;
         rx_buffer->end_point = rx_buffer->data + RT_LINK_RECEIVE_BUFFER_LENGTH; /* Point to memory that has no access rights */

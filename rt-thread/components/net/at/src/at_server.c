@@ -508,7 +508,7 @@ static void server_parser(at_server_t server)
         }
 
 __retry:
-        rt_memset(server->recv_buffer, 0x00, AT_SERVER_RECV_BUFF_LEN);
+        memset(server->recv_buffer, 0x00, AT_SERVER_RECV_BUFF_LEN);
         server->cur_recv_len = 0;
     }
 }
@@ -564,7 +564,7 @@ int at_server_init(void)
     at_server_local->echo_mode = 1;
     at_server_local->status = AT_STATUS_UNINITIALIZED;
 
-    rt_memset(at_server_local->recv_buffer, 0x00, AT_SERVER_RECV_BUFF_LEN);
+    memset(at_server_local->recv_buffer, 0x00, AT_SERVER_RECV_BUFF_LEN);
     at_server_local->cur_recv_len = 0;
 
     at_server_local->rx_notice = rt_sem_create("at_svr", 0, RT_IPC_FLAG_FIFO);

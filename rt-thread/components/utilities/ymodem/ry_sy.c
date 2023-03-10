@@ -128,7 +128,7 @@ static enum rym_code _rym_send_begin(
         rt_kprintf("error open file: %d\n", err);
         return RYM_ERR_FILE;
     }
-    rt_memset(buf, 0, len);
+    memset(buf, 0, len);
     err = stat(cctx->fpath, &file_buf);
     if (err != RT_EOK)
     {
@@ -170,7 +170,7 @@ static enum rym_code _rym_send_data(
 
     if (read_size < len)
     {
-        rt_memset(buf + read_size, 0x1A, len - read_size);
+        memset(buf + read_size, 0x1A, len - read_size);
         ctx->stage = RYM_STAGE_FINISHING;
     }
 
@@ -186,7 +186,7 @@ static enum rym_code _rym_send_end(
     rt_uint8_t *buf,
     rt_size_t len)
 {
-    rt_memset(buf, 0, len);
+    memset(buf, 0, len);
 
     return RYM_CODE_SOH;
 }

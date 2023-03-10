@@ -161,7 +161,7 @@ static void reset_buffer_flags(struct n_tty_data *ldata)
     ldata->line_start = 0;
 
     ldata->erasing = 0;
-    rt_memset(ldata->read_flags, 0, RT_TTY_BUF);
+    memset(ldata->read_flags, 0, RT_TTY_BUF);
     ldata->push = 0;
 }
 
@@ -1006,7 +1006,7 @@ static void n_tty_set_termios(struct tty_struct *tty, struct termios *old)
 
     if (!old || (old->c_lflag ^ tty->init_termios.c_lflag) & (ICANON | EXTPROC))
     {
-        rt_memset(ldata->read_flags, 0, RT_TTY_BUF);
+        memset(ldata->read_flags, 0, RT_TTY_BUF);
         ldata->line_start = ldata->read_tail;
         if (!L_ICANON(tty) || !read_cnt(ldata))
         {
@@ -1031,7 +1031,7 @@ static void n_tty_set_termios(struct tty_struct *tty, struct termios *old)
         I_IXON(tty) || L_ISIG(tty) || L_ECHO(tty) ||
         I_PARMRK(tty))
     {
-        rt_memset(ldata->char_map, 0, 256);
+        memset(ldata->char_map, 0, 256);
         if (I_IGNCR(tty) || I_ICRNL(tty))
         {
             set_bit('\r', (int *)ldata->char_map);

@@ -48,7 +48,7 @@ void zs_start(char *path)
         return;
     }
     rt_kprintf("\r\nsz: ready...\r\n");    /* here ready to send things */
-    rt_memset(zf, 0, sizeof(struct zfile));
+    memset(zf, 0, sizeof(struct zfile));
     zf->fname = path;
     zf->fd = -1;
     res = zsend_files(zf);

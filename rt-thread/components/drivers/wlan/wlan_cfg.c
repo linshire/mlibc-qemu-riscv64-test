@@ -81,7 +81,7 @@ void rt_wlan_cfg_init(void)
         cfg_cache = rt_malloc(sizeof(struct rt_wlan_cfg_des));
         if (cfg_cache != RT_NULL)
         {
-            rt_memset(cfg_cache, 0, sizeof(struct rt_wlan_cfg_des));
+            memset(cfg_cache, 0, sizeof(struct rt_wlan_cfg_des));
         }
         /* init mutex lock */
         rt_mutex_init(&cfg_mutex, "wlan_cfg", RT_IPC_FLAG_PRIO);

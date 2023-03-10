@@ -110,7 +110,7 @@ rt_err_t rt_memheap_init(struct rt_memheap *memheap,
     item->prev_free = item;
 
 #ifdef RT_USING_MEMTRACE
-    rt_memset(item->owner_thread_name, ' ', sizeof(item->owner_thread_name));
+    memset(item->owner_thread_name, ' ', sizeof(item->owner_thread_name));
 #endif /* RT_USING_MEMTRACE */
 
     item->next = (struct rt_memheap_item *)
@@ -255,7 +255,7 @@ void *rt_memheap_alloc(struct rt_memheap *heap, rt_size_t size)
                 new_ptr->pool_ptr = heap;
 
 #ifdef RT_USING_MEMTRACE
-                rt_memset(new_ptr->owner_thread_name, ' ', sizeof(new_ptr->owner_thread_name));
+                memset(new_ptr->owner_thread_name, ' ', sizeof(new_ptr->owner_thread_name));
 #endif /* RT_USING_MEMTRACE */
 
                 /* break down the block list */
@@ -459,7 +459,7 @@ void *rt_memheap_realloc(struct rt_memheap *heap, void *ptr, rt_size_t newsize)
                 next_ptr->pool_ptr = heap;
 
 #ifdef RT_USING_MEMTRACE
-                rt_memset((void *)next_ptr->owner_thread_name, ' ', sizeof(next_ptr->owner_thread_name));
+                memset((void *)next_ptr->owner_thread_name, ' ', sizeof(next_ptr->owner_thread_name));
 #endif /* RT_USING_MEMTRACE */
 
                 next_ptr->prev          = header_ptr;
@@ -535,7 +535,7 @@ void *rt_memheap_realloc(struct rt_memheap *heap, void *ptr, rt_size_t newsize)
     new_ptr->pool_ptr = heap;
 
 #ifdef RT_USING_MEMTRACE
-    rt_memset(new_ptr->owner_thread_name, ' ', sizeof(new_ptr->owner_thread_name));
+    memset(new_ptr->owner_thread_name, ' ', sizeof(new_ptr->owner_thread_name));
 #endif /* RT_USING_MEMTRACE */
 
     /* break down the block list */
@@ -713,7 +713,7 @@ void rt_memheap_free(void *ptr)
     }
 
 #ifdef RT_USING_MEMTRACE
-    rt_memset(header_ptr->owner_thread_name, ' ', sizeof(header_ptr->owner_thread_name));
+    memset(header_ptr->owner_thread_name, ' ', sizeof(header_ptr->owner_thread_name));
 #endif /* RT_USING_MEMTRACE */
 
     if (heap->locked == RT_FALSE)

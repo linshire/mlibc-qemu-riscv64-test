@@ -1019,7 +1019,7 @@ udevice_t rt_usbd_device_new(void)
         rt_kprintf("alloc memory failed\n");
         return RT_NULL;
     }
-    rt_memset(udevice, 0, sizeof(struct udevice));
+    memset(udevice, 0, sizeof(struct udevice));
 
     /* to initialize configuration list */
     rt_list_init(&udevice->cfg_list);
@@ -1155,7 +1155,7 @@ uconfig_t rt_usbd_config_new(void)
         rt_kprintf("alloc memory failed\n");
         return RT_NULL;
     }
-    rt_memset(cfg, 0, sizeof(struct uconfig));
+    memset(cfg, 0, sizeof(struct uconfig));
 
     /* set default wValue */
     cfg->cfg_desc.bLength = USB_DESC_LENGTH_CONFIG;

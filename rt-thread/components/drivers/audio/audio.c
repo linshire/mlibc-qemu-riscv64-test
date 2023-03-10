@@ -52,14 +52,14 @@ static rt_err_t _audio_send_replay_frame(struct rt_audio_device *audio)
             rt_completion_done(&audio->replay->cmp);
 
         /* send zero frames */
-        rt_memset(&buf_info->buffer[audio->replay->pos], 0, dst_size);
+        memset(&buf_info->buffer[audio->replay->pos], 0, dst_size);
 
         audio->replay->pos += dst_size;
         audio->replay->pos %= buf_info->total_size;
     }
     else
     {
-        rt_memset(&buf_info->buffer[audio->replay->pos], 0, dst_size);
+        memset(&buf_info->buffer[audio->replay->pos], 0, dst_size);
 
         /* copy data from memory pool to hardware device fifo */
         while (index < dst_size)
@@ -229,7 +229,7 @@ static rt_err_t _audio_dev_init(struct rt_device *dev)
 
         if (replay == RT_NULL)
             return -RT_ENOMEM;
-        rt_memset(replay, 0, sizeof(struct rt_audio_replay));
+        memset(replay, 0, sizeof(struct rt_audio_replay));
 
         /* init memory pool for replay */
         replay->mp = rt_mp_create("adu_mp", RT_AUDIO_REPLAY_MP_BLOCK_COUNT, RT_AUDIO_REPLAY_MP_BLOCK_SIZE);
@@ -258,7 +258,7 @@ static rt_err_t _audio_dev_init(struct rt_device *dev)
 
         if (record == RT_NULL)
             return -RT_ENOMEM;
-        rt_memset(record, 0, sizeof(struct rt_audio_record));
+        memset(record, 0, sizeof(struct rt_audio_record));
 
         /* init pipe for record*/
         buffer = rt_malloc(RT_AUDIO_RECORD_PIPE_SIZE);
@@ -393,7 +393,7 @@ static rt_ssize_t _audio_dev_write(struct rt_device *dev, rt_off_t pos, const vo
         if (audio->replay->write_index % block_size == 0)
         {
             audio->replay->write_data = rt_mp_alloc(audio->replay->mp, RT_WAITING_FOREVER);
-            rt_memset(audio->replay->write_data, 0, block_size);
+            memset(audio->replay->write_data, 0, block_size);
         }
 
         /* copy data to replay memory pool */

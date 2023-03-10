@@ -238,7 +238,7 @@ rt_inline rt_err_t rt_usb_hcd_alloc_pipe(uhcd_t hcd, upipe_t* pipe, uinst_t inst
     {
         return RT_ERROR;
     }
-    rt_memset(*pipe,0,sizeof(struct upipe));
+    memset(*pipe,0,sizeof(struct upipe));
     (*pipe)->inst = inst;
     rt_memcpy(&(*pipe)->ep,ep,sizeof(struct uendpoint_descriptor));
     return hcd->ops->open_pipe(*pipe);

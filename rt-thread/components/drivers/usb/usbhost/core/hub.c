@@ -515,7 +515,7 @@ static rt_err_t rt_usbh_hub_enable(void *arg)
     /* create a hub instance */
     hub = rt_malloc(sizeof(struct uhub));
     RT_ASSERT(hub != RT_NULL);
-    rt_memset(hub, 0, sizeof(struct uhub));
+    memset(hub, 0, sizeof(struct uhub));
 
     /* make interface instance's user data point to hub instance */
     intf->user_data = (void*)hub;
@@ -702,7 +702,7 @@ void rt_usbh_hub_init(uhcd_t hcd)
     rt_thread_t thread;
     /* create root hub for hcd */
     hcd->roothub = rt_malloc(sizeof(struct uhub));
-    rt_memset(hcd->roothub, 0, sizeof(struct uhub));
+    memset(hcd->roothub, 0, sizeof(struct uhub));
     hcd->roothub->is_roothub = RT_TRUE;
     hcd->roothub->hcd = hcd;
     hcd->roothub->num_ports = hcd->num_ports;

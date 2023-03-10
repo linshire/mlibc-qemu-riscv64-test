@@ -89,7 +89,7 @@ static int rt_link_frame_init(struct rt_link_frame *frame, rt_uint8_t config)
     }
 
     /* set frame control information */
-    rt_memset(&frame->head, 0, sizeof(struct rt_link_frame_head));
+    memset(&frame->head, 0, sizeof(struct rt_link_frame_head));
     if (config & RT_LINK_FLAG_CRC)
     {
         frame->head.crc = 1;
@@ -101,7 +101,7 @@ static int rt_link_frame_init(struct rt_link_frame *frame, rt_uint8_t config)
 
     frame->head.magicid = RT_LINK_FRAME_HEAD;
     /* frame data information */
-    rt_memset(&frame->extend, 0, sizeof(struct rt_link_extend));
+    memset(&frame->extend, 0, sizeof(struct rt_link_extend));
     frame->crc = 0;
     frame->real_data = RT_NULL;
     frame->data_len = 0;
@@ -141,7 +141,7 @@ static void rt_link_frame_remove(struct rt_link_service *service)
                 rt_slist_remove(&rt_link_scb->tx_data_slist, &find_frame->slist);
                 rt_exit_critical();
                 total--;
-                rt_memset(find_frame, 0, sizeof(struct rt_link_frame));
+                memset(find_frame, 0, sizeof(struct rt_link_frame));
                 rt_free(find_frame);
             }
         } while ((total > 0) && (tem_list != RT_NULL));
@@ -213,7 +213,7 @@ static rt_ssize_t frame_send(struct rt_link_frame *frame)
     rt_size_t length = 0;
     rt_uint8_t *data = RT_NULL;
 
-    rt_memset(rt_link_scb->sendbuffer, 0, sizeof(rt_link_scb->sendbuffer));
+    memset(rt_link_scb->sendbuffer, 0, sizeof(rt_link_scb->sendbuffer));
     data = rt_link_scb->sendbuffer;
     length = RT_LINK_HEAD_LENGTH;
     if (frame->head.crc)
@@ -325,7 +325,7 @@ static void _stop_recv_long(void)
 
 static rt_err_t rt_link_frame_stop_receive(struct rt_link_frame *frame)
 {
-    rt_memset(frame, 0, sizeof(struct rt_link_frame));
+    memset(frame, 0, sizeof(struct rt_link_frame));
     if (rt_link_scb->rx_record.dataspace)
     {
         rt_free(rt_link_scb->rx_record.dataspace);
@@ -1216,7 +1216,7 @@ int rt_link_init(void)
         goto __exit;
     }
 
-    rt_memset(rt_link_scb, 0, sizeof(struct rt_link_session));
+    memset(rt_link_scb, 0, sizeof(struct rt_link_session));
     rt_event_init(&rt_link_scb->event, "rtlink", RT_IPC_FLAG_FIFO);
     rt_event_control(&rt_link_scb->event, RT_IPC_CMD_RESET, RT_NULL);
 

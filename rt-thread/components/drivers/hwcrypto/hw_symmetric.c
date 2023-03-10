@@ -254,8 +254,8 @@ void rt_hwcrypto_symmetric_reset(struct rt_hwcrypto_ctx *ctx)
         symmetric_ctx->iv_len     = 0x00;
         symmetric_ctx->iv_off     = 0x00;
         symmetric_ctx->key_bitlen = 0x00;
-        rt_memset(symmetric_ctx->iv, 0, RT_HWCRYPTO_IV_MAX_SIZE);
-        rt_memset(symmetric_ctx->key, 0, RT_HWCRYPTO_KEYBIT_MAX_SIZE >> 3);
+        memset(symmetric_ctx->iv, 0, RT_HWCRYPTO_IV_MAX_SIZE);
+        memset(symmetric_ctx->key, 0, RT_HWCRYPTO_KEYBIT_MAX_SIZE >> 3);
 
         /* Hardware context reset */
         rt_hwcrypto_ctx_reset(ctx);

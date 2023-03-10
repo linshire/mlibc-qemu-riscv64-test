@@ -181,7 +181,7 @@ static int mbedtls_connect(void *sock)
     ret = mbedtls_ssl_get_verify_result(&session->ssl);
     if (ret != 0)
     {
-        rt_memset(session->buffer, 0x00, session->buffer_len);
+        memset(session->buffer, 0x00, session->buffer_len);
         mbedtls_x509_crt_verify_info((char *)session->buffer, session->buffer_len, "  ! ", ret);
         goto __exit;
     }

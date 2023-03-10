@@ -380,7 +380,7 @@ struct rt_wlan_key
 typedef struct rt_wlan_key rt_wlan_key_t;
 
 #define INVALID_INFO(_info)       do {    \
-                                        rt_memset((_info), 0, sizeof(struct rt_wlan_info)); \
+                                        memset((_info), 0, sizeof(struct rt_wlan_info)); \
                                         (_info)->band = RT_802_11_BAND_UNKNOWN; \
                                         (_info)->security = SECURITY_UNKNOWN; \
                                         (_info)->channel = -1; \

@@ -21,7 +21,7 @@
  */
 void bzero(void* s, size_t n)
 {
-    rt_memset(s, 0, n);
+    memset(s, 0, n);
 }
 
 void bcopy(const void* src, void* dest, size_t n)

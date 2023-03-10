@@ -326,7 +326,7 @@ static rt_err_t spi_wifi_transfer(struct rw009_wifi *dev)
     while (spi_wifi_is_busy());
     SPI_DEBUG("sequence start!\n");
 
-    rt_memset(&cmd, 0, sizeof(struct spi_cmd_request));
+    memset(&cmd, 0, sizeof(struct spi_cmd_request));
     cmd.magic1 = CMD_MAGIC1;
     cmd.magic2 = CMD_MAGIC2;
 
@@ -633,7 +633,7 @@ rt_err_t rt_hw_wifi_init(const char *spi_device_name, wifi_mode_t mode)
     RT_ASSERT( (SPI_MAX_DATA_LEN & 0x03) == 0);
     RT_ASSERT( sizeof(struct rw009_resp) <= SPI_MAX_DATA_LEN);
 
-    rt_memset(&rw009_wifi_device, 0, sizeof(struct rw009_wifi));
+    memset(&rw009_wifi_device, 0, sizeof(struct rw009_wifi));
 
     rw009_wifi_device.rt_spi_device = (struct rt_spi_device *)rt_device_find(spi_device_name);
 
