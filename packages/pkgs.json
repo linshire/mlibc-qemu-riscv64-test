@@ -1,0 +1,17 @@
+[
+ {
+  "path": "/packages/tools/mem_sandbox", 
+  "ver": "latest", 
+  "name": "MEM_SANDBOX"
+ }, 
+ {
+  "path": "/packages/misc/optparse", 
+  "ver": "latest", 
+  "name": "OPTPARSE"
+ }, 
+ {
+  "path": "/packages/misc/vi", 
+  "ver": "latest", 
+  "name": "VI"
+ }
+]

@@ -1,0 +1,19 @@
+Import('rtconfig')
+from building import *
+
+cwd = GetCurrentDir()
+src = Split('''
+''')
+
+LIBPATH = [cwd ]             # LIBPATH 指定库的路径，表示库的搜索路径是当前目录下的'libs'目录
+
+if rtconfig.CROSS_TOOL == 'gcc':
+    LIBS = ['mlibc']                    # GCC 下 LIBS 指定库的名称
+elif rtconfig.CROSS_TOOL == 'keil':
+    LIBS = ['libabc_keil']                # ARMCC 下 LIBS 指定库的名称
+else:
+    LIBS = ['libabc_iar']                 # IAR 下 LIBS 指定库的名称
+
+group = DefineGroup('mlibc', src, depend = [''], LIBS = LIBS, LIBPATH=LIBPATH)
+
+Return('group')

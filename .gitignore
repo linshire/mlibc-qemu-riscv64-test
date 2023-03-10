@@ -1,0 +1,6 @@
+mnt.c
+romfs_data.c
+opensbi
+build/
+*.bin
+*.elf
