@@ -747,7 +747,7 @@ static void client_parser(at_client_t client)
                 if (resp->buf_len + client->recv_line_len < resp->buf_size)
                 {
                     /* copy response lines, separated by '\0' */
-                    rt_memcpy(resp->buf + resp->buf_len, client->recv_line_buf, client->recv_line_len);
+                    memcpy(resp->buf + resp->buf_len, client->recv_line_buf, client->recv_line_len);
 
                     /* update the current response information */
                     resp->buf_len += client->recv_line_len;

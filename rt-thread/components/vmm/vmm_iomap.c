@@ -17,7 +17,7 @@ static struct vmm_iomap _vmm_iomap[RT_VMM_IOMAP_MAXNR];
 
 void vmm_iomap_init(struct vmm_iomap *iomap)
 {
-    rt_memcpy(_vmm_iomap, iomap, sizeof(_vmm_iomap));
+    memcpy(_vmm_iomap, iomap, sizeof(_vmm_iomap));
 }
 
 /* find virtual address according to name */

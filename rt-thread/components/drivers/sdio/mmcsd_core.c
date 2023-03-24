@@ -169,7 +169,7 @@ rt_int32_t mmcsd_all_get_cid(struct rt_mmcsd_host *host, rt_uint32_t *cid)
     if (err)
         return err;
 
-    rt_memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
+    memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
 
     return 0;
 }
@@ -195,7 +195,7 @@ rt_int32_t mmcsd_get_cid(struct rt_mmcsd_host *host, rt_uint32_t *cid)
         if (err)
             return err;
 
-        rt_memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
+        memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
 
         return 0;
     }
@@ -271,7 +271,7 @@ rt_int32_t mmcsd_get_csd(struct rt_mmcsd_card *card, rt_uint32_t *csd)
         if (err)
             return err;
 
-        rt_memcpy(csd, cmd.resp, sizeof(rt_uint32_t) * 4);
+        memcpy(csd, cmd.resp, sizeof(rt_uint32_t) * 4);
 
         return 0;
     }

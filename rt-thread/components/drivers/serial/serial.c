@@ -534,12 +534,12 @@ rt_inline int _serial_dma_rx(struct rt_serial_device *serial, rt_uint8_t *data, 
             recv_len = fifo_recved_len;
 
         if (rx_fifo->get_index + recv_len < serial->config.bufsz)
-            rt_memcpy(data, rx_fifo->buffer + rx_fifo->get_index, recv_len);
+            memcpy(data, rx_fifo->buffer + rx_fifo->get_index, recv_len);
         else
         {
-            rt_memcpy(data, rx_fifo->buffer + rx_fifo->get_index,
+            memcpy(data, rx_fifo->buffer + rx_fifo->get_index,
                     serial->config.bufsz - rx_fifo->get_index);
-            rt_memcpy(data + serial->config.bufsz - rx_fifo->get_index, rx_fifo->buffer,
+            memcpy(data + serial->config.bufsz - rx_fifo->get_index, rx_fifo->buffer,
                     recv_len + rx_fifo->get_index - serial->config.bufsz);
         }
         rt_dma_recv_update_get_index(serial, recv_len);
@@ -1042,7 +1042,7 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
         case RT_DEVICE_CTRL_NOTIFY_SET:
             if (args)
             {
-                rt_memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
+                memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
             }
             break;
 

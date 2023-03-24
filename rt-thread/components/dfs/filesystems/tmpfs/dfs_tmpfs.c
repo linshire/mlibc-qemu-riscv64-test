@@ -49,9 +49,9 @@ __next_dir:
         }
         else /* Last level dir */
         {
-            rt_memcpy(parent_path, path, path_p - path - 1);
+            memcpy(parent_path, path, path_p - path - 1);
             parent_path[path_p - path - 1] = '\0';
-            rt_memcpy(file_name, path_p, path_q - path_p);
+            memcpy(file_name, path_p, path_q - path_p);
             file_name[path_q - path_p] = '\0';
         }
     }

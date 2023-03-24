@@ -106,7 +106,7 @@ static struct pbuf *virtio_net_rx(rt_device_t dev)
 #ifdef RT_USING_SMP
             level = rt_spin_lock_irqsave(&virtio_dev->spinlock);
 #endif
-            rt_memcpy(p->payload, (void *)VIRTIO_PA2VA(queue_rx->desc[id].addr), len);
+            memcpy(p->payload, (void *)VIRTIO_PA2VA(queue_rx->desc[id].addr), len);
 
             queue_rx->used_idx++;
 
@@ -185,7 +185,7 @@ static rt_err_t virtio_net_control(rt_device_t dev, int cmd, void *args)
             break;
         }
 
-        rt_memcpy(args, virtio_net_dev->config->mac, sizeof(virtio_net_dev->config->mac));
+        memcpy(args, virtio_net_dev->config->mac, sizeof(virtio_net_dev->config->mac));
         break;
     default:
         status = -RT_EINVAL;

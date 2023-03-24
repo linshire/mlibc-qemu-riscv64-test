@@ -80,7 +80,7 @@ int msh_exec_script(const char *cmd_line, int size)
     if (pg_name == RT_NULL) return -RT_ENOMEM;
 
     /* copy command0 */
-    rt_memcpy(pg_name, cmd_line, cmd_length);
+    memcpy(pg_name, cmd_line, cmd_length);
     pg_name[cmd_length] = '\0';
 
     if (strstr(pg_name, ".sh") != RT_NULL || strstr(pg_name, ".SH") != RT_NULL)

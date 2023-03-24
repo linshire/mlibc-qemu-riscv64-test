@@ -269,8 +269,8 @@ static rt_ssize_t _inquiry_cmd(ufunction_t func, ustorage_cbw_t cbw)
     *(rt_uint32_t*)&buf[4] = 31;
 
     memset(&buf[8], 0x20, 28);
-    rt_memcpy(&buf[8], "RTT", 3);
-    rt_memcpy(&buf[16], "USB Disk", 8);
+    memcpy(&buf[8], "RTT", 3);
+    memcpy(&buf[16], "USB Disk", 8);
 
     data->cb_data_size = MIN(data->cb_data_size, SIZEOF_INQUIRY_CMD);
     data->ep_in->request.buffer = buf;

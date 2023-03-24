@@ -403,7 +403,7 @@ static rt_err_t _ep_out_handler(ufunction_t func, rt_size_t size)
 
     if(size != 0)
     {
-        rt_memcpy((void *)&report,(void*)data->ep_out->buffer,size);
+        memcpy((void *)&report,(void*)data->ep_out->buffer,size);
         report.size = size-1;
         rt_mq_send(&data->hid_mq,(void *)&report,sizeof(report));
     }
@@ -601,7 +601,7 @@ static rt_ssize_t _hid_write(rt_device_t dev, rt_off_t pos, const void *buffer, 
     if (hiddev->func->device->state == USB_STATE_CONFIGURED)
     {
         report.report_id = pos;
-        rt_memcpy((void *)report.report,(void *)buffer,size);
+        memcpy((void *)report.report,(void *)buffer,size);
         report.size = size;
         hiddev->ep_in->request.buffer = (void *)&report;
         hiddev->ep_in->request.size = (size+1) > 64 ? 64 : size+1;

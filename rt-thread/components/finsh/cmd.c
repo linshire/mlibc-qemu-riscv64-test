@@ -194,7 +194,7 @@ long list_thread(void)
                     continue;
                 }
                 /* copy info */
-                rt_memcpy(&thread_info, obj, sizeof thread_info);
+                memcpy(&thread_info, obj, sizeof thread_info);
                 rt_hw_interrupt_enable(level);
 
                 thread = (struct rt_thread *)obj;

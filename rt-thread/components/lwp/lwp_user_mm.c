@@ -604,7 +604,7 @@ size_t lwp_data_get(struct rt_lwp *lwp, void *dst, void *src, size_t size)
             break;
         }
         tmp_src = (void *)((char *)tmp_src - PV_OFFSET);
-        rt_memcpy(tmp_dst, tmp_src, len);
+        memcpy(tmp_dst, tmp_src, len);
         tmp_dst = (void *)((char *)tmp_dst + len);
         addr_start = (void *)((char *)addr_start + len);
         size -= len;
@@ -644,7 +644,7 @@ size_t lwp_data_put(struct rt_lwp *lwp, void *dst, void *src, size_t size)
             break;
         }
         tmp_dst = (void *)((char *)tmp_dst - PV_OFFSET);
-        rt_memcpy(tmp_dst, tmp_src, len);
+        memcpy(tmp_dst, tmp_src, len);
         tmp_src = (void *)((char *)tmp_src + len);
         addr_start = (void *)((char *)addr_start + len);
         size -= len;

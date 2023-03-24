@@ -357,7 +357,7 @@ static rt_err_t enc28j60_control(rt_device_t dev, int cmd, void *args)
     {
     case NIOCTL_GADDR:
         /* get mac address */
-        if (args) rt_memcpy(args, enc28j60->dev_addr, 6);
+        if (args) memcpy(args, enc28j60->dev_addr, 6);
         else return -RT_ERROR;
         break;
 

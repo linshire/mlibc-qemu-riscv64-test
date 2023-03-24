@@ -213,7 +213,7 @@ static size_t at_recvpkt_get(rt_slist_t *rlist, char *mem, size_t len)
 
         if (page_pos >= len - content_pos)
         {
-            rt_memcpy((char *) mem + content_pos, pkt->buff + pkt->bfsz_index, len - content_pos);
+            memcpy((char *) mem + content_pos, pkt->buff + pkt->bfsz_index, len - content_pos);
             pkt->bfsz_index += len - content_pos;
             if (pkt->bfsz_index == pkt->bfsz_totle)
             {
@@ -224,7 +224,7 @@ static size_t at_recvpkt_get(rt_slist_t *rlist, char *mem, size_t len)
         }
         else
         {
-            rt_memcpy((char *) mem + content_pos, pkt->buff + pkt->bfsz_index, page_pos);
+            memcpy((char *) mem + content_pos, pkt->buff + pkt->bfsz_index, page_pos);
             content_pos += page_pos;
             pkt->bfsz_index += page_pos;
             at_recvpkt_node_delete(rlist, free_node);
@@ -1597,7 +1597,7 @@ int at_getaddrinfo(const char *nodename, const char *servname,
     {
         /* copy nodename to canonname if specified */
         ai->ai_canonname = ((char *) ai + sizeof(struct addrinfo) + sizeof(struct sockaddr_storage));
-        rt_memcpy(ai->ai_canonname, nodename, namelen);
+        memcpy(ai->ai_canonname, nodename, namelen);
         ai->ai_canonname[namelen] = 0;
     }
     ai->ai_addrlen = sizeof(struct sockaddr_storage);

@@ -1146,7 +1146,7 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
         case RT_DEVICE_CTRL_NOTIFY_SET:
             if (args)
             {
-                rt_memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
+                memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
             }
             break;
 

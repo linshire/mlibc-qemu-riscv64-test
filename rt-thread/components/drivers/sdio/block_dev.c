@@ -270,10 +270,10 @@ static rt_err_t rt_mmcsd_control(rt_device_t dev, int cmd, void *args)
     switch (cmd)
     {
     case RT_DEVICE_CTRL_BLK_GETGEOME:
-        rt_memcpy(args, &blk_dev->geometry, sizeof(struct rt_device_blk_geometry));
+        memcpy(args, &blk_dev->geometry, sizeof(struct rt_device_blk_geometry));
         break;
     case RT_DEVICE_CTRL_BLK_PARTITION:
-        rt_memcpy(args, &blk_dev->part, sizeof(struct dfs_partition));
+        memcpy(args, &blk_dev->part, sizeof(struct dfs_partition));
     default:
         break;
     }

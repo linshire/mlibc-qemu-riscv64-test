@@ -215,7 +215,7 @@ int msh_exec_module(const char *cmd_line, int size)
         return -RT_ENOMEM;
 
     /* copy command0 */
-    rt_memcpy(pg_name, cmd_line, cmd_length);
+    memcpy(pg_name, cmd_line, cmd_length);
     pg_name[cmd_length] = '\0';
 
     if (strstr(pg_name, ".mo") != RT_NULL || strstr(pg_name, ".MO") != RT_NULL)
@@ -670,7 +670,7 @@ void msh_auto_complete_path(char *path)
             }
 
             length = index - path;
-            rt_memcpy(index, full_path, min_length);
+            memcpy(index, full_path, min_length);
             path[length + min_length] = '\0';
 
             /* try to locate folder */

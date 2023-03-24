@@ -164,8 +164,8 @@ rt_err_t ping(char* target_name, rt_uint32_t times, rt_size_t size)
         rt_kprintf("ping: unknown host %s\n", target_name);
         return -RT_ERROR;
     }
-    rt_memcpy(&h, &res->ai_addr, sizeof(struct sockaddr_in *));
-    rt_memcpy(&ina, &h->sin_addr, sizeof(ina));
+    memcpy(&h, &res->ai_addr, sizeof(struct sockaddr_in *));
+    memcpy(&ina, &h->sin_addr, sizeof(ina));
     lwip_freeaddrinfo(res);
     if (inet_aton(inet_ntoa(ina), &target_addr) == 0)
     {
