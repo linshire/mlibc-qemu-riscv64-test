@@ -28,9 +28,8 @@ int putchar(int chr)
 int main(void)
 {
 
-    utest_testcase_run(NULL,NULL);
-    while(1)
-    {};
+    //utest_testcase_run(NULL,NULL);
+    while(1){};
     return 0;
 }
 
