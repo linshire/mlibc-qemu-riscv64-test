@@ -4,3 +4,6 @@ opensbi
 build/
 *.bin
 *.elf
+*.a
+*.map
+*.o

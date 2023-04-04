@@ -259,9 +259,6 @@
 /* u8g2: a monochrome graphic library */
 
 
-/* PainterEngine: A cross-platform graphics application framework written in C language */
-
-
 /* tools packages */
 
 #define PKG_USING_MEM_SANDBOX
@@ -355,6 +352,7 @@
 
 
 /* Other */
+
 
 /* Signal IO */
 
