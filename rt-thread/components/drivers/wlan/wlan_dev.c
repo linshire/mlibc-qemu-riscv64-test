@@ -106,11 +106,11 @@ rt_err_t rt_wlan_dev_connect(struct rt_wlan_device *device, struct rt_wlan_info 
         return -RT_ERROR;
     }
     memset(&sta_info, 0, sizeof(struct rt_sta_info));
-    rt_memcpy(&sta_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
-    rt_memcpy(sta_info.bssid, info->bssid, RT_WLAN_BSSID_MAX_LENGTH);
+    memcpy(&sta_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
+    memcpy(sta_info.bssid, info->bssid, RT_WLAN_BSSID_MAX_LENGTH);
     if (password != RT_NULL)
     {
-        rt_memcpy(sta_info.key.val, password, password_len);
+        memcpy(sta_info.key.val, password, password_len);
         sta_info.key.len = password_len;
     }
     sta_info.channel = info->channel;
@@ -190,10 +190,10 @@ rt_err_t rt_wlan_dev_ap_start(struct rt_wlan_device *device, struct rt_wlan_info
     }
 
     memset(&ap_info, 0, sizeof(struct rt_ap_info));
-    rt_memcpy(&ap_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
+    memcpy(&ap_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
     if (password != RT_NULL)
     {
-        rt_memcpy(ap_info.key.val, password, password_len);
+        memcpy(ap_info.key.val, password, password_len);
     }
     ap_info.key.len = password_len;
     ap_info.hidden = info->hidden;
@@ -568,8 +568,8 @@ rt_err_t rt_wlan_dev_scan(struct rt_wlan_device *device, struct rt_wlan_info *in
             LOG_E("L:%d ssid is too long", __LINE__);
             return -RT_EINVAL;
         }
-        rt_memcpy(&scan_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
-        rt_memcpy(scan_info.bssid, info->bssid, RT_WLAN_BSSID_MAX_LENGTH);
+        memcpy(&scan_info.ssid, &info->ssid, sizeof(rt_wlan_ssid_t));
+        memcpy(scan_info.bssid, info->bssid, RT_WLAN_BSSID_MAX_LENGTH);
         if (info->channel > 0)
         {
             scan_info.channel_min = info->channel;

@@ -223,7 +223,7 @@ static rt_err_t rt_wlan_send_to_thread(rt_wlan_event_t event, void *buff, int le
     if (len != 0)
     {
         msg->buff = (void *)&msg[1];
-        rt_memcpy(msg->buff, buff, len);
+        memcpy(msg->buff, buff, len);
         msg->len = len;
     }
 
@@ -910,7 +910,7 @@ rt_err_t rt_wlan_connect(const char *ssid, const char *password)
     INVALID_INFO(&info);
     MGNT_LOCK();
 
-    rt_memcpy(&info.ssid.val[0],ssid,rt_strlen(ssid));
+    memcpy(&info.ssid.val[0],ssid,rt_strlen(ssid));
     info.ssid.len = rt_strlen(ssid);
 
 #ifdef RT_WLAN_JOIN_SCAN_BY_MGNT
@@ -1029,7 +1029,7 @@ rt_err_t rt_wlan_connect_adv(struct rt_wlan_info *info, const char *password)
     /* save info */
     rt_enter_critical();
     _sta_mgnt.info = *info;
-    rt_memcpy(&_sta_mgnt.key.val, password, password_len);
+    memcpy(&_sta_mgnt.key.val, password, password_len);
     _sta_mgnt.key.len = password_len;
     _sta_mgnt.key.val[password_len] = '\0';
     rt_exit_critical();
@@ -1235,7 +1235,7 @@ rt_err_t rt_wlan_start_ap(const char *ssid, const char *password)
     }
 
     /* copy info */
-    rt_memcpy(&info.ssid.val, ssid, ssid_len);
+    memcpy(&info.ssid.val, ssid, ssid_len);
     info.ssid.len = ssid_len;
     info.channel = 6;
     info.band = RT_802_11_BAND_2_4GHZ;
@@ -1322,8 +1322,8 @@ rt_err_t rt_wlan_start_ap_adv(struct rt_wlan_info *info, const char *password)
         MGNT_UNLOCK();
         return err;
     }
-    rt_memcpy(&_ap_mgnt.info, info, sizeof(struct rt_wlan_info));
-    rt_memcpy(&_ap_mgnt.key.val, password, password_len);
+    memcpy(&_ap_mgnt.info, info, sizeof(struct rt_wlan_info));
+    memcpy(&_ap_mgnt.key.val, password, password_len);
     _ap_mgnt.key.len = password_len;
 
     MGNT_UNLOCK();

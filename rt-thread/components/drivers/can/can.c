@@ -106,7 +106,7 @@ rt_inline int _can_int_rx(struct rt_can_device *can, struct rt_can_msg *data, in
         rt_hw_interrupt_enable(level);
         if (listmsg != RT_NULL)
         {
-            rt_memcpy(data, &listmsg->data, sizeof(struct rt_can_msg));
+            memcpy(data, &listmsg->data, sizeof(struct rt_can_msg));
 
             level = rt_hw_interrupt_disable();
             rt_list_insert_before(&rx_fifo->freelist, &listmsg->list);
@@ -592,7 +592,7 @@ static rt_err_t rt_can_control(struct rt_device *dev,
                 if (!can->hdr[pitem->hdr_bank].connected)
                 {
                     rt_hw_interrupt_enable(level);
-                    rt_memcpy(&can->hdr[pitem->hdr_bank].filter, pitem,
+                    memcpy(&can->hdr[pitem->hdr_bank].filter, pitem,
                               sizeof(struct rt_can_filter_item));
                     level = rt_hw_interrupt_disable();
                     can->hdr[pitem->hdr_bank].connected = 1;
@@ -825,7 +825,7 @@ void rt_hw_can_isr(struct rt_can_device *can, int event)
 
         if (listmsg != RT_NULL)
         {
-            rt_memcpy(&listmsg->data, &tmpmsg, sizeof(struct rt_can_msg));
+            memcpy(&listmsg->data, &tmpmsg, sizeof(struct rt_can_msg));
             level = rt_hw_interrupt_disable();
             rt_list_insert_before(&rx_fifo->uselist, &listmsg->list);
 #ifdef RT_CAN_USING_HDR

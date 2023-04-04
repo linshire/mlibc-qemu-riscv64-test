@@ -616,7 +616,7 @@ static int wifi_debug_save_cfg(int argc, char *argv[])
             rt_kprintf("ssid is to long");
             return 0;
         }
-        rt_memcpy(&cfg_info.info.ssid.val[0], ssid, len);
+        memcpy(&cfg_info.info.ssid.val[0], ssid, len);
         cfg_info.info.ssid.len = len;
     }
 
@@ -628,7 +628,7 @@ static int wifi_debug_save_cfg(int argc, char *argv[])
             rt_kprintf("password is to long");
             return 0;
         }
-        rt_memcpy(&cfg_info.key.val[0], password, len);
+        memcpy(&cfg_info.key.val[0], password, len);
         cfg_info.key.len = len;
     }
 #ifdef RT_WLAN_CFG_ENABLE

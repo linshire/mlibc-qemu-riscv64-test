@@ -589,7 +589,7 @@ ufunction_t rt_usbd_function_cdc_create(udevice_t device)
     if(vcom_get_stored_serno(serno, _SER_NO_LEN) != RT_EOK)
     {
         memset(serno, 0, _SER_NO_LEN + 1);
-        rt_memcpy(serno, _SER_NO, rt_strlen(_SER_NO));
+        memcpy(serno, _SER_NO, rt_strlen(_SER_NO));
     }
 #ifdef RT_USB_DEVICE_COMPOSITE
     rt_usbd_device_set_interface_string(device, VCOM_INTF_STR_INDEX, _ustring[2]);

@@ -106,7 +106,7 @@ int dfs_ramfs_read(struct dfs_fd *file, void *buf, size_t count)
         length = file->vnode->size - file->pos;
 
     if (length > 0)
-        rt_memcpy(buf, &(dirent->data[file->pos]), length);
+        memcpy(buf, &(dirent->data[file->pos]), length);
 
     /* update file current position */
     file->pos += length;
@@ -143,7 +143,7 @@ int dfs_ramfs_write(struct dfs_fd *fd, const void *buf, size_t count)
     }
 
     if (count > 0)
-        rt_memcpy(dirent->data + fd->pos, buf, count);
+        memcpy(dirent->data + fd->pos, buf, count);
 
     /* update file current position */
     fd->pos += count;

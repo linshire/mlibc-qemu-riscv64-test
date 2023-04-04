@@ -601,7 +601,7 @@ netdev_inet_pton(int af, const char *src, void *dst)
         err = netdev_ip6addr_aton(src, &addr);
         if (err)
         {
-            rt_memcpy(dst, &addr.addr, sizeof(addr.addr));
+            memcpy(dst, &addr.addr, sizeof(addr.addr));
         }
         break;
     }

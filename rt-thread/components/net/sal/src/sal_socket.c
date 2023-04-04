@@ -1083,7 +1083,7 @@ int sal_ioctlsocket(int socket, long cmd, void *arg)
 
         case SIOCGIFHWADDR:
             addr = (struct sockaddr *)&(ifr->ifr_ifru.ifru_hwaddr);
-            rt_memcpy(addr->sa_data,sock->netdev->hwaddr,sock->netdev->hwaddr_len);
+            memcpy(addr->sa_data,sock->netdev->hwaddr,sock->netdev->hwaddr_len);
             return 0;
 
         case SIOCGIFMTU:

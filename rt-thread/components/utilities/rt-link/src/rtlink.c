@@ -168,12 +168,12 @@ static int rt_link_command_frame_send(rt_uint16_t serv, rt_uint8_t sequence, rt_
     data_len += sizeof(command_frame.head);
 
     rt_link_frame_extend_config(&command_frame, attribute, parameter);
-    rt_memcpy(data + data_len, &command_frame.extend, sizeof(command_frame.extend));
+    memcpy(data + data_len, &command_frame.extend, sizeof(command_frame.extend));
     data_len += sizeof(command_frame.extend);
 
     command_frame.head.sequence = sequence;
     command_frame.head.service = serv;
-    rt_memcpy(data, &command_frame.head, sizeof(command_frame.head));
+    memcpy(data, &command_frame.head, sizeof(command_frame.head));
 
     rt_link_hw_send(data, data_len);
     return RT_EOK;
@@ -227,22 +227,22 @@ static rt_ssize_t frame_send(struct rt_link_frame *frame)
 
     length += frame->data_len;
     frame->head.length = frame->data_len;
-    rt_memcpy(data, &frame->head, RT_LINK_HEAD_LENGTH);
+    memcpy(data, &frame->head, RT_LINK_HEAD_LENGTH);
     data = data + RT_LINK_HEAD_LENGTH;
     if (frame->head.extend)
     {
-        rt_memcpy(data, &frame->extend, RT_LINK_EXTEND_LENGTH);
+        memcpy(data, &frame->extend, RT_LINK_EXTEND_LENGTH);
         data = data + RT_LINK_EXTEND_LENGTH;
     }
     if (frame->attribute == RT_LINK_SHORT_DATA_FRAME || frame->attribute == RT_LINK_LONG_DATA_FRAME)
     {
-        rt_memcpy(data, frame->real_data, frame->data_len);
+        memcpy(data, frame->real_data, frame->data_len);
         data = data + frame->data_len;
     }
     if (frame->head.crc)
     {
         frame->crc = rt_link_scb->calculate_crc(RT_FALSE, rt_link_scb->sendbuffer, length - RT_LINK_CRC_LENGTH);
-        rt_memcpy(data, &frame->crc, RT_LINK_CRC_LENGTH);
+        memcpy(data, &frame->crc, RT_LINK_CRC_LENGTH);
     }
 
     LOG_D("frame send seq(%d) len(%d) attr:(%d), crc:(0x%08x).", frame->head.sequence, length, frame->attribute, frame->crc);

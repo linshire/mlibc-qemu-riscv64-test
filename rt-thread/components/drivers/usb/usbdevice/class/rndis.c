@@ -376,7 +376,7 @@ static rndis_query_cmplt_t _create_resp(rt_size_t size)
 static void _copy_resp(rndis_query_cmplt_t resp, const void * buffer)
 {
     char * resp_buffer = (char *)resp + sizeof(struct rndis_query_cmplt);
-    rt_memcpy(resp_buffer, buffer, resp->InformationBufferLength);
+    memcpy(resp_buffer, buffer, resp->InformationBufferLength);
 }
 
 static void _set_resp(rndis_query_cmplt_t resp, rt_uint32_t value)
@@ -897,13 +897,13 @@ static rt_err_t _ep_out_handler(ufunction_t func, rt_size_t size)
             data += sizeof(struct rndis_packet_msg);
             size -= sizeof(struct rndis_packet_msg);
             ((rt_rndis_eth_t)func->user_data)->rx_frist = RT_FALSE;
-            rt_memcpy(&((rt_rndis_eth_t)func->user_data)->rx_buffer[((rt_rndis_eth_t)func->user_data)->rx_offset], data, size);
+            memcpy(&((rt_rndis_eth_t)func->user_data)->rx_buffer[((rt_rndis_eth_t)func->user_data)->rx_offset], data, size);
             ((rt_rndis_eth_t)func->user_data)->rx_offset += size;
         }
     }
     else
     {
-        rt_memcpy(&((rt_rndis_eth_t)func->user_data)->rx_buffer[((rt_rndis_eth_t)func->user_data)->rx_offset], data, size);
+        memcpy(&((rt_rndis_eth_t)func->user_data)->rx_buffer[((rt_rndis_eth_t)func->user_data)->rx_offset], data, size);
         ((rt_rndis_eth_t)func->user_data)->rx_offset += size;
     }
 
@@ -1101,7 +1101,7 @@ static rt_err_t rt_rndis_eth_control(rt_device_t dev, int cmd, void *args)
     {
     case NIOCTL_GADDR:
         /* get mac address */
-        if(args) rt_memcpy(args, rndis_eth_dev->dev_addr, MAX_ADDR_LEN);
+        if(args) memcpy(args, rndis_eth_dev->dev_addr, MAX_ADDR_LEN);
         else return -RT_ERROR;
         break;
 
@@ -1137,7 +1137,7 @@ struct pbuf *rt_rndis_eth_rx(rt_device_t dev)
             for (q = p; q != RT_NULL; q= q->next)
             {
                 /* Copy the received frame into buffer from memory pointed by the current ETHERNET DMA Rx descriptor */
-                rt_memcpy(q->payload,
+                memcpy(q->payload,
                        (rt_uint8_t *)((device->rx_buffer) + offset),
                        q->len);
                 offset += q->len;
@@ -1191,7 +1191,7 @@ rt_err_t rt_rndis_eth_tx(rt_device_t dev, struct pbuf* p)
     buffer = (char *)&device->tx_buffer + sizeof(struct rndis_packet_msg);
     for (q = p; q != NULL; q = q->next)
     {
-        rt_memcpy(buffer, q->payload, q->len);
+        memcpy(buffer, q->payload, q->len);
         buffer += q->len;
     }
 

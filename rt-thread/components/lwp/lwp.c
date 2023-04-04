@@ -196,7 +196,7 @@ struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **argv, char
     {
         len = rt_strlen(argv[i]) + 1;
         new_argve[i] = str;
-        rt_memcpy(str_k, argv[i], len);
+        memcpy(str_k, argv[i], len);
         str += len;
         str_k += len;
     }
@@ -212,7 +212,7 @@ struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **argv, char
         {
             len = rt_strlen(envp[j]) + 1;
             new_argve[i] = str;
-            rt_memcpy(str_k, envp[j], len);
+            memcpy(str_k, envp[j], len);
             str += len;
             str_k += len;
             i++;
@@ -294,7 +294,7 @@ static struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **arg
     {
         len = rt_strlen(argv[i]) + 1;
         new_argve[i] = str;
-        rt_memcpy(str, argv[i], len);
+        memcpy(str, argv[i], len);
         str += len;
     }
     new_argve[i] = 0;
@@ -308,7 +308,7 @@ static struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **arg
         {
             len = rt_strlen(envp[j]) + 1;
             new_argve[i] = str;
-            rt_memcpy(str, envp[j], len);
+            memcpy(str, envp[j], len);
             str += len;
             i++;
         }
@@ -646,10 +646,10 @@ static int load_elf(int fd, int len, struct rt_lwp *lwp, uint8_t *load_addr, str
 
             krandom = (uint8_t *)lwp_v2p(lwp, random);
             krandom = (uint8_t *)krandom - PV_OFFSET;
-            rt_memcpy(krandom, &random_value, sizeof random_value);
+            memcpy(krandom, &random_value, sizeof random_value);
 #else
             random = (uint8_t *)(process_header + process_header_size);
-            rt_memcpy(random, &random_value, sizeof random_value);
+            memcpy(random, &random_value, sizeof random_value);
 #endif
             aux->item[2].value = (size_t)random;
         }

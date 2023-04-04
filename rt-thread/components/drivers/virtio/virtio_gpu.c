@@ -84,7 +84,7 @@ static void virtio_gpu_ctrl_send_command(struct virtio_gpu_device *virtio_gpu_de
 #endif
     }
 
-    rt_memcpy(&virtio_gpu_dev->gpu_request, cmd, cmd_len);
+    memcpy(&virtio_gpu_dev->gpu_request, cmd, cmd_len);
 
     virtio_fill_desc(virtio_dev, VIRTIO_GPU_QUEUE_CTRL, idx[0],
             VIRTIO_VA2PA(addr), cmd_len, VIRTQ_DESC_F_NEXT, idx[1]);
@@ -114,7 +114,7 @@ static void virtio_gpu_ctrl_send_command(struct virtio_gpu_device *virtio_gpu_de
 
     virtio_free_desc_chain(virtio_dev, VIRTIO_GPU_QUEUE_CTRL, idx[0]);
 
-    rt_memcpy(res, ret_res, res_len);
+    memcpy(res, ret_res, res_len);
 
 #ifdef RT_USING_SMP
     rt_spin_unlock_irqrestore(&virtio_dev->spinlock, level);
@@ -147,7 +147,7 @@ static void virtio_gpu_cursor_send_command(struct virtio_gpu_device *virtio_gpu_
     addr = &virtio_gpu_dev->info[id].cursor_cmd;
     virtio_gpu_dev->info[id].cursor_valid = RT_TRUE;
 
-    rt_memcpy(addr, cmd, cmd_len);
+    memcpy(addr, cmd, cmd_len);
 
     virtio_fill_desc(virtio_dev, VIRTIO_GPU_QUEUE_CURSOR, id, VIRTIO_VA2PA(addr), cmd_len, 0, 0);
 
@@ -377,7 +377,7 @@ static rt_err_t virtio_gpu_cursor_set_img(struct virtio_gpu_device *virtio_gpu_d
 {
     rt_err_t status;
 
-    rt_memcpy(virtio_gpu_dev->cursor_img, img, VIRTIO_GPU_CURSOR_IMG_SIZE);
+    memcpy(virtio_gpu_dev->cursor_img, img, VIRTIO_GPU_CURSOR_IMG_SIZE);
 
     status = virtio_gpu_attach_backing_resource(virtio_gpu_dev,
             virtio_gpu_dev->cursor_resource_id, virtio_gpu_dev->cursor_img, VIRTIO_GPU_CURSOR_IMG_SIZE);
@@ -415,7 +415,7 @@ static rt_err_t virtio_gpu_get_display_info(struct virtio_gpu_device *virtio_gpu
         {
             if (virtio_gpu_dev->pmode_id == VIRTIO_GPU_INVALID_PMODE_ID)
             {
-                rt_memcpy(&virtio_gpu_dev->pmode, &info.pmodes[i], sizeof(virtio_gpu_dev->pmode));
+                memcpy(&virtio_gpu_dev->pmode, &info.pmodes[i], sizeof(virtio_gpu_dev->pmode));
                 virtio_gpu_dev->pmode_id = i;
             }
         }
@@ -459,7 +459,7 @@ static rt_ssize_t virtio_gpu_read(rt_device_t dev, rt_off_t pos, void *buffer, r
 
     rt_mutex_take(&virtio_gpu_dev->rw_mutex, RT_WAITING_FOREVER);
 
-    rt_memcpy(buffer, (rt_uint8_t *)virtio_gpu_dev->framebuffer + pos, size);
+    memcpy(buffer, (rt_uint8_t *)virtio_gpu_dev->framebuffer + pos, size);
 
     rt_mutex_release(&virtio_gpu_dev->rw_mutex);
 
@@ -477,7 +477,7 @@ static rt_ssize_t virtio_gpu_write(rt_device_t dev, rt_off_t pos, const void *bu
 
     rt_mutex_take(&virtio_gpu_dev->rw_mutex, RT_WAITING_FOREVER);
 
-    rt_memcpy((rt_uint8_t *)virtio_gpu_dev->framebuffer + pos, buffer, size);
+    memcpy((rt_uint8_t *)virtio_gpu_dev->framebuffer + pos, buffer, size);
 
     rt_mutex_release(&virtio_gpu_dev->rw_mutex);
 

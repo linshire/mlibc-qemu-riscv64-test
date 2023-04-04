@@ -711,13 +711,13 @@ static rt_err_t _vendor_request(udevice_t device, ureq_t setup)
                     RT_ASSERT(usb_comp_id_desc != RT_NULL);
                     device->os_comp_id_desc->head_desc.dwLength = usb_comp_id_desc_size;
                     pusb_comp_id_desc = usb_comp_id_desc;
-                    rt_memcpy((void *)pusb_comp_id_desc,(void *)&device->os_comp_id_desc->head_desc,sizeof(struct usb_os_header_comp_id_descriptor));
+                    memcpy((void *)pusb_comp_id_desc,(void *)&device->os_comp_id_desc->head_desc,sizeof(struct usb_os_header_comp_id_descriptor));
                     pusb_comp_id_desc += sizeof(struct usb_os_header_comp_id_descriptor);
 
                     for (p = device->os_comp_id_desc->func_desc.next; p != &device->os_comp_id_desc->func_desc; p = p->next)
                     {
                         func_comp_id_desc = rt_list_entry(p,struct usb_os_function_comp_id_descriptor,list);
-                        rt_memcpy(pusb_comp_id_desc,(void *)&func_comp_id_desc->bFirstInterfaceNumber,
+                        memcpy(pusb_comp_id_desc,(void *)&func_comp_id_desc->bFirstInterfaceNumber,
                         sizeof(struct usb_os_function_comp_id_descriptor)-sizeof(rt_list_t));
                         pusb_comp_id_desc += sizeof(struct usb_os_function_comp_id_descriptor)-sizeof(rt_list_t);
                     }
@@ -1130,7 +1130,7 @@ rt_err_t rt_usbd_device_set_descriptor(udevice_t device, udev_desc_t dev_desc)
     RT_ASSERT(dev_desc != RT_NULL);
 
     /* copy the usb device descriptor to the device */
-    rt_memcpy((void *)&device->dev_desc, (void *)dev_desc, USB_DESC_LENGTH_DEVICE);
+    memcpy((void *)&device->dev_desc, (void *)dev_desc, USB_DESC_LENGTH_DEVICE);
 
     return RT_EOK;
 }
@@ -1261,7 +1261,7 @@ rt_err_t rt_usbd_altsetting_config_descriptor(ualtsetting_t setting, const void*
     RT_ASSERT(setting != RT_NULL);
     RT_ASSERT(setting->desc !=RT_NULL);
 
-    rt_memcpy(setting->desc, desc, setting->desc_size);
+    memcpy(setting->desc, desc, setting->desc_size);
     setting->intf_desc = (uintf_desc_t)((char*)setting->desc + intf_pos);
 
     return RT_EOK;
@@ -1568,7 +1568,7 @@ rt_err_t rt_usbd_device_add_config(udevice_t device, uconfig_t cfg)
                 }
 
                 /* construct complete configuration descriptor */
-                rt_memcpy((void*)&cfg->cfg_desc.data[cfg->cfg_desc.wTotalLength - USB_DESC_LENGTH_CONFIG],
+                memcpy((void*)&cfg->cfg_desc.data[cfg->cfg_desc.wTotalLength - USB_DESC_LENGTH_CONFIG],
                             (void*)altsetting->desc,
                             altsetting->desc_size);
                 cfg->cfg_desc.wTotalLength += altsetting->desc_size;
@@ -1938,7 +1938,7 @@ rt_err_t rt_usbd_ep0_setup_handler(udcd_t dcd, struct urequest* setup)
     }
     else
     {
-        rt_memcpy((void*)&msg.content.setup, (void*)setup, sizeof(struct urequest));
+        memcpy((void*)&msg.content.setup, (void*)setup, sizeof(struct urequest));
     }
 
     msg.type = USB_MSG_SETUP_NOTIFY;

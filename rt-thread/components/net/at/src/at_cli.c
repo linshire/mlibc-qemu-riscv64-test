@@ -124,7 +124,7 @@ static void server_cli_parser(void)
         getchar_bak = server->get_char;
 
         memset(endmark_back, 0x00, AT_END_MARK_LEN);
-        rt_memcpy(endmark_back, server->end_mark, strlen(server->end_mark));
+        memcpy(endmark_back, server->end_mark, strlen(server->end_mark));
 
         /* setup server device as console device */
         server->device = rt_console_get_device();
@@ -155,7 +155,7 @@ static void server_cli_parser(void)
         server->get_char = getchar_bak;
 
         memset(server->end_mark, 0x00, AT_END_MARK_LEN);
-        rt_memcpy(server->end_mark, endmark_back, strlen(endmark_back));
+        memcpy(server->end_mark, endmark_back, strlen(endmark_back));
 
         rt_hw_interrupt_enable(level);
     }

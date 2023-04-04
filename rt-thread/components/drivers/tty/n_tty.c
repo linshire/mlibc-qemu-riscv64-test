@@ -537,7 +537,7 @@ static void __isig(int sig, struct tty_struct *tty)
         {
             struct rt_lwp *old_lwp;
             
-            rt_memcpy(&old_termios, &(tty->init_termios), sizeof(struct termios));
+            memcpy(&old_termios, &(tty->init_termios), sizeof(struct termios));
             tty->init_termios = *new_termios;
             ld = tty->ldisc;
             if (ld != RT_NULL)
@@ -1184,7 +1184,7 @@ static int copy_from_read_buf(struct tty_struct *tty,char *b,size_t nr)
     if (n)
     {
         const char *from = read_buf_addr(ldata, tail);
-        rt_memcpy(b, from, n);
+        memcpy(b, from, n);
         is_eof = n == 1 && *from == EOF_CHAR(tty);
         ldata->read_tail += n;
         /* Turn single EOF into zero-length read */
@@ -1270,12 +1270,12 @@ static int canon_copy_from_read_buf(struct tty_struct *tty, char *b, size_t nr)
     const void *from = read_buf_addr(ldata, tail);
     if (n > buf_size)
     {
-        rt_memcpy(b, from, buf_size);
+        memcpy(b, from, buf_size);
         b += buf_size;
         n -= buf_size;
         from = ldata->read_buf;
     }
-    rt_memcpy(b, from, n);
+    memcpy(b, from, n);
 
     if (found)
     {
@@ -1621,14 +1621,14 @@ static void n_tty_receive_buf_real_raw(struct tty_struct *tty, char *cp, int cou
 
     head = ldata->read_head & (RT_TTY_BUF - 1);
     n = min(count, RT_TTY_BUF - head);
-    rt_memcpy(read_buf_addr(ldata, head), cp, n);
+    memcpy(read_buf_addr(ldata, head), cp, n);
     ldata->read_head += n;
     cp += n;
     count -= n;
 
     head = ldata->read_head & (RT_TTY_BUF - 1);
     n = min(count, RT_TTY_BUF - head);
-    rt_memcpy(read_buf_addr(ldata, head), cp, n);
+    memcpy(read_buf_addr(ldata, head), cp, n);
     ldata->read_head += n;
 }
 

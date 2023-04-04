@@ -31,7 +31,7 @@ int arch_user_space_init(struct rt_lwp *lwp)
 
     lwp->end_heap = USER_HEAP_VADDR;
 
-    rt_memcpy(mmu_table + KPTE_START, (size_t *)rt_kernel_space.page_table + KPTE_START, ARCH_PAGE_SIZE);
+    memcpy(mmu_table + KPTE_START, (size_t *)rt_kernel_space.page_table + KPTE_START, ARCH_PAGE_SIZE);
     memset(mmu_table, 0, 3 * ARCH_PAGE_SIZE);
     rt_hw_cpu_dcache_ops(RT_HW_CACHE_FLUSH, mmu_table, 4 * ARCH_PAGE_SIZE);
     lwp->aspace = rt_aspace_create((void *)USER_VADDR_START, USER_VADDR_TOP - USER_VADDR_START, mmu_table);
@@ -59,7 +59,7 @@ void arch_kuser_init(rt_aspace_t aspace, void *vectors)
         while (1)
             ; // early failed
 
-    rt_memcpy((void *)((char *)vectors + 0x1000 - kuser_sz), __kuser_helper_start, kuser_sz);
+    memcpy((void *)((char *)vectors + 0x1000 - kuser_sz), __kuser_helper_start, kuser_sz);
     /*
      * vectors + 0xfe0 = __kuser_get_tls
      * vectors + 0xfe8 = hardware TLS instruction at 0xffff0fe8

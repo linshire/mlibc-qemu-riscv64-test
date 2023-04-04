@@ -692,7 +692,7 @@ void *rt_slab_realloc(rt_slab_t m, void *ptr, rt_size_t size)
         osize = kup->size << RT_MM_PAGE_BITS;
         if ((nptr = rt_slab_alloc(m, size)) == RT_NULL)
             return RT_NULL;
-        rt_memcpy(nptr, ptr, size > osize ? osize : size);
+        memcpy(nptr, ptr, size > osize ? osize : size);
         rt_slab_free(m, ptr);
 
         return nptr;
@@ -715,7 +715,7 @@ void *rt_slab_realloc(rt_slab_t m, void *ptr, rt_size_t size)
         if ((nptr = rt_slab_alloc(m, size)) == RT_NULL)
             return RT_NULL;
 
-        rt_memcpy(nptr, ptr, size > z->z_chunksize ? z->z_chunksize : size);
+        memcpy(nptr, ptr, size > z->z_chunksize ? z->z_chunksize : size);
         rt_slab_free(m, ptr);
 
         return nptr;

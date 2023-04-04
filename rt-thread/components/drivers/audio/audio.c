@@ -77,7 +77,7 @@ static rt_err_t _audio_send_replay_frame(struct rt_audio_device *audio)
             }
 
             remain_bytes = MIN((dst_size - index), (src_size - audio->replay->read_index));
-            rt_memcpy(&buf_info->buffer[audio->replay->pos],
+            memcpy(&buf_info->buffer[audio->replay->pos],
                    &data[audio->replay->read_index], remain_bytes);
 
             index += remain_bytes;
@@ -398,7 +398,7 @@ static rt_ssize_t _audio_dev_write(struct rt_device *dev, rt_off_t pos, const vo
 
         /* copy data to replay memory pool */
         remain_bytes = MIN((block_size - audio->replay->write_index), (size - index));
-        rt_memcpy(&audio->replay->write_data[audio->replay->write_index], &ptr[index], remain_bytes);
+        memcpy(&audio->replay->write_data[audio->replay->write_index], &ptr[index], remain_bytes);
 
         index += remain_bytes;
         audio->replay->write_index += remain_bytes;

@@ -290,7 +290,7 @@ static rt_err_t _ep_in_handler(ufunction_t func, rt_size_t size)
 static rt_err_t _ep_out_handler(ufunction_t func, rt_size_t size)
 {
     rt_ecm_eth_t ecm_device = (rt_ecm_eth_t)func->user_data;
-    rt_memcpy((void *)(ecm_device->rx_buffer + ecm_device->rx_offset),ecm_device->rx_pool,size);
+    memcpy((void *)(ecm_device->rx_buffer + ecm_device->rx_offset),ecm_device->rx_pool,size);
     ecm_device->rx_offset += size;
     if(size < EP_MAXPACKET(ecm_device->eps.ep_out))
     {
@@ -342,7 +342,7 @@ static rt_err_t rt_ecm_eth_control(rt_device_t dev, int cmd, void *args)
     {
     case NIOCTL_GADDR:
         /* get mac address */
-        if(args) rt_memcpy(args, ecm_eth_dev->dev_addr, MAX_ADDR_LEN);
+        if(args) memcpy(args, ecm_eth_dev->dev_addr, MAX_ADDR_LEN);
         else return -RT_ERROR;
         break;
 
@@ -381,7 +381,7 @@ struct pbuf *rt_ecm_eth_rx(rt_device_t dev)
             for (q = p; q != RT_NULL; q= q->next)
             {
                 /* Copy the received frame into buffer from memory pointed by the current ETHERNET DMA Rx descriptor */
-                rt_memcpy(q->payload,
+                memcpy(q->payload,
                         (rt_uint8_t *)((ecm_eth_dev->rx_buffer) + offset),
                         q->len);
                 offset += q->len;
@@ -436,7 +436,7 @@ rt_err_t rt_ecm_eth_tx(rt_device_t dev, struct pbuf* p)
     pbuffer = (char *)&ecm_eth_dev->tx_buffer;
     for (q = p; q != NULL; q = q->next)
     {
-        rt_memcpy(pbuffer, q->payload, q->len);
+        memcpy(pbuffer, q->payload, q->len);
         pbuffer += q->len;
     }
 

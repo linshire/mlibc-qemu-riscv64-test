@@ -554,7 +554,7 @@ static rt_int32_t mmcsd_sd_init_card(struct rt_mmcsd_host *host,
 
     card->card_type = CARD_TYPE_SD;
     card->host = host;
-    rt_memcpy(card->resp_cid, resp, sizeof(card->resp_cid));
+    memcpy(card->resp_cid, resp, sizeof(card->resp_cid));
 
     /*
      * For native busses:  get card RCA and quit open drain mode.

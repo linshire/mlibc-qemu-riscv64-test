@@ -26,7 +26,7 @@ void bzero(void* s, size_t n)
 
 void bcopy(const void* src, void* dest, size_t n)
 {
-    rt_memcpy(dest, src, n);
+    memcpy(dest, src, n);
 }
 
 int bcmp(const void* s1, const void* s2, size_t n)
@@ -175,7 +175,7 @@ char *strndup(const char *s, size_t size)
     char *news = (char *)malloc(nsize + 1);
     if (news)
     {
-        rt_memcpy(news, s, nsize);
+        memcpy(news, s, nsize);
         news[nsize] = '\0';
     }
 

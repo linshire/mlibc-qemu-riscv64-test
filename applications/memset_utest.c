@@ -77,4 +77,4 @@ static void testcase(void)
 {
     UTEST_UNIT_RUN(test_memset_base);
 }
-UTEST_TC_EXPORT(testcase, "NOT ALIGN(RT_ALIGN_SIZE) memset test", utest_tc_init, utest_tc_cleanup, 10);
+UTEST_TC_EXPORT(testcase, "memset test", utest_tc_init, utest_tc_cleanup, 10);

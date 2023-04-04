@@ -406,7 +406,7 @@ static rt_err_t at_cmd_get_name(const char *cmd_buffer, char *cmd_name)
                 || (*(cmd_buffer + i) >= AT_CMD_CHAR_0 && *(cmd_buffer + i) <= AT_CMD_CHAR_9))
         {
             cmd_name_len = i;
-            rt_memcpy(cmd_name, cmd_buffer, cmd_name_len);
+            memcpy(cmd_name, cmd_buffer, cmd_name_len);
             *(cmd_name + cmd_name_len) = '\0';
 
             return RT_EOK;
@@ -600,7 +600,7 @@ int at_server_init(void)
     }
 
     at_server_local->get_char = at_server_getchar;
-    rt_memcpy(at_server_local->end_mark, AT_CMD_END_MARK, sizeof(AT_CMD_END_MARK));
+    memcpy(at_server_local->end_mark, AT_CMD_END_MARK, sizeof(AT_CMD_END_MARK));
 
     at_server_local->parser_entry = server_parser;
     at_server_local->parser = rt_thread_create("at_svr",

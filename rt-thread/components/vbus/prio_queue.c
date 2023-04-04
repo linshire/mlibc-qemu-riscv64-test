@@ -148,7 +148,7 @@ rt_err_t rt_prio_queue_push(struct rt_prio_queue *que,
     if (item == RT_NULL)
         return -RT_ENOMEM;
 
-    rt_memcpy(item+1, data, que->item_sz);
+    memcpy(item+1, data, que->item_sz);
     item->next = RT_NULL;
 
     level = rt_hw_interrupt_disable();
@@ -229,7 +229,7 @@ rt_err_t rt_prio_queue_pop(struct rt_prio_queue *que,
 
     rt_hw_interrupt_enable(level);
 
-    rt_memcpy(data, item+1, que->item_sz);
+    memcpy(data, item+1, que->item_sz);
     rt_mp_free(item);
 
     return RT_EOK;
