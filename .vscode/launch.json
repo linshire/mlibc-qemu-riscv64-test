@@ -1,7 +1,4 @@
 {
-    // 使用 IntelliSense 了解相关属性。 
-    // 悬停以查看现有属性的描述。
-    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
 
@@ -16,13 +13,15 @@
             "program": "${workspaceFolder}/rtthread.elf",
             "miDebuggerPath": "/home/linshire/toolchains/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-gdb",
             "valuesFormatting": "parseText",
-            "miDebuggerServerAddress": "localhost:1234"
-            
-            
-            
+            "miDebuggerServerAddress": "localhost:1234",
+            "setupCommands": [
+                {
+                  "text":   "shell qemu-system-riscv64 -nographic -machine virt -m 256M -kernel rtthread.bin -s -S -drive if=none,file=sd.bin,format=raw,id=blk0 -device virtio-blk-device,drive=blk0,bus=virtio-mmio-bus.0 -netdev user,id=tap0 -device virtio-net-device,netdev=tap0,bus=virtio-mmio-bus.1 -device virtio-serial-device -chardev socket,host=127.0.0.1,port=4321,server=on,wait=off,telnet=on,id=console0 -device virtserialport,chardev=console0"
+                }
+            ],
         },
         {
-            "name": "DebugLinux",
+            "name": "Debug @Linux",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/rtthread.elf",
@@ -38,9 +37,9 @@
             //     {
             //         "text": "cd ${workspaceRoot}"
             //     },
-            //     // {
-            //     //     "text": "shell qemu-dbg.sh"
-            //     // },
+            //     {
+            //         "text": "shell qemu-dbg.sh"
+            //     },
             //     {
             //         "text": "target remote localhost:1234"
             //     },
@@ -55,9 +54,7 @@
             //"launchCompleteCommand": "exec-run",
                 "MIMode": "gdb",
                 "miDebuggerPath": "/home/linshire/toolchains/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-gdb"
-
         }
-    
 
     ]
 }
