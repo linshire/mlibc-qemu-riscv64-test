@@ -7,12 +7,14 @@
 
         {
             "name": "qemu-riscv64",
-            "type": "gdb",
+            "type": "cppdbg",
             "request": "launch",
-            "target": "./rtthread.bin",
             "cwd": "${workspaceRoot}",
+            "stopAtEntry": true,
+            "args": [],
+            "MIMode": "gdb",
             "program": "${workspaceFolder}/rtthread.elf",
-            "gdbpath": "/home/linshire/toolchains/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-gdb",
+            "miDebuggerPath": "/home/linshire/toolchains/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-linux-ubuntu14/bin/riscv64-unknown-elf-gdb",
             "valuesFormatting": "parseText",
             "miDebuggerServerAddress": "localhost:1234"
             
