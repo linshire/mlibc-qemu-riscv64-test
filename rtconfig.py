@@ -18,7 +18,7 @@ else:
     exit(0)
 
 
-CFLAGS_MLIBC_TEST =  " -nostdinc" +" -nostdinc " + " -ffreestanding " #+ " -Wl,-wrap=memset "
+CFLAGS_MLIBC_TEST =  " -nostdinc" +" -nostdinc " + " -ffreestanding " + " -g " #+ " -Wl,-wrap=memset "
 
 BUILD = 'debug'
 
