@@ -21,7 +21,7 @@
  * 2021-12-20     Meco Man     implement rt_strcpy()
  * 2022-01-07     Gabriel      add __on_rt_assert_hook
  * 2022-06-04     Meco Man     remove strnlen
- * 2022-08-24     Yunjie       make rt_memset word-independent to adapt to ti c28x (16bit word)
+ * 2022-08-24     Yunjie       make memset word-independent to adapt to ti c28x (16bit word)
  * 2022-08-30     Yunjie       make rt_vsnprintf adapt to ti c28x (16bit int)
  * 2023-02-02     Bernard      add Smart ID for logo version show
  */
@@ -192,7 +192,7 @@ RTM_EXPORT(_rt_errno);
  *
  * @return The address of source memory.
  */
-rt_weak void *rt_memset(void *s, int c, rt_ubase_t count)
+rt_weak void *memset(void *s, int c, rt_ubase_t count)
 {
 #ifdef RT_KSERVICE_USING_TINY_SIZE
     char *xs = (char *)s;
@@ -259,7 +259,7 @@ rt_weak void *rt_memset(void *s, int c, rt_ubase_t count)
 #undef TOO_SMALL
 #endif /* RT_KSERVICE_USING_TINY_SIZE */
 }
-RTM_EXPORT(rt_memset);
+RTM_EXPORT(memset);
 
 /**
  * This function will copy memory content from source address to destination address.
@@ -272,7 +272,7 @@ RTM_EXPORT(rt_memset);
  *
  * @return The address of destination memory
  */
-rt_weak void *rt_memcpy(void *dst, const void *src, rt_ubase_t count)
+rt_weak void *memcpy(void *dst, const void *src, rt_ubase_t count)
 {
 #ifdef RT_KSERVICE_USING_TINY_SIZE
     char *tmp = (char *)dst, *s = (char *)src;
@@ -343,7 +343,7 @@ rt_weak void *rt_memcpy(void *dst, const void *src, rt_ubase_t count)
 #undef TOO_SMALL
 #endif /* RT_KSERVICE_USING_TINY_SIZE */
 }
-RTM_EXPORT(rt_memcpy);
+RTM_EXPORT(memcpy);
 
 /**
  * This function will move memory content from source address to destination
@@ -657,7 +657,7 @@ char *rt_strdup(const char *s)
         return RT_NULL;
     }
 
-    rt_memcpy(tmp, s, len);
+    memcpy(tmp, s, len);
 
     return tmp;
 }
@@ -1735,7 +1735,7 @@ rt_weak void *rt_calloc(rt_size_t count, rt_size_t size)
     /* zero the memory */
     if (p)
     {
-        rt_memset(p, 0, count * size);
+        memset(p, 0, count * size);
     }
     return p;
 }

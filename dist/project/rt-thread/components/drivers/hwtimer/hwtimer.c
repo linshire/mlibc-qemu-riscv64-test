@@ -170,7 +170,7 @@ static rt_ssize_t rt_hwtimer_read(struct rt_device *dev, rt_off_t pos, void *buf
     tv.sec = (rt_int32_t)t;
     tv.usec = (rt_int32_t)((t - tv.sec) * 1000000);
     size = size > sizeof(tv)? sizeof(tv) : size;
-    rt_memcpy(buffer, &tv, size);
+    memcpy(buffer, &tv, size);
 
     return size;
 }

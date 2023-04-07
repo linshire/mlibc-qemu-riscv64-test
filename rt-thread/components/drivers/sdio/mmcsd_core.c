@@ -92,8 +92,8 @@ rt_int32_t mmcsd_send_cmd(struct rt_mmcsd_host *host,
 {
     struct rt_mmcsd_req req;
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
-    rt_memset(cmd->resp, 0, sizeof(cmd->resp));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(cmd->resp, 0, sizeof(cmd->resp));
     cmd->retries = retries;
 
     req.cmd = cmd;
@@ -115,7 +115,7 @@ rt_int32_t mmcsd_go_idle(struct rt_mmcsd_host *host)
         rt_thread_mdelay(1);
     }
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = GO_IDLE_STATE;
     cmd.arg = 0;
@@ -141,7 +141,7 @@ rt_int32_t mmcsd_spi_read_ocr(struct rt_mmcsd_host *host,
     struct rt_mmcsd_cmd cmd;
     rt_int32_t err;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SPI_READ_OCR;
     cmd.arg = high_capacity ? (1 << 30) : 0;
@@ -159,7 +159,7 @@ rt_int32_t mmcsd_all_get_cid(struct rt_mmcsd_host *host, rt_uint32_t *cid)
     rt_int32_t err;
     struct rt_mmcsd_cmd cmd;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = ALL_SEND_CID;
     cmd.arg = 0;
@@ -169,7 +169,7 @@ rt_int32_t mmcsd_all_get_cid(struct rt_mmcsd_host *host, rt_uint32_t *cid)
     if (err)
         return err;
 
-    rt_memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
+    memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
 
     return 0;
 }
@@ -186,7 +186,7 @@ rt_int32_t mmcsd_get_cid(struct rt_mmcsd_host *host, rt_uint32_t *cid)
     {
         if (!host->card)
             return -RT_ERROR;
-        rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+        memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
         cmd.cmd_code = SEND_CID;
         cmd.arg = host->card->rca << 16;
@@ -195,7 +195,7 @@ rt_int32_t mmcsd_get_cid(struct rt_mmcsd_host *host, rt_uint32_t *cid)
         if (err)
             return err;
 
-        rt_memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
+        memcpy(cid, cmd.resp, sizeof(rt_uint32_t) * 4);
 
         return 0;
     }
@@ -208,9 +208,9 @@ rt_int32_t mmcsd_get_cid(struct rt_mmcsd_host *host, rt_uint32_t *cid)
         return -RT_ENOMEM;
     }
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -262,7 +262,7 @@ rt_int32_t mmcsd_get_csd(struct rt_mmcsd_card *card, rt_uint32_t *csd)
 
     if (!controller_is_spi(card->host))
     {
-        rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+        memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
         cmd.cmd_code = SEND_CSD;
         cmd.arg = card->rca << 16;
@@ -271,7 +271,7 @@ rt_int32_t mmcsd_get_csd(struct rt_mmcsd_card *card, rt_uint32_t *csd)
         if (err)
             return err;
 
-        rt_memcpy(csd, cmd.resp, sizeof(rt_uint32_t) * 4);
+        memcpy(csd, cmd.resp, sizeof(rt_uint32_t) * 4);
 
         return 0;
     }
@@ -284,9 +284,9 @@ rt_int32_t mmcsd_get_csd(struct rt_mmcsd_card *card, rt_uint32_t *csd)
         return -RT_ENOMEM;
     }
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -335,7 +335,7 @@ static rt_int32_t _mmcsd_select_card(struct rt_mmcsd_host *host,
     rt_int32_t err;
     struct rt_mmcsd_cmd cmd;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SELECT_CARD;
 
@@ -372,7 +372,7 @@ rt_int32_t mmcsd_spi_use_crc(struct rt_mmcsd_host *host, rt_int32_t use_crc)
     struct rt_mmcsd_cmd cmd;
     rt_int32_t err;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SPI_CRC_ON_OFF;
     cmd.flags = RESP_SPI_R1;
@@ -700,7 +700,7 @@ void mmcsd_detect(void *param)
 
 void mmcsd_host_init(struct rt_mmcsd_host *host)
 {
-    rt_memset(host, 0, sizeof(struct rt_mmcsd_host));
+    memset(host, 0, sizeof(struct rt_mmcsd_host));
     strncpy(host->name, "sd", sizeof(host->name) - 1);
     host->max_seg_size = 65535;
     host->max_dma_segs = 1;

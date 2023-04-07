@@ -142,7 +142,7 @@ int pthread_mutex_destroy(pthread_mutex_t *mutex)
     if (mutex->lock.owner != RT_NULL)
         return EBUSY;
 
-    rt_memset(mutex, 0, sizeof(pthread_mutex_t));
+    memset(mutex, 0, sizeof(pthread_mutex_t));
     mutex->attr = -1;
 
     return 0;

@@ -222,7 +222,7 @@ int lwip_netdev_ping(struct netdev *netif, const char *host, size_t data_len,
     RT_ASSERT(host);
     RT_ASSERT(ping_resp);
 
-    rt_memset(&hint, 0x00, sizeof(hint));
+    memset(&hint, 0x00, sizeof(hint));
     /* convert URL to IP */
     if (lwip_getaddrinfo(host, RT_NULL, &hint, &res) != 0)
     {

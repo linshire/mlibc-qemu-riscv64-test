@@ -694,7 +694,7 @@ static rt_err_t rt_serial_tx_enable(struct rt_device        *dev,
 
         tx_fifo->activated = RT_FALSE;
         tx_fifo->put_size = 0;
-        rt_memset(&tx_fifo->rb, RT_NULL, sizeof(tx_fifo->rb));
+        memset(&tx_fifo->rb, RT_NULL, sizeof(tx_fifo->rb));
         rt_completion_init(&(tx_fifo->tx_cpt));
         dev->open_flag |= RT_SERIAL_TX_BLOCKING;
 
@@ -890,7 +890,7 @@ static rt_err_t rt_serial_tx_disable(struct rt_device        *dev,
     rt_free(tx_fifo);
     serial->serial_tx = RT_NULL;
 
-    rt_memset(&serial->rx_notify, 0, sizeof(struct rt_device_notify));
+    memset(&serial->rx_notify, 0, sizeof(struct rt_device_notify));
 
     return RT_EOK;
 }
@@ -1146,7 +1146,7 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
         case RT_DEVICE_CTRL_NOTIFY_SET:
             if (args)
             {
-                rt_memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
+                memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
             }
             break;
 
@@ -1285,7 +1285,7 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
                     char row_s[4], col_s[4];
                     char *p;
 
-                    rt_memset(_tio_buf, 0, _TIO_BUFLEN);
+                    memset(_tio_buf, 0, _TIO_BUFLEN);
 
                     /* send the command to terminal for getting the window size of the terminal */
                     rt_kprintf("\033[18t");
@@ -1313,8 +1313,8 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
                     }
 
                     /* interpreting data eg: "\033[8;1;15t" which means row is 1 and col is 15 (unit: size of ONE character) */
-                    rt_memset(row_s,0,4);
-                    rt_memset(col_s,0,4);
+                    memset(row_s,0,4);
+                    memset(col_s,0,4);
                     cnt1 = 0;
                     while(_tio_buf[cnt1] != ';' && cnt1 < _TIO_BUFLEN)
                     {

@@ -57,7 +57,7 @@ static void virtio_console_send_ctrl(struct virtio_console_device *virtio_consol
 
     id = queue_ctrl_tx->avail->idx % queue_ctrl_tx->num;
 
-    rt_memcpy(&virtio_console_dev->info[id].tx_ctrl, ctrl, sizeof(struct virtio_console_control));
+    memcpy(&virtio_console_dev->info[id].tx_ctrl, ctrl, sizeof(struct virtio_console_control));
 
     virtio_free_desc(virtio_dev, VIRTIO_CONSOLE_QUEUE_CTRL_TX, id);
 
@@ -412,7 +412,7 @@ static rt_err_t virtio_console_port_control(rt_device_t dev, int cmd, void *args
             status = -RT_ERROR;
             break;
         }
-        rt_memcpy(&port_dev->rx_notify_helper, args, sizeof(port_dev->rx_notify_helper));
+        memcpy(&port_dev->rx_notify_helper, args, sizeof(port_dev->rx_notify_helper));
         break;
     case RT_DEVICE_CTRL_CLR_INT:
         /* Disable RX */

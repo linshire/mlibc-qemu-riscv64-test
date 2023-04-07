@@ -108,7 +108,7 @@ struct rt_hwcrypto_ctx *rt_hwcrypto_ctx_create(struct rt_hwcrypto_device *device
     {
         return ctx;
     }
-    rt_memset(ctx, 0, obj_size);
+    memset(ctx, 0, obj_size);
     /* Init context */
     err = rt_hwcrypto_ctx_init(ctx, device, type);
     if (err != RT_EOK)
@@ -233,7 +233,7 @@ rt_err_t rt_hwcrypto_register(struct rt_hwcrypto_device *device, const char *nam
     RT_ASSERT(device->ops->copy != RT_NULL);
     RT_ASSERT(device->ops->reset != RT_NULL);
 
-    rt_memset(&device->parent, 0, sizeof(struct rt_device));
+    memset(&device->parent, 0, sizeof(struct rt_device));
 #ifdef RT_USING_DEVICE_OPS
     device->parent.ops = &hwcrypto_ops;
 #else

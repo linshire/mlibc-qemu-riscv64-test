@@ -134,7 +134,7 @@ static int _map_one_page(struct rt_aspace *aspace, void *va, void *pa,
 
         if (mmu_l2)
         {
-            rt_memset(mmu_l2, 0, PAGE_SIZE);
+            memset(mmu_l2, 0, PAGE_SIZE);
             rt_hw_cpu_dcache_clean(mmu_l2, PAGE_SIZE);
             *mmu_l1 = COMBINEPTE((rt_size_t)VPN_TO_PPN(mmu_l2, PV_OFFSET),
                                  PAGE_DEFAULT_ATTR_NEXT);
@@ -158,7 +158,7 @@ static int _map_one_page(struct rt_aspace *aspace, void *va, void *pa,
 
         if (mmu_l3)
         {
-            rt_memset(mmu_l3, 0, PAGE_SIZE);
+            memset(mmu_l3, 0, PAGE_SIZE);
             rt_hw_cpu_dcache_clean(mmu_l3, PAGE_SIZE);
             *(mmu_l2 + l2_off) =
                 COMBINEPTE((rt_size_t)VPN_TO_PPN(mmu_l3, PV_OFFSET),

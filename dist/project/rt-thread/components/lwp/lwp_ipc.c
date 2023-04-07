@@ -921,7 +921,7 @@ int lwp_channel_open(int fdt_type, const char *name, int flags)
     ch = rt_raw_channel_open(name, flags);
     if (ch)
     {
-        rt_memset(d->vnode, 0, sizeof(struct dfs_fnode));
+        memset(d->vnode, 0, sizeof(struct dfs_fnode));
         rt_list_init(&d->vnode->list);
         d->vnode->type = FT_USER;
         d->vnode->path = NULL;

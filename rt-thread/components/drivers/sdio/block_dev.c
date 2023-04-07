@@ -111,7 +111,7 @@ rt_int32_t mmcsd_num_wr_blocks(struct rt_mmcsd_card *card)
     struct rt_mmcsd_data data;
     rt_uint32_t timeout_us;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = APP_CMD;
     cmd.arg = card->rca << 16;
@@ -123,13 +123,13 @@ rt_int32_t mmcsd_num_wr_blocks(struct rt_mmcsd_card *card)
     if (!controller_is_spi(card->host) && !(cmd.resp[0] & R1_APP_CMD))
         return -RT_ERROR;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_APP_SEND_NUM_WR_BLKS;
     cmd.arg = 0;
     cmd.flags = RESP_SPI_R1 | RESP_R1 | CMD_ADTC;
 
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     data.timeout_ns = card->tacc_ns * 100;
     data.timeout_clks = card->tacc_clks * 100;
@@ -149,7 +149,7 @@ rt_int32_t mmcsd_num_wr_blocks(struct rt_mmcsd_card *card)
     data.flags = DATA_DIR_READ;
     data.buf = &blocks;
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -175,10 +175,10 @@ static rt_err_t rt_mmcsd_req_blk(struct rt_mmcsd_card *card,
     rt_uint32_t r_cmd, w_cmd;
 
     mmcsd_host_lock(host);
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
-    rt_memset(&stop, 0, sizeof(struct rt_mmcsd_cmd));
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&stop, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
     req.cmd = &cmd;
     req.data = &data;
 
@@ -270,10 +270,10 @@ static rt_err_t rt_mmcsd_control(rt_device_t dev, int cmd, void *args)
     switch (cmd)
     {
     case RT_DEVICE_CTRL_BLK_GETGEOME:
-        rt_memcpy(args, &blk_dev->geometry, sizeof(struct rt_device_blk_geometry));
+        memcpy(args, &blk_dev->geometry, sizeof(struct rt_device_blk_geometry));
         break;
     case RT_DEVICE_CTRL_BLK_PARTITION:
-        rt_memcpy(args, &blk_dev->part, sizeof(struct dfs_partition));
+        memcpy(args, &blk_dev->part, sizeof(struct dfs_partition));
     default:
         break;
     }

@@ -67,7 +67,7 @@ rt_int32_t sdio_io_send_op_cond(struct rt_mmcsd_host *host,
 
     RT_ASSERT(host != RT_NULL);
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_IO_SEND_OP_COND;
     cmd.arg = ocr;
@@ -129,7 +129,7 @@ rt_int32_t sdio_io_rw_direct(struct rt_mmcsd_card *card,
     if (reg_addr & ~SDIO_ARG_CMD53_REG_MASK)
         return -RT_ERROR;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SD_IO_RW_DIRECT;
     cmd.arg = rw ? SDIO_ARG_CMD52_WRITE : SDIO_ARG_CMD52_READ;
@@ -186,9 +186,9 @@ rt_int32_t sdio_io_rw_extended(struct rt_mmcsd_card *card,
     if (addr & ~SDIO_ARG_CMD53_REG_MASK)
         return -RT_ERROR;
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -420,7 +420,7 @@ static rt_int32_t sdio_read_cccr(struct rt_mmcsd_card *card)
     rt_int32_t cccr_version;
     rt_uint8_t data;
 
-    rt_memset(&card->cccr, 0, sizeof(struct rt_sdio_cccr));
+    memset(&card->cccr, 0, sizeof(struct rt_sdio_cccr));
 
     data = sdio_io_readb(card->sdio_function[0], SDIO_REG_CCCR_CCCR_REV, &ret);
     if (ret)
@@ -703,7 +703,7 @@ static rt_int32_t sdio_initialize_function(struct rt_mmcsd_card *card,
         ret = -RT_ENOMEM;
         goto err;
     }
-    rt_memset(func, 0, sizeof(struct rt_sdio_function));
+    memset(func, 0, sizeof(struct rt_sdio_function));
 
     func->card = card;
     func->num = func_num;
@@ -851,7 +851,7 @@ static rt_int32_t sdio_init_card(struct rt_mmcsd_host *host, rt_uint32_t ocr)
         err = -RT_ENOMEM;
         goto err;
     }
-    rt_memset(card, 0, sizeof(struct rt_mmcsd_card));
+    memset(card, 0, sizeof(struct rt_mmcsd_card));
 
     card->card_type = CARD_TYPE_SDIO;
     card->sdio_function_num = function_num;
@@ -865,7 +865,7 @@ static rt_int32_t sdio_init_card(struct rt_mmcsd_host *host, rt_uint32_t ocr)
         err = -RT_ENOMEM;
         goto err1;
     }
-    rt_memset(card->sdio_function[0], 0, sizeof(struct rt_sdio_function));
+    memset(card->sdio_function[0], 0, sizeof(struct rt_sdio_function));
     card->sdio_function[0]->card = card;
     card->sdio_function[0]->num = 0;
 

@@ -179,7 +179,7 @@ static rt_err_t _thread_init(struct rt_thread *thread,
     thread->stack_size = stack_size;
 
     /* init thread stack */
-    rt_memset(thread->stack_addr, '#', thread->stack_size);
+    memset(thread->stack_addr, '#', thread->stack_size);
 #ifdef ARCH_CPU_STACK_GROWS_UPWARD
     thread->sp = (void *)rt_hw_stack_init(thread->entry, thread->parameter,
                                           (void *)((char *)thread->stack_addr),
@@ -258,11 +258,11 @@ static rt_err_t _thread_init(struct rt_thread *thread,
 #ifdef RT_USING_SMART
     thread->lwp = RT_NULL;
     rt_list_init(&(thread->sibling));
-    rt_memset(&thread->signal, 0, sizeof(lwp_sigset_t));
-    rt_memset(&thread->signal_mask, 0, sizeof(lwp_sigset_t));
+    memset(&thread->signal, 0, sizeof(lwp_sigset_t));
+    memset(&thread->signal_mask, 0, sizeof(lwp_sigset_t));
     thread->signal_mask_bak = 0;
     thread->signal_in_process = 0;
-    rt_memset(&thread->user_ctx, 0, sizeof thread->user_ctx);
+    memset(&thread->user_ctx, 0, sizeof thread->user_ctx);
 #endif
 
 #ifdef RT_USING_CPU_USAGE

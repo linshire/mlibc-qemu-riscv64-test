@@ -312,7 +312,7 @@ rt_err_t rt_wlan_prot_event_unregister(struct rt_wlan_prot *prot, rt_wlan_prot_e
         if ((prot_event_tab[event][i].handler != RT_NULL) &&
                 (prot_event_tab[event][i].prot == prot))
         {
-            rt_memset(&prot_event_tab[event][i], 0, sizeof(struct rt_wlan_prot_event_des));
+            memset(&prot_event_tab[event][i], 0, sizeof(struct rt_wlan_prot_event_des));
             return RT_EOK;
         }
     }

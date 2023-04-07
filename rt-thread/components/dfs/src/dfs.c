@@ -60,11 +60,11 @@ int dfs_init(void)
     dfs_fnode_mgr_init();
 
     /* clear filesystem operations table */
-    rt_memset((void *)filesystem_operation_table, 0, sizeof(filesystem_operation_table));
+    memset((void *)filesystem_operation_table, 0, sizeof(filesystem_operation_table));
     /* clear filesystem table */
-    rt_memset(filesystem_table, 0, sizeof(filesystem_table));
+    memset(filesystem_table, 0, sizeof(filesystem_table));
     /* clean fd table */
-    rt_memset(&_fdtab, 0, sizeof(_fdtab));
+    memset(&_fdtab, 0, sizeof(_fdtab));
 
     /* create device filesystem lock */
     rt_mutex_init(&fslock, "fslock", RT_IPC_FLAG_PRIO);
@@ -72,7 +72,7 @@ int dfs_init(void)
 
 #ifdef DFS_USING_WORKDIR
     /* set current working directory */
-    rt_memset(working_directory, 0, sizeof(working_directory));
+    memset(working_directory, 0, sizeof(working_directory));
     working_directory[0] = '/';
 #endif
 

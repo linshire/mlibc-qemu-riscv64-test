@@ -72,7 +72,7 @@ static void netif_is_ready(struct rt_work *work, void *parameter)
         rt_timer_start(&lwip_prot->timer);
         goto exit;
     }
-    rt_memset(&ip_addr, 0, sizeof(ip_addr));
+    memset(&ip_addr, 0, sizeof(ip_addr));
 #if LWIP_IPV4 && LWIP_IPV6
     if (eth_dev->netif->ip_addr.type == IPADDR_TYPE_V4)
     {
@@ -106,16 +106,16 @@ static void netif_is_ready(struct rt_work *work, void *parameter)
         rt_timer_start(&lwip_prot->timer);
         goto exit;
     }
-    rt_memset(str, 0, IPADDR_STRLEN_MAX);
+    memset(str, 0, IPADDR_STRLEN_MAX);
     rt_enter_critical();
-    rt_memcpy(str, ipaddr_ntoa(&(eth_dev->netif->ip_addr)), IPADDR_STRLEN_MAX);
+    memcpy(str, ipaddr_ntoa(&(eth_dev->netif->ip_addr)), IPADDR_STRLEN_MAX);
     rt_exit_critical();
     LOG_I("Got IP address : %s", str);
 exit:
     level = rt_hw_interrupt_disable();
     if (work)
     {
-        rt_memset(work, 0, sizeof(struct rt_work));
+        memset(work, 0, sizeof(struct rt_work));
     }
     rt_hw_interrupt_enable(level);
 }
@@ -142,7 +142,7 @@ static void timer_callback(void *parameter)
         if (rt_workqueue_dowork(workqueue, work) != RT_EOK)
         {
             level = rt_hw_interrupt_disable();
-            rt_memset(work, 0, sizeof(struct rt_work));
+            memset(work, 0, sizeof(struct rt_work));
             rt_hw_interrupt_enable(level);
         }
     }
@@ -183,8 +183,8 @@ static void netif_set_connected(void *parameter)
             {
                 char netif_name[RT_NAME_MAX];
 
-                rt_memset(netif_name, 0, sizeof(netif_name));
-                rt_memcpy(netif_name, eth_dev->netif->name, sizeof(eth_dev->netif->name));
+                memset(netif_name, 0, sizeof(netif_name));
+                memcpy(netif_name, eth_dev->netif->name, sizeof(eth_dev->netif->name));
                 dhcpd_start(netif_name);
             }
 #endif
@@ -205,8 +205,8 @@ static void netif_set_connected(void *parameter)
 #ifdef LWIP_USING_DHCPD
         {
             char netif_name[RT_NAME_MAX];
-            rt_memset(netif_name, 0, sizeof(netif_name));
-            rt_memcpy(netif_name, lwip_prot->eth.netif->name, sizeof(lwip_prot->eth.netif->name));
+            memset(netif_name, 0, sizeof(netif_name));
+            memcpy(netif_name, lwip_prot->eth.netif->name, sizeof(lwip_prot->eth.netif->name));
             dhcpd_stop(netif_name);
         }
 #endif
@@ -456,7 +456,7 @@ static struct rt_wlan_prot *rt_wlan_lwip_protocol_register(struct rt_wlan_prot *
         rt_device_close((rt_device_t)wlan);
         return RT_NULL;
     }
-    rt_memset(lwip_prot, 0, sizeof(struct lwip_prot_des));
+    memset(lwip_prot, 0, sizeof(struct lwip_prot_des));
 
     eth = &lwip_prot->eth;
 
@@ -483,7 +483,7 @@ static struct rt_wlan_prot *rt_wlan_lwip_protocol_register(struct rt_wlan_prot *
         rt_free(lwip_prot);
         return RT_NULL;
     }
-    rt_memcpy(&lwip_prot->prot, prot, sizeof(struct rt_wlan_prot));
+    memcpy(&lwip_prot->prot, prot, sizeof(struct rt_wlan_prot));
     rt_sprintf(timer_name, "timer_%s", eth_name);
     rt_timer_init(&lwip_prot->timer, timer_name, timer_callback, wlan, rt_tick_from_millisecond(1000),
                     RT_TIMER_FLAG_SOFT_TIMER | RT_TIMER_FLAG_ONE_SHOT);
@@ -510,8 +510,8 @@ static void rt_wlan_lwip_protocol_unregister(struct rt_wlan_prot *prot, struct r
 #ifdef LWIP_USING_DHCPD
     {
         char netif_name[RT_NAME_MAX];
-        rt_memset(netif_name, 0, sizeof(netif_name));
-        rt_memcpy(netif_name, lwip_prot->eth.netif->name, sizeof(lwip_prot->eth.netif->name));
+        memset(netif_name, 0, sizeof(netif_name));
+        memcpy(netif_name, lwip_prot->eth.netif->name, sizeof(lwip_prot->eth.netif->name));
         dhcpd_stop(netif_name);
     }
 #endif
@@ -535,7 +535,7 @@ int rt_wlan_lwip_init(void)
     static struct rt_wlan_prot prot;
     rt_wlan_prot_event_t event;
 
-    rt_memset(&prot, 0, sizeof(prot));
+    memset(&prot, 0, sizeof(prot));
     rt_strncpy(&prot.name[0], RT_WLAN_PROT_LWIP_NAME, RT_WLAN_PROT_NAME_LEN);
     prot.ops = &ops;
 

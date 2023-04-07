@@ -32,7 +32,7 @@ struct rt_link_receive_buffer *rt_link_hw_buffer_init(void *parameter)
     rx_buffer = rt_malloc(sizeof(struct rt_link_receive_buffer));
     if (rx_buffer != RT_NULL)
     {
-        rt_memset(rx_buffer, 0, sizeof(struct rt_link_receive_buffer));
+        memset(rx_buffer, 0, sizeof(struct rt_link_receive_buffer));
         rx_buffer->read_point = rx_buffer->data;
         rx_buffer->write_point = rx_buffer->data;
         rx_buffer->end_point = rx_buffer->data + RT_LINK_RECEIVE_BUFFER_LENGTH; /* Point to memory that has no access rights */
@@ -60,15 +60,15 @@ static rt_ssize_t rt_link_hw_buffer_write(void *data, rt_size_t count)
         count = count > surplus ? surplus : count;
         if (count >= w2end)
         {
-            rt_memcpy(rx_buffer->write_point, data, w2end);
+            memcpy(rx_buffer->write_point, data, w2end);
             rx_buffer->write_point = rx_buffer->data;
 
-            rt_memcpy(rx_buffer->write_point, (rt_uint8_t *)data + w2end, (count - w2end));
+            memcpy(rx_buffer->write_point, (rt_uint8_t *)data + w2end, (count - w2end));
             rx_buffer->write_point += (count - w2end);
         }
         else
         {
-            rt_memcpy(rx_buffer->write_point, data, count);
+            memcpy(rx_buffer->write_point, data, count);
             rx_buffer->write_point += count;
         }
     }
@@ -76,7 +76,7 @@ static rt_ssize_t rt_link_hw_buffer_write(void *data, rt_size_t count)
     {
         surplus = rx_buffer->read_point - rx_buffer->write_point;
         count = count > surplus ? surplus : count;
-        rt_memcpy(rx_buffer->write_point, data, count);
+        memcpy(rx_buffer->write_point, data, count);
         rx_buffer->write_point += count;
     }
     return count;
@@ -131,12 +131,12 @@ void rt_link_hw_copy(rt_uint8_t *dst, rt_uint8_t *src, rt_size_t count)
     {
         rt_size_t offset = 0;
         offset = rx_buffer->end_point - src;
-        rt_memcpy(dst, src, offset);
-        rt_memcpy(dst + offset,  rx_buffer->data, pointer - rx_buffer->end_point);
+        memcpy(dst, src, offset);
+        memcpy(dst + offset,  rx_buffer->data, pointer - rx_buffer->end_point);
     }
     else
     {
-        rt_memcpy(dst, src, count);
+        memcpy(dst, src, count);
     }
 }
 

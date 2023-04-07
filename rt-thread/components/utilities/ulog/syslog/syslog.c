@@ -49,7 +49,7 @@ void openlog(const char *ident, int option, int facility)
 
     level = rt_hw_interrupt_disable();
 
-    rt_memset(local_ident, 0, sizeof(local_ident));
+    memset(local_ident, 0, sizeof(local_ident));
     if (ident)
     {
         rt_strncpy(local_ident, ident, ULOG_SYSLOG_IDENT_MAX_LEN);

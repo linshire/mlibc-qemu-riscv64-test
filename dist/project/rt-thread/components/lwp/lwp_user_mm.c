@@ -515,7 +515,7 @@ void *lwp_mmap2(void *addr, size_t length, int prot, int flags, int fd,
         {
             if ((flags & MAP_ANONYMOUS) != 0)
             {
-                rt_memset(ret, 0, length);
+                memset(ret, 0, length);
             }
         }
         else
@@ -703,7 +703,7 @@ size_t lwp_data_get(struct rt_lwp *lwp, void *dst, void *src, size_t size)
             break;
         }
         tmp_src = (void *)((char *)tmp_src - PV_OFFSET);
-        rt_memcpy(tmp_dst, tmp_src, len);
+        memcpy(tmp_dst, tmp_src, len);
         tmp_dst = (void *)((char *)tmp_dst + len);
         addr_start = (void *)((char *)addr_start + len);
         size -= len;
@@ -743,7 +743,7 @@ size_t lwp_data_put(struct rt_lwp *lwp, void *dst, void *src, size_t size)
             break;
         }
         tmp_dst = (void *)((char *)tmp_dst - PV_OFFSET);
-        rt_memcpy(tmp_dst, tmp_src, len);
+        memcpy(tmp_dst, tmp_src, len);
         tmp_src = (void *)((char *)tmp_src + len);
         addr_start = (void *)((char *)addr_start + len);
         size -= len;

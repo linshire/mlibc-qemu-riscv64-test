@@ -403,7 +403,7 @@ static rt_err_t _ep_out_handler(ufunction_t func, rt_size_t size)
 
     if(size != 0)
     {
-        rt_memcpy((void *)&report,(void*)data->ep_out->buffer,size);
+        memcpy((void *)&report,(void*)data->ep_out->buffer,size);
         report.size = size-1;
         rt_mq_send(&data->hid_mq,(void *)&report,sizeof(report));
     }
@@ -601,7 +601,7 @@ static rt_ssize_t _hid_write(rt_device_t dev, rt_off_t pos, const void *buffer, 
     if (hiddev->func->device->state == USB_STATE_CONFIGURED)
     {
         report.report_id = pos;
-        rt_memcpy((void *)report.report,(void *)buffer,size);
+        memcpy((void *)report.report,(void *)buffer,size);
         report.size = size;
         hiddev->ep_in->request.buffer = (void *)&report;
         hiddev->ep_in->request.size = (size+1) > 64 ? 64 : size+1;
@@ -650,7 +650,7 @@ static void rt_usb_hid_init(struct ufunction *func)
 {
     struct hid_s *hiddev;
     hiddev = (struct hid_s *)func->user_data;
-    rt_memset(&hiddev->parent, 0, sizeof(hiddev->parent));
+    memset(&hiddev->parent, 0, sizeof(hiddev->parent));
 
 #ifdef RT_USING_DEVICE_OPS
     hiddev->parent.ops   = &hid_device_ops;
@@ -702,7 +702,7 @@ ufunction_t rt_usbd_function_hid_create(udevice_t device)
 
     /* allocate memory for cdc vcom data */
     data = (struct hid_s*)rt_malloc(sizeof(struct hid_s));
-    rt_memset(data, 0, sizeof(struct hid_s));
+    memset(data, 0, sizeof(struct hid_s));
     func->user_data = (void*)data;
 
     /* create an interface object */

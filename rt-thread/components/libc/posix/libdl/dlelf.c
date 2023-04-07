@@ -103,12 +103,12 @@ rt_err_t dlmodule_load_shared_object(struct rt_dlmodule* module, void *module_pt
     module->mem_size = module_size;
 
     /* zero all space */
-    rt_memset(module->mem_space, 0, module_size);
+    memset(module->mem_space, 0, module_size);
     for (index = 0; index < elf_module->e_phnum; index++)
     {
         if (phdr[index].p_type == PT_LOAD)
         {
-            rt_memcpy(module->mem_space + phdr[index].p_vaddr - vstart_addr,
+            memcpy(module->mem_space + phdr[index].p_vaddr - vstart_addr,
                       (rt_uint8_t *)elf_module + phdr[index].p_offset,
                       phdr[index].p_filesz);
         }
@@ -228,8 +228,8 @@ rt_err_t dlmodule_load_shared_object(struct rt_dlmodule* module, void *module_pt
             module->symtab[count].addr =
                 (void *)(module->mem_space + symtab[i].st_value - module->vstart_addr);
             module->symtab[count].name = rt_malloc(length);
-            rt_memset((void *)module->symtab[count].name, 0, length);
-            rt_memcpy((void *)module->symtab[count].name,
+            memset((void *)module->symtab[count].name, 0, length);
+            memcpy((void *)module->symtab[count].name,
                       strtab + symtab[i].st_name,
                       length);
             count ++;
@@ -321,7 +321,7 @@ rt_err_t dlmodule_load_relocated_object(struct rt_dlmodule* module, void *module
 
     /* zero all space */
     ptr = module->mem_space;
-    rt_memset(ptr, 0, module_size);
+    memset(ptr, 0, module_size);
 
     /* load text and data section */
     for (index = 0; index < elf_module->e_shnum; index ++)
@@ -329,7 +329,7 @@ rt_err_t dlmodule_load_relocated_object(struct rt_dlmodule* module, void *module
         /* load text section */
         if (IS_PROG(shdr[index]) && IS_AX(shdr[index]))
         {
-            rt_memcpy(ptr,
+            memcpy(ptr,
                       (rt_uint8_t *)elf_module + shdr[index].sh_offset,
                       shdr[index].sh_size);
             LOG_D("load text 0x%x, size %d", ptr, shdr[index].sh_size);
@@ -339,7 +339,7 @@ rt_err_t dlmodule_load_relocated_object(struct rt_dlmodule* module, void *module
         /* load rodata section */
         if (IS_PROG(shdr[index]) && IS_ALLOC(shdr[index]))
         {
-            rt_memcpy(ptr,
+            memcpy(ptr,
                       (rt_uint8_t *)elf_module + shdr[index].sh_offset,
                       shdr[index].sh_size);
             rodata_addr = (rt_uint32_t)ptr;
@@ -351,7 +351,7 @@ rt_err_t dlmodule_load_relocated_object(struct rt_dlmodule* module, void *module
         /* load data section */
         if (IS_PROG(shdr[index]) && IS_AW(shdr[index]))
         {
-            rt_memcpy(ptr,
+            memcpy(ptr,
                       (rt_uint8_t *)elf_module + shdr[index].sh_offset,
                       shdr[index].sh_size);
             data_addr = (rt_uint32_t)ptr;
@@ -363,7 +363,7 @@ rt_err_t dlmodule_load_relocated_object(struct rt_dlmodule* module, void *module
         /* load bss section */
         if (IS_NOPROG(shdr[index]) && IS_AW(shdr[index]))
         {
-            rt_memset(ptr, 0, shdr[index].sh_size);
+            memset(ptr, 0, shdr[index].sh_size);
             bss_addr = (rt_uint32_t)ptr;
             LOG_D("load bss 0x%x, size %d", ptr, shdr[index].sh_size);
         }

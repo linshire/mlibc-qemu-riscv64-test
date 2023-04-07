@@ -36,7 +36,7 @@ void rt_hw_interrupt_init(void)
 
     rt_int32_t idx;
 
-    rt_memset(isr_table, 0x00, sizeof(isr_table));
+    memset(isr_table, 0x00, sizeof(isr_table));
     for (idx = 0; idx < INTERRUPTS_MAX; idx++)
     {
         isr_table[idx].handler = rt_hw_interrupt_handler;

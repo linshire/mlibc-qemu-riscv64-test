@@ -5599,9 +5599,9 @@ LOAD e:/toolchain/riscv64-unknown-elf-toolchain-10.2.0-2020.12.8-x86_64-w64-ming
  .text.memset
                 0x000000008024e0c8      0x138 build\kernel\src\kservice.o
                 0x000000008024e0c8                memset
- .text.rt_memcpy
+ .text.memcpy
                 0x000000008024e200      0x15e build\kernel\src\kservice.o
-                0x000000008024e200                rt_memcpy
+                0x000000008024e200                memcpy
  .text.rt_memmove
                 0x000000008024e35e       0xcc build\kernel\src\kservice.o
                 0x000000008024e35e                rt_memmove
@@ -12373,7 +12373,7 @@ rt_memcmp                                         build\kernel\src\kservice.o
                                                   build\kernel\components\net\sal\src\sal_socket.o
                                                   build\kernel\components\net\netdev\src\netdev.o
                                                   build\kernel\components\libc\compilers\common\cstring.o
-rt_memcpy                                         build\kernel\src\kservice.o
+memcpy                                         build\kernel\src\kservice.o
                                                   build\kernel\src\mem.o
                                                   build\kernel\src\ipc.o
                                                   build\kernel\components\net\sal\src\sal_socket.o

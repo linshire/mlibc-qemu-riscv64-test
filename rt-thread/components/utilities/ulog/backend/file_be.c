@@ -142,7 +142,7 @@ static void ulog_file_backend_output_with_buf(struct ulog_backend *backend, rt_u
         {
             copy_len = len;
         }
-        rt_memcpy(be->buf_ptr_now, log, copy_len);
+        memcpy(be->buf_ptr_now, log, copy_len);
         /* update data pos */
         be->buf_ptr_now += copy_len;
         len -= copy_len;

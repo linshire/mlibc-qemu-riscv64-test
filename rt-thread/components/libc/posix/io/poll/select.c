@@ -24,7 +24,7 @@ static void fdszero(fd_set *set, int nfds)
     m = (fd_mask *)set;
     for (n = 0; n < nfds; n += (sizeof(fd_mask) * 8))
     {
-        rt_memset(m, 0, sizeof(fd_mask));
+        memset(m, 0, sizeof(fd_mask));
         m ++;
     }
 }

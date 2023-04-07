@@ -87,7 +87,7 @@ int arch_user_space_init(struct rt_lwp *lwp)
     {
         return -1;
     }
-    rt_memset(mmu_table, 0, ARCH_PAGE_SIZE);
+    memset(mmu_table, 0, ARCH_PAGE_SIZE);
 
     lwp->end_heap = USER_HEAP_VADDR;
     memcpy(mmu_table, g_mmu_table, ARCH_PAGE_SIZE / 4);

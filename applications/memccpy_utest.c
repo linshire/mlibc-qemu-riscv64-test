@@ -2,28 +2,28 @@
 #include "utest.h"
 #include <string.h>
 
+
+
 void test_memccpy_base()
 {
     char* str1 = "hello word!!!";
     char* str2= "hellosfsfddddhkalsfjdhjkl;asdfhjellosfsfddddhkalsfjdhjkl;asdfhjklfasdhsdfhjkashkalsfjdfsfddddhkalsfjdhjkl;asdfhjellosfsfdddhjkl;asdfhjellosfsfddddhkalsfjdhjkl;asdfhdfklhsdfhuioerfhuioerfjnkel;klfasdhsdfhjkasdfklhsdfhuioerfhuioerfjnkel;skarhjfowe\;;';.//;[[[]lsdat[paertadrgyaer@%^*&(&*)*()#%$&*(*(&%^&$%^#%$^$%&$%^%^&*())&*()*(_++=78908678%^&$%$%^@#@FYUGYUHJKLIHUtui6y))]]]";
     char* str3 = "5";
-    char* testspace[100];
-    int i1 = 0,i2 = 0, i3 = 0,sizelen = 0;
+    char  testspace[100] = {0};
+    size_t i1 = 0,i2 = 0, i3 = 0,sizelen = 0;
 
     
     
-    i1 =  memccpy(testspace,str2,'h',10);
-printf("\n%o    %o\n",i1,testspace);
-    uassert_int_equal(i1, testspace);
+    i1 =  memccpy(testspace,str2,'o',10);
+    uassert_int_equal(i1, testspace + 5);
 
 
     i2 =  memccpy(testspace,str2,';',100);
-printf("\n%o    %o\n",i2,testspace+26);
-    uassert_int_equal(i2,testspace +26);
+    uassert_int_equal(i2,testspace + 25);
 
+    memset(testspace,0,100);
     i3 =  memccpy(testspace,str2,';',10);
-printf("\n%o    %o\n",i3,testspace);
-    uassert_int_equal(i3,testspace +10);
+    uassert_int_equal(i3,RT_NULL);
 
     
 }

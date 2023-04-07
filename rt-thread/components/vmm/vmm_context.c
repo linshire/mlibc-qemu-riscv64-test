@@ -25,7 +25,7 @@ volatile struct vmm_context *_vmm_context = RT_NULL;
 void vmm_context_init(void *context_addr)
 {
     _vmm_context = (struct vmm_context *)context_addr;
-    rt_memset((void *)_vmm_context, 0x00, sizeof(struct vmm_context));
+    memset((void *)_vmm_context, 0x00, sizeof(struct vmm_context));
     /* When loading RT-Thread, the IRQ on the guest should be disabled. */
     _vmm_context->virq_status = 1;
 }

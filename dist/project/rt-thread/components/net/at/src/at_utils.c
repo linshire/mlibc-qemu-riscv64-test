@@ -93,7 +93,7 @@ rt_size_t at_vprintfln(rt_device_t device, const char *format, va_list args)
     last_cmd_len = vsnprintf(send_buf, sizeof(send_buf) - 2, format, args);
     if(last_cmd_len > sizeof(send_buf) - 2)
         last_cmd_len = sizeof(send_buf) - 2;
-    rt_memcpy(send_buf + last_cmd_len, "\r\n", 2);
+    memcpy(send_buf + last_cmd_len, "\r\n", 2);
 
     len = last_cmd_len + 2;
 

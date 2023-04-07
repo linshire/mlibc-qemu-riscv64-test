@@ -217,7 +217,7 @@ int mtd_nand_read(const char *name, int block, int page)
     }
 
     oob_ptr = page_ptr + nand->page_size;
-    rt_memset(page_ptr, 0xff, nand->page_size + nand->oob_size);
+    memset(page_ptr, 0xff, nand->page_size + nand->oob_size);
 
     /* calculate the page number */
     page = block * nand->pages_per_block + page;

@@ -380,7 +380,7 @@ static rt_err_t _write_block(struct rt_spi_device *device, const void *buffer, u
     struct rt_spi_message message;
     uint8_t send_buffer[16];
 
-    rt_memset(send_buffer, DUMMY, sizeof(send_buffer));
+    memset(send_buffer, DUMMY, sizeof(send_buffer));
     send_buffer[sizeof(send_buffer) - 1] = token;
 
     /* send start block token */
@@ -500,7 +500,7 @@ static rt_err_t rt_msd_init(rt_device_t dev)
             uint8_t send_buffer[100]; /* 100byte > 74 clock */
 
             /* initial message */
-            rt_memset(send_buffer, DUMMY, sizeof(send_buffer));
+            memset(send_buffer, DUMMY, sizeof(send_buffer));
             message.send_buf = send_buffer;
             message.recv_buf = RT_NULL;
             message.length = sizeof(send_buffer);
@@ -697,7 +697,7 @@ static rt_err_t rt_msd_init(rt_device_t dev)
                     uint8_t send_buffer[100];
 
                     /* initial message */
-                    rt_memset(send_buffer, DUMMY, sizeof(send_buffer));
+                    memset(send_buffer, DUMMY, sizeof(send_buffer));
                     message.send_buf = send_buffer;
                     message.recv_buf = RT_NULL;
                     message.length = sizeof(send_buffer);
@@ -1452,7 +1452,7 @@ static rt_ssize_t rt_msd_write(rt_device_t dev, rt_off_t pos, const void *buffer
         {
             uint8_t send_buffer[18];
 
-            rt_memset(send_buffer, DUMMY, sizeof(send_buffer));
+            memset(send_buffer, DUMMY, sizeof(send_buffer));
             send_buffer[sizeof(send_buffer) - 1] = MSD_TOKEN_WRITE_MULTIPLE_STOP;
 
             /* initial message */
@@ -1567,7 +1567,7 @@ static rt_ssize_t rt_msd_sdhc_write(rt_device_t dev, rt_off_t pos, const void *b
         {
             uint8_t send_buffer[18];
 
-            rt_memset(send_buffer, DUMMY, sizeof(send_buffer));
+            memset(send_buffer, DUMMY, sizeof(send_buffer));
             send_buffer[sizeof(send_buffer) - 1] = MSD_TOKEN_WRITE_MULTIPLE_STOP;
 
             /* initial message */
@@ -1627,7 +1627,7 @@ rt_err_t msd_init(const char *sd_device_name, const char *spi_device_name)
         MSD_DEBUG("spi device %s not found!\r\n", spi_device_name);
         return -RT_ENOSYS;
     }
-    rt_memset(&_msd_device, 0, sizeof(_msd_device));
+    memset(&_msd_device, 0, sizeof(_msd_device));
     _msd_device.spi_device = spi_device;
 
     /* register sdcard device */

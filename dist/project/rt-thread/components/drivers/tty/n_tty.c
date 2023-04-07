@@ -161,7 +161,7 @@ static void reset_buffer_flags(struct n_tty_data *ldata)
     ldata->line_start = 0;
 
     ldata->erasing = 0;
-    rt_memset(ldata->read_flags, 0, RT_TTY_BUF);
+    memset(ldata->read_flags, 0, RT_TTY_BUF);
     ldata->push = 0;
 }
 
@@ -537,7 +537,7 @@ static void __isig(int sig, struct tty_struct *tty)
         {
             struct rt_lwp *old_lwp;
             
-            rt_memcpy(&old_termios, &(tty->init_termios), sizeof(struct termios));
+            memcpy(&old_termios, &(tty->init_termios), sizeof(struct termios));
             tty->init_termios = *new_termios;
             ld = tty->ldisc;
             if (ld != RT_NULL)
@@ -1006,7 +1006,7 @@ static void n_tty_set_termios(struct tty_struct *tty, struct termios *old)
 
     if (!old || (old->c_lflag ^ tty->init_termios.c_lflag) & (ICANON | EXTPROC))
     {
-        rt_memset(ldata->read_flags, 0, RT_TTY_BUF);
+        memset(ldata->read_flags, 0, RT_TTY_BUF);
         ldata->line_start = ldata->read_tail;
         if (!L_ICANON(tty) || !read_cnt(ldata))
         {
@@ -1031,7 +1031,7 @@ static void n_tty_set_termios(struct tty_struct *tty, struct termios *old)
         I_IXON(tty) || L_ISIG(tty) || L_ECHO(tty) ||
         I_PARMRK(tty))
     {
-        rt_memset(ldata->char_map, 0, 256);
+        memset(ldata->char_map, 0, 256);
         if (I_IGNCR(tty) || I_ICRNL(tty))
         {
             set_bit('\r', (int *)ldata->char_map);
@@ -1184,7 +1184,7 @@ static int copy_from_read_buf(struct tty_struct *tty,char *b,size_t nr)
     if (n)
     {
         const char *from = read_buf_addr(ldata, tail);
-        rt_memcpy(b, from, n);
+        memcpy(b, from, n);
         is_eof = n == 1 && *from == EOF_CHAR(tty);
         ldata->read_tail += n;
         /* Turn single EOF into zero-length read */
@@ -1270,12 +1270,12 @@ static int canon_copy_from_read_buf(struct tty_struct *tty, char *b, size_t nr)
     const void *from = read_buf_addr(ldata, tail);
     if (n > buf_size)
     {
-        rt_memcpy(b, from, buf_size);
+        memcpy(b, from, buf_size);
         b += buf_size;
         n -= buf_size;
         from = ldata->read_buf;
     }
-    rt_memcpy(b, from, n);
+    memcpy(b, from, n);
 
     if (found)
     {
@@ -1621,14 +1621,14 @@ static void n_tty_receive_buf_real_raw(struct tty_struct *tty, char *cp, int cou
 
     head = ldata->read_head & (RT_TTY_BUF - 1);
     n = min(count, RT_TTY_BUF - head);
-    rt_memcpy(read_buf_addr(ldata, head), cp, n);
+    memcpy(read_buf_addr(ldata, head), cp, n);
     ldata->read_head += n;
     cp += n;
     count -= n;
 
     head = ldata->read_head & (RT_TTY_BUF - 1);
     n = min(count, RT_TTY_BUF - head);
-    rt_memcpy(read_buf_addr(ldata, head), cp, n);
+    memcpy(read_buf_addr(ldata, head), cp, n);
     ldata->read_head += n;
 }
 

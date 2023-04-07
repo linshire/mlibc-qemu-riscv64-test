@@ -178,7 +178,7 @@ static uint8_t get_ip(struct mac_addr_t *p_mac_addr)
     int i;
     uint8_t ip_addr_3;
 
-    rt_memset(&bad_mac, 0, sizeof(bad_mac));
+    memset(&bad_mac, 0, sizeof(bad_mac));
     if (!rt_memcmp(&bad_mac, p_mac_addr, sizeof(bad_mac)))
     {
         DEBUG_PRINTF("mac address all zero");
@@ -186,7 +186,7 @@ static uint8_t get_ip(struct mac_addr_t *p_mac_addr)
         goto _return;
     }
 
-    rt_memset(&bad_mac, 0xFF, sizeof(bad_mac));
+    memset(&bad_mac, 0xFF, sizeof(bad_mac));
     if (!rt_memcmp(&bad_mac, p_mac_addr, sizeof(bad_mac)))
     {
         DEBUG_PRINTF("mac address all one");
@@ -287,7 +287,7 @@ static void dhcpd_thread_entry(void *parameter)
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(DHCP_SERVER_PORT);
     server_addr.sin_addr.s_addr = INADDR_ANY;
-    rt_memset(&(server_addr.sin_zero), 0, sizeof(server_addr.sin_zero));
+    memset(&(server_addr.sin_zero), 0, sizeof(server_addr.sin_zero));
 
     /* bind socket to the server address */
     if (bind(sock, (struct sockaddr *)&server_addr,

@@ -81,7 +81,7 @@ static void virtio_input_cfg_bits(struct virtio_input_device *virtio_input_dev,
         }
         else
         {
-            rt_memcpy(config_base + offset + i, buffer, sizeof(rt_uint8_t));
+            memcpy(config_base + offset + i, buffer, sizeof(rt_uint8_t));
         }
     }
 
@@ -150,7 +150,7 @@ static rt_ssize_t virtio_input_read(rt_device_t dev, rt_off_t pos, void *buffer,
 
     rt_mutex_take(&virtio_input_dev->rw_mutex, RT_WAITING_FOREVER);
 
-    rt_memcpy(buffer, &virtio_input_dev->bcst_events[pos], size);
+    memcpy(buffer, &virtio_input_dev->bcst_events[pos], size);
 
     rt_mutex_release(&virtio_input_dev->rw_mutex);
 
@@ -168,7 +168,7 @@ static rt_ssize_t virtio_input_write(rt_device_t dev, rt_off_t pos, const void *
 
     rt_mutex_take(&virtio_input_dev->rw_mutex, RT_WAITING_FOREVER);
 
-    rt_memcpy(&virtio_input_dev->bcst_events[pos], buffer, size);
+    memcpy(&virtio_input_dev->bcst_events[pos], buffer, size);
 
     rt_mutex_release(&virtio_input_dev->rw_mutex);
 
@@ -202,13 +202,13 @@ static rt_err_t virtio_input_control(rt_device_t dev, int cmd, void *args)
     case VIRTIO_DEVICE_CTRL_INPUT_GET_ABS_X_INFO:
 
         virtio_input_cfg_select(virtio_input_dev, VIRTIO_INPUT_CFG_ABS_INFO, VIRTIO_INPUT_ABS_AXIS_X);
-        rt_memcpy(args, config, sizeof(struct virtio_input_config));
+        memcpy(args, config, sizeof(struct virtio_input_config));
 
         break;
     case VIRTIO_DEVICE_CTRL_INPUT_GET_ABS_Y_INFO:
 
         virtio_input_cfg_select(virtio_input_dev, VIRTIO_INPUT_CFG_ABS_INFO, VIRTIO_INPUT_ABS_AXIS_Y);
-        rt_memcpy(args, config, sizeof(struct virtio_input_config));
+        memcpy(args, config, sizeof(struct virtio_input_config));
 
         break;
     case VIRTIO_DEVICE_CTRL_INPUT_SET_STATUS:
@@ -223,7 +223,7 @@ static rt_err_t virtio_input_control(rt_device_t dev, int cmd, void *args)
             id = queue_status->avail->idx % queue_status->num;
             addr = &virtio_input_dev->xmit_events[id];
 
-            rt_memcpy(addr, args, sizeof(struct virtio_input_event));
+            memcpy(addr, args, sizeof(struct virtio_input_event));
 
             virtio_free_desc(virtio_dev, VIRTIO_INPUT_QUEUE_STATUS, id);
 
@@ -243,22 +243,22 @@ static rt_err_t virtio_input_control(rt_device_t dev, int cmd, void *args)
         break;
     case VIRTIO_DEVICE_CTRL_INPUT_GET_EV_BIT:
 
-        rt_memcpy(args, virtio_input_dev->ev_bit, sizeof(virtio_input_dev->ev_bit));
+        memcpy(args, virtio_input_dev->ev_bit, sizeof(virtio_input_dev->ev_bit));
 
         break;
     case VIRTIO_DEVICE_CTRL_INPUT_GET_KEY_BIT:
 
-        rt_memcpy(args, virtio_input_dev->key_bit, sizeof(virtio_input_dev->key_bit));
+        memcpy(args, virtio_input_dev->key_bit, sizeof(virtio_input_dev->key_bit));
 
         break;
     case VIRTIO_DEVICE_CTRL_INPUT_GET_REL_BIT:
 
-        rt_memcpy(args, virtio_input_dev->rel_bit, sizeof(virtio_input_dev->rel_bit));
+        memcpy(args, virtio_input_dev->rel_bit, sizeof(virtio_input_dev->rel_bit));
 
         break;
     case VIRTIO_DEVICE_CTRL_INPUT_GET_ABS_BIT:
 
-        rt_memcpy(args, virtio_input_dev->abs_bit, sizeof(virtio_input_dev->abs_bit));
+        memcpy(args, virtio_input_dev->abs_bit, sizeof(virtio_input_dev->abs_bit));
 
         break;
     default:

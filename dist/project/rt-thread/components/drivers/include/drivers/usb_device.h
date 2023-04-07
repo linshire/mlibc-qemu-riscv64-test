@@ -438,11 +438,11 @@ rt_inline void usbd_os_proerty_descriptor_send(ufunction_t func, ureq_t setup, u
         data = (rt_uint8_t *)rt_malloc(header.dwLength);
         RT_ASSERT(data != RT_NULL);
         pdata = data;
-        rt_memcpy((void *)pdata,(void *)&header,sizeof(struct usb_os_property_header));
+        memcpy((void *)pdata,(void *)&header,sizeof(struct usb_os_property_header));
         pdata += sizeof(struct usb_os_property_header);
         for(index = 0;index < number_of_proerty;index++)
         {
-            rt_memcpy((void *)pdata,(void *)&usb_os_proerty[index],10);
+            memcpy((void *)pdata,(void *)&usb_os_proerty[index],10);
             pdata += 10;
             for(i = 0;i < usb_os_proerty[index].wPropertyNameLength/2;i++)
             {

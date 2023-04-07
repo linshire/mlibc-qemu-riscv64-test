@@ -88,7 +88,7 @@ static rt_ssize_t _read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t s
             else
                 cpysz = size - outsz;
 
-            rt_memcpy((char*)buffer + outsz, ((char*)(vdev->act+1)) + vdev->pos, cpysz);
+            memcpy((char*)buffer + outsz, ((char*)(vdev->act+1)) + vdev->pos, cpysz);
             vdev->pos += cpysz;
 
             outsz += cpysz;

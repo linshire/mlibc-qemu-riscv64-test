@@ -201,7 +201,7 @@ rt_smem_t rt_smem_init(const char    *name,
         return RT_NULL;
     }
 
-    rt_memset(small_mem, 0, sizeof(*small_mem));
+    memset(small_mem, 0, sizeof(*small_mem));
     /* initialize small memory object */
     rt_object_init(&(small_mem->parent.parent), RT_Object_Class_Memory, name);
     small_mem->parent.algorithm = "small";
@@ -497,7 +497,7 @@ void *rt_smem_realloc(rt_smem_t m, void *rmem, rt_size_t newsize)
     nmem = rt_smem_alloc(&small_mem->parent, newsize);
     if (nmem != RT_NULL) /* check memory */
     {
-        rt_memcpy(nmem, rmem, size < newsize ? size : newsize);
+        memcpy(nmem, rmem, size < newsize ? size : newsize);
         rt_smem_free(rmem);
     }
 

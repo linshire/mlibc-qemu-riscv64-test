@@ -680,7 +680,7 @@ static int at_recv_readline(at_client_t client)
     char ch = 0, last_ch = 0;
     rt_bool_t is_full = RT_FALSE;
 
-    rt_memset(client->recv_line_buf, 0x00, client->recv_bufsz);
+    memset(client->recv_line_buf, 0x00, client->recv_bufsz);
     client->recv_line_len = 0;
 
     while (1)
@@ -704,7 +704,7 @@ static int at_recv_readline(at_client_t client)
             if (is_full)
             {
                 LOG_E("read line failed. The line data length is out of buffer size(%d)!", client->recv_bufsz);
-                rt_memset(client->recv_line_buf, 0x00, client->recv_bufsz);
+                memset(client->recv_line_buf, 0x00, client->recv_bufsz);
                 client->recv_line_len = 0;
                 return -RT_EFULL;
             }
@@ -747,7 +747,7 @@ static void client_parser(at_client_t client)
                 if (resp->buf_len + client->recv_line_len < resp->buf_size)
                 {
                     /* copy response lines, separated by '\0' */
-                    rt_memcpy(resp->buf + resp->buf_len, client->recv_line_buf, client->recv_line_len);
+                    memcpy(resp->buf + resp->buf_len, client->recv_line_buf, client->recv_line_len);
 
                     /* update the current response information */
                     resp->buf_len += client->recv_line_len;
@@ -905,7 +905,7 @@ __exit:
             rt_free(client->recv_line_buf);
         }
 
-        rt_memset(client, 0x00, sizeof(struct at_client));
+        memset(client, 0x00, sizeof(struct at_client));
     }
     else
     {

@@ -317,7 +317,7 @@ struct rt_lwp* lwp_new(void)
     {
         return lwp;
     }
-    rt_memset(lwp, 0, sizeof(*lwp));
+    memset(lwp, 0, sizeof(*lwp));
     //lwp->tgroup_leader = RT_NULL;
     rt_list_init(&lwp->wait_list);
     lwp->leader = 0;
@@ -793,7 +793,7 @@ long list_process(void)
                         continue;
                     }
 
-                    rt_memcpy(&th, thread, sizeof(struct rt_thread));
+                    memcpy(&th, thread, sizeof(struct rt_thread));
                     rt_hw_interrupt_enable(level);
 
                     if (th.lwp == RT_NULL)

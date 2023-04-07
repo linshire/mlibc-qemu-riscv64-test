@@ -183,7 +183,7 @@ struct tm *gmtime_r(const time_t *timep, struct tm *r)
         return RT_NULL;
     }
 
-    rt_memset(r, RT_NULL, sizeof(struct tm));
+    memset(r, RT_NULL, sizeof(struct tm));
 
     r->tm_sec = work % 60;
     work /= 60;
@@ -261,7 +261,7 @@ char* asctime_r(const struct tm *t, char *buf)
         return RT_NULL;
     }
 
-    rt_memset(buf, RT_NULL, 26);
+    memset(buf, RT_NULL, 26);
 
     /* Checking input validity */
     if ((int)rt_strlen(days) <= (t->tm_wday << 2) || (int)rt_strlen(months) <= (t->tm_mon << 2))

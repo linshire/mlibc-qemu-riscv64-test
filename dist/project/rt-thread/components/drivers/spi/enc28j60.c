@@ -357,7 +357,7 @@ static rt_err_t enc28j60_control(rt_device_t dev, int cmd, void *args)
     {
     case NIOCTL_GADDR:
         /* get mac address */
-        if (args) rt_memcpy(args, enc28j60->dev_addr, 6);
+        if (args) memcpy(args, enc28j60->dev_addr, 6);
         else return -RT_ERROR;
         break;
 
@@ -778,7 +778,7 @@ rt_err_t enc28j60_attach(const char *spi_device_name)
         rt_spi_configure(spi_device, &cfg);
     } /* config spi */
 
-    rt_memset(&enc28j60_dev, 0, sizeof(enc28j60_dev));
+    memset(&enc28j60_dev, 0, sizeof(enc28j60_dev));
 
     rt_event_init(&tx_event, "eth_tx", RT_IPC_FLAG_FIFO);
     enc28j60_dev.spi_device = spi_device;

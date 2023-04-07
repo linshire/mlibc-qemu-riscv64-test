@@ -14,7 +14,7 @@ static struct rt_device zero_dev;
 
 static rt_ssize_t zero_read    (rt_device_t dev, rt_off_t pos, void *buffer, rt_size_t size)
 {
-    rt_memset(buffer, 0, size);
+    memset(buffer, 0, size);
     return size;
 }
 

@@ -99,7 +99,7 @@ rt_err_t rt_hwcrypto_symmetric_setkey(struct rt_hwcrypto_ctx *ctx, const rt_uint
     if (ctx && bitlen <= RT_HWCRYPTO_KEYBIT_MAX_SIZE)
     {
         symmetric_ctx = (struct hwcrypto_symmetric *)ctx;
-        rt_memcpy(symmetric_ctx->key, key, bitlen >> 3);
+        memcpy(symmetric_ctx->key, key, bitlen >> 3);
         /* Record key length */
         symmetric_ctx->key_bitlen = bitlen;
         /* Key change flag set up */
@@ -125,7 +125,7 @@ int rt_hwcrypto_symmetric_getkey(struct rt_hwcrypto_ctx *ctx, rt_uint8_t *key, r
 
     if (ctx && bitlen >= symmetric_ctx->key_bitlen)
     {
-        rt_memcpy(key, symmetric_ctx->key, symmetric_ctx->key_bitlen >> 3);
+        memcpy(key, symmetric_ctx->key, symmetric_ctx->key_bitlen >> 3);
         return symmetric_ctx->key_bitlen;
     }
 
@@ -148,7 +148,7 @@ rt_err_t rt_hwcrypto_symmetric_setiv(struct rt_hwcrypto_ctx *ctx, const rt_uint8
     if (ctx && len <= RT_HWCRYPTO_IV_MAX_SIZE)
     {
         symmetric_ctx = (struct hwcrypto_symmetric *)ctx;
-        rt_memcpy(symmetric_ctx->iv, iv, len);
+        memcpy(symmetric_ctx->iv, iv, len);
         symmetric_ctx->iv_len = len;
         /* IV change flag set up */
         symmetric_ctx->flags |= SYMMTRIC_MODIFY_IV;
@@ -173,7 +173,7 @@ int rt_hwcrypto_symmetric_getiv(struct rt_hwcrypto_ctx *ctx, rt_uint8_t *iv, rt_
 
     if (ctx && len >= symmetric_ctx->iv_len)
     {
-        rt_memcpy(iv, symmetric_ctx->iv, symmetric_ctx->iv_len);
+        memcpy(iv, symmetric_ctx->iv, symmetric_ctx->iv_len);
         return symmetric_ctx->iv_len;
     }
 
@@ -230,8 +230,8 @@ rt_err_t rt_hwcrypto_symmetric_cpy(struct rt_hwcrypto_ctx *des, const struct rt_
         symmetric_des->iv_len     = symmetric_src->iv_len    ;
         symmetric_des->iv_off     = symmetric_src->iv_off    ;
         symmetric_des->key_bitlen = symmetric_src->key_bitlen;
-        rt_memcpy(symmetric_des->iv, symmetric_src->iv, symmetric_src->iv_len);
-        rt_memcpy(symmetric_des->key, symmetric_src->key, symmetric_src->key_bitlen >> 3);
+        memcpy(symmetric_des->iv, symmetric_src->iv, symmetric_src->iv_len);
+        memcpy(symmetric_des->key, symmetric_src->key, symmetric_src->key_bitlen >> 3);
 
         /* Hardware context copy */
         return rt_hwcrypto_ctx_cpy(des, src);
@@ -254,8 +254,8 @@ void rt_hwcrypto_symmetric_reset(struct rt_hwcrypto_ctx *ctx)
         symmetric_ctx->iv_len     = 0x00;
         symmetric_ctx->iv_off     = 0x00;
         symmetric_ctx->key_bitlen = 0x00;
-        rt_memset(symmetric_ctx->iv, 0, RT_HWCRYPTO_IV_MAX_SIZE);
-        rt_memset(symmetric_ctx->key, 0, RT_HWCRYPTO_KEYBIT_MAX_SIZE >> 3);
+        memset(symmetric_ctx->iv, 0, RT_HWCRYPTO_IV_MAX_SIZE);
+        memset(symmetric_ctx->key, 0, RT_HWCRYPTO_KEYBIT_MAX_SIZE >> 3);
 
         /* Hardware context reset */
         rt_hwcrypto_ctx_reset(ctx);

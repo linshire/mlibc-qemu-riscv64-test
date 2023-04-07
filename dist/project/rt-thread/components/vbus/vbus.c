@@ -257,9 +257,9 @@ static void _bus_out_entry(void *param)
             if (tailsz > dpkg.len)
                 tailsz = dpkg.len;
 
-            rt_memcpy(&RT_VBUS_OUT_RING->blks[RT_VBUS_OUT_RING->put_idx].data,
+            memcpy(&RT_VBUS_OUT_RING->blks[RT_VBUS_OUT_RING->put_idx].data,
                       dpkg.data, tailsz);
-            rt_memcpy(&RT_VBUS_OUT_RING->blks[0],
+            memcpy(&RT_VBUS_OUT_RING->blks[0],
                       ((char*)dpkg.data)+tailsz,
                       dpkg.len - tailsz);
 
@@ -268,7 +268,7 @@ static void _bus_out_entry(void *param)
         }
         else
         {
-            rt_memcpy(&RT_VBUS_OUT_RING->blks[RT_VBUS_OUT_RING->put_idx].data,
+            memcpy(&RT_VBUS_OUT_RING->blks[RT_VBUS_OUT_RING->put_idx].data,
                       dpkg.data, dpkg.len);
 
             rt_vbus_smp_wmb();
@@ -620,7 +620,7 @@ static rt_err_t _chn0_echo_with(rt_uint8_t prefix,
     if (!resp)
         return -RT_ENOMEM;
     *resp = prefix;
-    rt_memcpy(resp+1, dp, dsize);
+    memcpy(resp+1, dp, dsize);
     vbus_verbose("%s --> remote\n", dump_cmd_pkt(resp, dsize+1));
 
     err = _chn0_post(resp, dsize+1, RT_WAITING_FOREVER);
@@ -708,7 +708,7 @@ static int _chn0_actor(unsigned char *dp, size_t dsize)
                 break;
 
             *resp = RT_VBUS_CHN0_CMD_SET;
-            rt_memcpy(resp+1, dp+1, dsize-1);
+            memcpy(resp+1, dp+1, dsize-1);
             resp[dsize] = chnr;
 
             rt_vbus_set_recv_wm(chnr, _sess[i].req->recv_wm.low, _sess[i].req->recv_wm.high);
@@ -941,7 +941,7 @@ int rt_vbus_request_chn(struct rt_vbus_request *req,
     rt_hw_interrupt_enable(level);
 
     pbuf[0] = RT_VBUS_CHN0_CMD_ENABLE;
-    rt_memcpy(pbuf+1, req->name, plen-1);
+    memcpy(pbuf+1, req->name, plen-1);
     vbus_verbose("%s --> remote\n", dump_cmd_pkt(pbuf, plen));
 
     err = _chn0_post(pbuf, plen, RT_WAITING_FOREVER);
@@ -1020,7 +1020,7 @@ static void _bus_in_entry(void *param)
 {
     rt_sem_init(&_bus_in_sem, "vbus", 0, RT_IPC_FLAG_FIFO);
     rt_event_init(&_bus_in_event, "vbus", RT_IPC_FLAG_FIFO);
-    rt_memset(_bus_in_action, 0, sizeof(_bus_in_action));
+    memset(_bus_in_action, 0, sizeof(_bus_in_action));
 
     while (rt_sem_take(&_bus_in_sem,
                        RT_WAITING_FOREVER) == RT_EOK)
@@ -1087,8 +1087,8 @@ static void _bus_in_entry(void *param)
                 if (tailsz > size)
                     tailsz = size;
 
-                rt_memcpy(act+1, &RT_VBUS_IN_RING->blks[RT_VBUS_IN_RING->get_idx].data, tailsz);
-                rt_memcpy((char*)(act+1) + tailsz, &RT_VBUS_IN_RING->blks[0], size - tailsz);
+                memcpy(act+1, &RT_VBUS_IN_RING->blks[RT_VBUS_IN_RING->get_idx].data, tailsz);
+                memcpy((char*)(act+1) + tailsz, &RT_VBUS_IN_RING->blks[0], size - tailsz);
 
                 /* It shall make sure the CPU has finished reading the item
                  * before it writes the new tail pointer, which will erase the
@@ -1098,7 +1098,7 @@ static void _bus_in_entry(void *param)
             }
             else
             {
-                rt_memcpy(act+1, &RT_VBUS_IN_RING->blks[RT_VBUS_IN_RING->get_idx].data, size);
+                memcpy(act+1, &RT_VBUS_IN_RING->blks[RT_VBUS_IN_RING->get_idx].data, size);
 
                 rt_vbus_smp_wmb();
                 RT_VBUS_IN_RING->get_idx = nxtidx;
@@ -1143,8 +1143,8 @@ int rt_vbus_init(void *outr, void *inr)
     RT_VBUS_OUT_RING = outr;
     RT_VBUS_IN_RING  = inr;
 
-    rt_memset(RT_VBUS_OUT_RING, 0, sizeof(*RT_VBUS_OUT_RING));
-    rt_memset(RT_VBUS_IN_RING,  0, sizeof(*RT_VBUS_IN_RING));
+    memset(RT_VBUS_OUT_RING, 0, sizeof(*RT_VBUS_OUT_RING));
+    memset(RT_VBUS_IN_RING,  0, sizeof(*RT_VBUS_IN_RING));
     _chn_status[0] = RT_VBUS_CHN_ST_ESTABLISHED;
     for (i = 1; i < ARRAY_SIZE(_chn_status); i++)
     {

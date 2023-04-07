@@ -291,7 +291,7 @@ static rt_err_t rt_usbh_adk_enable(void* arg)
     RT_ASSERT(adk != RT_NULL);
 
     /* initilize the data structure */
-    rt_memset(adk, 0, sizeof(struct uadkinst));
+    memset(adk, 0, sizeof(struct uadkinst));
     intf->user_data = (void*)adk;
 
     for(i=0; i<intf->intf_desc->bNumEndpoints; i++)

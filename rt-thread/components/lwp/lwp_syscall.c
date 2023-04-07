@@ -1405,7 +1405,7 @@ rt_thread_t sys_thread_create(void *arg[])
     thread->user_entry = (void (*)(void *))arg[1];
     thread->user_stack = (void *)user_stack;
     thread->user_stack_size = (uint32_t)arg[4];
-    rt_memset(thread->user_stack, '#', thread->user_stack_size);
+    memset(thread->user_stack, '#', thread->user_stack_size);
 #endif /* ARCH_MM_MMU */
 
     thread->lwp = (void*)lwp;
@@ -1567,7 +1567,7 @@ long _sys_clone(void *arg[])
     rt_hw_interrupt_enable(level);
 
     /* copy origin stack */
-    rt_memcpy(thread->stack_addr, self->stack_addr, thread->stack_size);
+    memcpy(thread->stack_addr, self->stack_addr, thread->stack_size);
     lwp_tid_set_thread(tid, thread);
     arch_set_thread_context(arch_clone_exit,
             (void *)((char *)thread->stack_addr + thread->stack_size),
@@ -1616,11 +1616,11 @@ static void lwp_struct_copy(struct rt_lwp *dst, struct rt_lwp *src)
     dst->tty_old_pgrp = 0;
     dst->__pgrp = src->__pgrp;
     dst->tty = src->tty;
-    rt_memcpy(dst->cmd, src->cmd, RT_NAME_MAX);
+    memcpy(dst->cmd, src->cmd, RT_NAME_MAX);
 
     dst->sa_flags = src->sa_flags;
     dst->signal_mask = src->signal_mask;
-    rt_memcpy(dst->signal_handler, src->signal_handler, sizeof dst->signal_handler);
+    memcpy(dst->signal_handler, src->signal_handler, sizeof dst->signal_handler);
 }
 
 static int lwp_copy_files(struct rt_lwp *dst, struct rt_lwp *src)
@@ -1745,7 +1745,7 @@ sysret_t _sys_fork(void)
     rt_hw_interrupt_enable(level);
 
     /* copy origin stack */
-    rt_memcpy(thread->stack_addr, self_thread->stack_addr, self_thread->stack_size);
+    memcpy(thread->stack_addr, self_thread->stack_addr, self_thread->stack_size);
     lwp_tid_set_thread(tid, thread);
 
     /* duplicate user objects */
@@ -1883,7 +1883,7 @@ static char *_insert_args(int new_argc, char *new_argv[], struct lwp_args_info *
     {
         nargv[i] = p;
         len = rt_strlen(new_argv[i]) + 1;
-        rt_memcpy(p, new_argv[i], len);
+        memcpy(p, new_argv[i], len);
         p += len;
     }
     /* copy argv */
@@ -1892,7 +1892,7 @@ static char *_insert_args(int new_argc, char *new_argv[], struct lwp_args_info *
     {
         nargv[i] = p;
         len = rt_strlen(args->argv[i]) + 1;
-        rt_memcpy(p, args->argv[i], len);
+        memcpy(p, args->argv[i], len);
         p += len;
     }
     nargv[i] = NULL;
@@ -1901,7 +1901,7 @@ static char *_insert_args(int new_argc, char *new_argv[], struct lwp_args_info *
     {
         nenvp[i] = p;
         len = rt_strlen(args->envp[i]) + 1;
-        rt_memcpy(p, args->envp[i], len);
+        memcpy(p, args->envp[i], len);
         p += len;
     }
     nenvp[i] = NULL;
@@ -2079,7 +2079,7 @@ int load_ldso(struct rt_lwp *lwp, char *exec_name, char *const argv[], char *con
         {
             kargv[i] = p;
             len = rt_strlen(argv[i]) + 1;
-            rt_memcpy(p, argv[i], len);
+            memcpy(p, argv[i], len);
             p += len;
         }
         kargv[i] = NULL;
@@ -2091,7 +2091,7 @@ int load_ldso(struct rt_lwp *lwp, char *exec_name, char *const argv[], char *con
         {
             kenvp[i] = p;
             len = rt_strlen(envp[i]) + 1;
-            rt_memcpy(p, envp[i], len);
+            memcpy(p, envp[i], len);
             p += len;
         }
         kenvp[i] = NULL;
@@ -2267,7 +2267,7 @@ sysret_t sys_execve(const char *path, char *const argv[], char *const envp[])
         {
             kargv[i] = p;
             len = rt_strlen(argv[i]) + 1;
-            rt_memcpy(p, argv[i], len);
+            memcpy(p, argv[i], len);
             p += len;
         }
         kargv[i] = NULL;
@@ -2279,7 +2279,7 @@ sysret_t sys_execve(const char *path, char *const argv[], char *const envp[])
         {
             kenvp[i] = p;
             len = rt_strlen(envp[i]) + 1;
-            rt_memcpy(p, envp[i], len);
+            memcpy(p, envp[i], len);
             p += len;
         }
         kenvp[i] = NULL;
@@ -2292,7 +2292,7 @@ sysret_t sys_execve(const char *path, char *const argv[], char *const envp[])
         SET_ERRNO(ENOMEM);
         goto quit;
     }
-    rt_memset(new_lwp, 0, sizeof(struct rt_lwp));
+    memset(new_lwp, 0, sizeof(struct rt_lwp));
     new_lwp->ref = 1;
     lwp_user_object_lock_init(new_lwp);
     ret = lwp_user_space_init(new_lwp, 0);
@@ -2377,12 +2377,12 @@ sysret_t sys_execve(const char *path, char *const argv[], char *const envp[])
 
         _swap_lwp_data(lwp, new_lwp, void *, args);
 
-        rt_memset(&thread->signal_mask, 0, sizeof(thread->signal_mask));
-        rt_memset(&thread->signal_mask_bak, 0, sizeof(thread->signal_mask_bak));
+        memset(&thread->signal_mask, 0, sizeof(thread->signal_mask));
+        memset(&thread->signal_mask_bak, 0, sizeof(thread->signal_mask_bak));
         lwp->sa_flags = 0;
-        rt_memset(&lwp->signal_mask, 0, sizeof(lwp->signal_mask));
-        rt_memset(&lwp->signal_mask_bak, 0, sizeof(lwp->signal_mask_bak));
-        rt_memset(lwp->signal_handler, 0, sizeof(lwp->signal_handler));
+        memset(&lwp->signal_mask, 0, sizeof(lwp->signal_mask));
+        memset(&lwp->signal_mask_bak, 0, sizeof(lwp->signal_mask_bak));
+        memset(lwp->signal_handler, 0, sizeof(lwp->signal_handler));
 
         /* to do: clsoe files with flag CLOEXEC */
 
@@ -3480,7 +3480,7 @@ sysret_t sys_getaddrinfo(const char *nodename,
             goto exit;
         }
 
-        rt_memset(k_hints, 0x0, sizeof(struct addrinfo));
+        memset(k_hints, 0x0, sizeof(struct addrinfo));
         k_hints->ai_flags    = hints->ai_flags;
         k_hints->ai_family   = hints->ai_family;
         k_hints->ai_socktype = hints->ai_socktype;
@@ -3617,7 +3617,7 @@ sysret_t sys_gethostbyname2_r(const char *name, int af, struct hostent *ret,
         while (sal_he.h_addr_list[index] != NULL)
         {
             ret->h_addr_list[index] = ptr;
-            rt_memcpy(ptr, sal_he.h_addr_list[index], sal_he.h_length);
+            memcpy(ptr, sal_he.h_addr_list[index], sal_he.h_length);
 
             ptr += sal_he.h_length;
             index++;

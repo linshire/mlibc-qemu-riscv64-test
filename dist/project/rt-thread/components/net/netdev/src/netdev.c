@@ -164,7 +164,7 @@ int netdev_unregister(struct netdev *netdev)
         extern int sal_netdev_cleanup(struct netdev *netdev);
         sal_netdev_cleanup(netdev);
 #endif
-        rt_memset(netdev, 0, sizeof(*netdev));
+        memset(netdev, 0, sizeof(*netdev));
     }
 
     return -RT_ERROR;
@@ -1164,7 +1164,7 @@ int netdev_cmd_ping(char* target_name, char *netdev_name, rt_uint32_t times, rt_
         int delay_tick = 0;
         rt_tick_t start_tick = 0;
 
-        rt_memset(&ping_resp, 0x00, sizeof(struct netdev_ping_resp));
+        memset(&ping_resp, 0x00, sizeof(struct netdev_ping_resp));
         start_tick = rt_tick_get();
         ret = netdev->ops->ping(netdev, (const char *)target_name, size, NETDEV_PING_RECV_TIMEO, &ping_resp);
         if (ret == -RT_ETIMEOUT)

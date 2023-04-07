@@ -85,7 +85,7 @@ rt_aspace_t rt_aspace_create(void *start, rt_size_t length, void *pgtbl)
     aspace = (rt_aspace_t)rt_malloc(sizeof(*aspace));
     if (aspace)
     {
-        rt_memset(aspace, 0, sizeof(*aspace));
+        memset(aspace, 0, sizeof(*aspace));
 
         err = rt_aspace_init(aspace, start, length, pgtbl);
 

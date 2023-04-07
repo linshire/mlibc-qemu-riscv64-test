@@ -137,9 +137,9 @@ static int mmc_get_ext_csd(struct rt_mmcsd_card *card, rt_uint8_t **new_ext_csd)
         return -RT_ENOMEM;
     }
 
-    rt_memset(&req, 0, sizeof(struct rt_mmcsd_req));
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
-    rt_memset(&data, 0, sizeof(struct rt_mmcsd_data));
+    memset(&req, 0, sizeof(struct rt_mmcsd_req));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&data, 0, sizeof(struct rt_mmcsd_data));
 
     req.cmd = &cmd;
     req.data = &data;
@@ -412,7 +412,7 @@ rt_err_t mmc_send_op_cond(struct rt_mmcsd_host *host,
     rt_uint32_t i;
     rt_err_t err = RT_EOK;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SEND_OP_COND;
     cmd.arg = controller_is_spi(host) ? 0 : ocr;
@@ -456,7 +456,7 @@ static rt_err_t mmc_set_card_addr(struct rt_mmcsd_host *host, rt_uint32_t rca)
     rt_err_t err;
     struct rt_mmcsd_cmd cmd;
 
-    rt_memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
+    memset(&cmd, 0, sizeof(struct rt_mmcsd_cmd));
 
     cmd.cmd_code = SET_RELATIVE_ADDR;
     cmd.arg = rca << 16;
@@ -545,12 +545,12 @@ static rt_int32_t mmcsd_mmc_init_card(struct rt_mmcsd_host *host,
         err = -RT_ENOMEM;
         goto err;
     }
-    rt_memset(card, 0, sizeof(struct rt_mmcsd_card));
+    memset(card, 0, sizeof(struct rt_mmcsd_card));
 
     card->card_type = CARD_TYPE_MMC;
     card->host = host;
     card->rca = 1;
-    rt_memcpy(card->resp_cid, resp, sizeof(card->resp_cid));
+    memcpy(card->resp_cid, resp, sizeof(card->resp_cid));
 
     /*
      * For native busses:  get card RCA and quit open drain mode.

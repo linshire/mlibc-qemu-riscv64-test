@@ -407,7 +407,7 @@ rt_err_t spi_bit_configure(struct rt_spi_device *device, struct rt_spi_configura
         ops->delay_us = 0;
     }
 
-    rt_memcpy(&obj->config, configuration, sizeof(struct rt_spi_configuration));
+    memcpy(&obj->config, configuration, sizeof(struct rt_spi_configuration));
 
     return RT_EOK;
 }

@@ -94,7 +94,7 @@ static void vector_child(void *param)
     asm volatile("csrr %0, vl":"=r"(vl));
     rt_hw_vector_ctx_save(ctx[0]);
 
-    rt_memcpy(ctx[1], ctx[0], VECTOR_CTX_BYTES);
+    memcpy(ctx[1], ctx[0], VECTOR_CTX_BYTES);
 
     rt_thread_yield();
 
@@ -128,7 +128,7 @@ static void test_context()
     asm volatile("csrr %0, vl":"=r"(vl));
     rt_hw_vector_ctx_save(ctx_vector[0]);
 
-    rt_memcpy(ctx_vector[1], ctx_vector[0], VECTOR_CTX_BYTES);
+    memcpy(ctx_vector[1], ctx_vector[0], VECTOR_CTX_BYTES);
 
     rt_thread_startup(child);
     rt_sem_take(sem, 0);

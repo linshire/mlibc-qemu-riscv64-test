@@ -215,7 +215,7 @@ int msh_exec_module(const char *cmd_line, int size)
         return -RT_ENOMEM;
 
     /* copy command0 */
-    rt_memcpy(pg_name, cmd_line, cmd_length);
+    memcpy(pg_name, cmd_line, cmd_length);
     pg_name[cmd_length] = '\0';
 
     if (strstr(pg_name, ".mo") != RT_NULL || strstr(pg_name, ".MO") != RT_NULL)
@@ -284,7 +284,7 @@ static int _msh_exec_cmd(char *cmd, rt_size_t length, int *retp)
         return -RT_ERROR;
 
     /* split arguments */
-    rt_memset(argv, 0x00, sizeof(argv));
+    memset(argv, 0x00, sizeof(argv));
     argc = msh_split(cmd, length, argv);
     if (argc == 0)
         return -RT_ERROR;
@@ -435,7 +435,7 @@ int _msh_exec_lwp(int debug, char *cmd, rt_size_t length)
         return -1;
 
     /* split arguments */
-    rt_memset(argv, 0x00, sizeof(argv));
+    memset(argv, 0x00, sizeof(argv));
     argc = msh_split(cmd, length, argv);
     if (argc == 0)
         return -1;
@@ -670,7 +670,7 @@ void msh_auto_complete_path(char *path)
             }
 
             length = index - path;
-            rt_memcpy(index, full_path, min_length);
+            memcpy(index, full_path, min_length);
             path[length + min_length] = '\0';
 
             /* try to locate folder */

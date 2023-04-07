@@ -287,7 +287,7 @@ rt_ssize_t rt_link_dev_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_size
         node = rt_container_of(rt_slist_next(&rtlink->recv_head), struct rtlink_recv_list, list);
         unread_len = (node->size) - (node->index);
         read_len = (size > unread_len) ? unread_len : size;
-        rt_memcpy(buffer, (rt_uint8_t *)node->data + node->index, read_len);
+        memcpy(buffer, (rt_uint8_t *)node->data + node->index, read_len);
         node->index += read_len;
 
         if (node->index >= node->size)

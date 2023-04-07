@@ -133,7 +133,7 @@ int sal_init(void)
     }
 
     /*init the dev_res table */
-    rt_memset(sal_dev_res_tbl,  0, sizeof(sal_dev_res_tbl));
+    memset(sal_dev_res_tbl,  0, sizeof(sal_dev_res_tbl));
 
     /* create sal socket lock */
     rt_mutex_init(&sal_core_lock, "sal_lock", RT_IPC_FLAG_PRIO);
@@ -204,7 +204,7 @@ static void check_netdev_internet_up_work(struct rt_work *work, void *work_data)
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(SAL_INTERNET_PORT);
     server_addr.sin_addr = *((struct in_addr *)host->h_addr);
-    rt_memset(&(server_addr.sin_zero), 0, sizeof(server_addr.sin_zero));
+    memset(&(server_addr.sin_zero), 0, sizeof(server_addr.sin_zero));
 
     timeout.tv_sec = SAL_INTERNET_TIMEOUT;
     timeout.tv_usec = 0;
@@ -214,7 +214,7 @@ static void check_netdev_internet_up_work(struct rt_work *work, void *work_data)
     skt_ops->setsockopt(sockfd, SOL_SOCKET, SO_SNDTIMEO, (void *) &timeout, sizeof(timeout));
 
     /* get build moth value*/
-    rt_memset(date, 0x00, SAL_INTERNET_DATE_LEN);
+    memset(date, 0x00, SAL_INTERNET_DATE_LEN);
     rt_snprintf(date, SAL_INTERNET_DATE_LEN, "%s", __DATE__);
 
     for (index = 0; index < sizeof(month) / SAL_INTERNET_MONTH_LEN; index++)
@@ -233,7 +233,7 @@ static void check_netdev_internet_up_work(struct rt_work *work, void *work_data)
         goto __exit;
     }
 
-    rt_memset(send_data, 0x00, SAL_INTERNET_BUFF_LEN);
+    memset(send_data, 0x00, SAL_INTERNET_BUFF_LEN);
     send_data[0] = SAL_INTERNET_VERSION;
     for (index = 0; index < netdev->hwaddr_len; index++)
     {
@@ -615,7 +615,7 @@ int sal_accept(int socket, struct sockaddr *addr, socklen_t *addrlen)
         if (retval < 0)
         {
             pf->skt_ops->closesocket(new_socket);
-            rt_memset(new_sock, 0x00, sizeof(struct sal_socket));
+            memset(new_sock, 0x00, sizeof(struct sal_socket));
             /* socket init failed, delete socket */
             socket_delete(new_sal_socket);
             LOG_E("New socket registered failed, return error %d.", retval);
@@ -1083,7 +1083,7 @@ int sal_ioctlsocket(int socket, long cmd, void *arg)
 
         case SIOCGIFHWADDR:
             addr = (struct sockaddr *)&(ifr->ifr_ifru.ifru_hwaddr);
-            rt_memcpy(addr->sa_data,sock->netdev->hwaddr,sock->netdev->hwaddr_len);
+            memcpy(addr->sa_data,sock->netdev->hwaddr,sock->netdev->hwaddr_len);
             return 0;
 
         case SIOCGIFMTU:

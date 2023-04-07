@@ -81,7 +81,7 @@ void rt_wlan_cfg_init(void)
         cfg_cache = rt_malloc(sizeof(struct rt_wlan_cfg_des));
         if (cfg_cache != RT_NULL)
         {
-            rt_memset(cfg_cache, 0, sizeof(struct rt_wlan_cfg_des));
+            memset(cfg_cache, 0, sizeof(struct rt_wlan_cfg_des));
         }
         /* init mutex lock */
         rt_mutex_init(&cfg_mutex, "wlan_cfg", RT_IPC_FLAG_PRIO);
@@ -121,7 +121,7 @@ rt_err_t rt_wlan_cfg_cache_save(void)
     info_pkg->num = cfg_cache->num;
     /* CRC */
     info_pkg->crc = rt_wlan_cal_crc((rt_uint8_t *)cfg_cache->cfg_info, sizeof(struct rt_wlan_cfg_info) * cfg_cache->num);
-    rt_memcpy(((rt_uint8_t *)info_pkg) + sizeof(struct cfg_save_info_head),
+    memcpy(((rt_uint8_t *)info_pkg) + sizeof(struct cfg_save_info_head),
               cfg_cache->cfg_info, sizeof(struct rt_wlan_cfg_info) * cfg_cache->num);
     if (cfg_ops->write_cfg(info_pkg, len) != len)
         err =  -RT_ERROR;
@@ -246,7 +246,7 @@ int rt_wlan_cfg_read(struct rt_wlan_cfg_info *cfg_info, int num)
     /* copy data */
     WLAN_CFG_LOCK();
     num = cfg_cache->num > num ? num : cfg_cache->num;
-    rt_memcpy(&cfg_cache->cfg_info[0], cfg_info, sizeof(struct rt_wlan_cfg_info) * num);
+    memcpy(&cfg_cache->cfg_info[0], cfg_info, sizeof(struct rt_wlan_cfg_info) * num);
     WLAN_CFG_UNLOCK();
 
     return num;

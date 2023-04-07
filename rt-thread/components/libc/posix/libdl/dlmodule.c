@@ -155,7 +155,7 @@ static void _dlmodule_thread_entry(void* parameter)
 
     if (module->cmd_line)
     {
-        rt_memset(argv, 0x00, sizeof(argv));
+        memset(argv, 0x00, sizeof(argv));
         argc = _rt_module_split_arg((char *)module->cmd_line, rt_strlen(module->cmd_line), argv);
         if (argc == 0) goto __exit;
     }

@@ -658,8 +658,8 @@ const char *rt_strerror(rt_err_t error);
 int __rt_ffs(int value);
 
 #ifndef RT_KSERVICE_USING_STDLIB_MEMORY
-void *rt_memset(void *src, int c, rt_ubase_t n);
-void *rt_memcpy(void *dest, const void *src, rt_ubase_t n);
+void *memset(void *src, int c, rt_ubase_t n);
+void *memcpy(void *dest, const void *src, rt_ubase_t n);
 void *rt_memmove(void *dest, const void *src, rt_size_t n);
 rt_int32_t rt_memcmp(const void *cs, const void *ct, rt_size_t count);
 #endif /* RT_KSERVICE_USING_STDLIB_MEMORY */
@@ -676,8 +676,8 @@ rt_size_t rt_strlen(const char *src);
 #else
 #include <string.h>
 #ifdef RT_KSERVICE_USING_STDLIB_MEMORY
-#define rt_memset(s, c, count)      memset(s, c, count)
-#define rt_memcpy(dst, src, count)  memcpy(dst, src, count)
+#define memset(s, c, count)      memset(s, c, count)
+#define memcpy(dst, src, count)  memcpy(dst, src, count)
 #define rt_memmove(dest, src, n)    memmove(dest, src, n)
 #define rt_memcmp(cs, ct, count)    memcmp(cs, ct, count)
 #endif /* RT_KSERVICE_USING_STDLIB_MEMORY */

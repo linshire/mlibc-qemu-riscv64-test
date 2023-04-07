@@ -657,11 +657,11 @@ void mem_overflow_init_raw(void *p, size_t size)
   u8_t *m;
 #if MEM_SANITY_REGION_BEFORE_ALIGNED > 0
   m = (u8_t *)p - MEM_SANITY_REGION_BEFORE_ALIGNED;
-  rt_memset(m, 0xcd, MEM_SANITY_REGION_BEFORE_ALIGNED);
+  memset(m, 0xcd, MEM_SANITY_REGION_BEFORE_ALIGNED);
 #endif
 #if MEM_SANITY_REGION_AFTER_ALIGNED > 0
   m = (u8_t *)p + size;
-  rt_memset(m, 0xcd, MEM_SANITY_REGION_AFTER_ALIGNED);
+  memset(m, 0xcd, MEM_SANITY_REGION_AFTER_ALIGNED);
 #endif
 #else /* MEM_SANITY_REGION_BEFORE_ALIGNED > 0 || MEM_SANITY_REGION_AFTER_ALIGNED > 0 */
   LWIP_UNUSED_ARG(p);

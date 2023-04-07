@@ -17,8 +17,8 @@ else:
     print('Please make sure your toolchains is GNU GCC!')
     exit(0)
 
+CFLAGS_MLIBC_TEST =  " -nostdinc" +" -nostdlib " + " -ffreestanding " + " -g " #+ " -Wl,-wrap=memset "
 
-CFLAGS_MLIBC_TEST =  " -nostdinc" +" -nostdinc " + " -ffreestanding " + " -g " #+ " -Wl,-wrap=memset "
 
 BUILD = 'debug'
 

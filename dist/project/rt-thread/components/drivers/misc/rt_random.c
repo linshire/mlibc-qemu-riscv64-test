@@ -23,14 +23,14 @@ static rt_ssize_t random_read(rt_device_t dev, rt_off_t pos, void *buffer, rt_si
 {
     rt_uint16_t rand = calc_random();
     ssize_t ret = sizeof(rand);
-    rt_memcpy(buffer, &rand, ret);
+    memcpy(buffer, &rand, ret);
     return ret;
 }
 
 static rt_ssize_t random_write(rt_device_t dev, rt_off_t pos, const void *buffer, rt_size_t size)
 {
     ssize_t ret = sizeof(seed);
-    rt_memcpy(&seed, buffer, ret);
+    memcpy(&seed, buffer, ret);
     return ret;
 }
 
@@ -97,14 +97,14 @@ static rt_ssize_t random_uread(rt_device_t dev, rt_off_t pos, void *buffer, rt_s
 {
     rt_uint16_t rand = calc_urandom();
     ssize_t ret = sizeof(rand);
-    rt_memcpy(buffer, &rand, ret);
+    memcpy(buffer, &rand, ret);
     return ret;
 }
 
 static rt_ssize_t random_uwrite(rt_device_t dev, rt_off_t pos, const void *buffer, rt_size_t size)
 {
     ssize_t ret = sizeof(useed);
-    rt_memcpy(&useed, buffer, ret);
+    memcpy(&useed, buffer, ret);
     return ret;
 }
 

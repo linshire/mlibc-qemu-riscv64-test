@@ -308,7 +308,7 @@ static rt_ssize_t _sensor_read(rt_device_t dev, rt_off_t pos, void *buf, rt_size
             len = sensor->data_len / sizeof(struct rt_sensor_data);
         }
 
-        rt_memcpy(buf, sensor->data_buf, len * sizeof(struct rt_sensor_data));
+        memcpy(buf, sensor->data_buf, len * sizeof(struct rt_sensor_data));
 
         /* Clear the buffer */
         sensor->data_len = 0;
@@ -475,7 +475,7 @@ int rt_hw_sensor_register(rt_sensor_t    sensor,
         return -RT_ERROR;
     }
 
-    rt_memcpy(device_name, sensor_name, rt_strlen(sensor_name) + 1);
+    memcpy(device_name, sensor_name, rt_strlen(sensor_name) + 1);
     strcat(device_name, name);
 
     if (sensor->module != RT_NULL && sensor->module->lock == RT_NULL)

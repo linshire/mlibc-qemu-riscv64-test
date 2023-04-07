@@ -476,7 +476,7 @@ rt_object_t rt_object_allocate(enum rt_object_class_type type, const char *name)
     }
 
     /* clean memory data of object */
-    rt_memset(object, 0x0, information->object_size);
+    memset(object, 0x0, information->object_size);
 
     /* initialize object's parameters */
 

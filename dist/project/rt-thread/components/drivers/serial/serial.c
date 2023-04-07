@@ -534,12 +534,12 @@ rt_inline int _serial_dma_rx(struct rt_serial_device *serial, rt_uint8_t *data, 
             recv_len = fifo_recved_len;
 
         if (rx_fifo->get_index + recv_len < serial->config.bufsz)
-            rt_memcpy(data, rx_fifo->buffer + rx_fifo->get_index, recv_len);
+            memcpy(data, rx_fifo->buffer + rx_fifo->get_index, recv_len);
         else
         {
-            rt_memcpy(data, rx_fifo->buffer + rx_fifo->get_index,
+            memcpy(data, rx_fifo->buffer + rx_fifo->get_index,
                     serial->config.bufsz - rx_fifo->get_index);
-            rt_memcpy(data + serial->config.bufsz - rx_fifo->get_index, rx_fifo->buffer,
+            memcpy(data + serial->config.bufsz - rx_fifo->get_index, rx_fifo->buffer,
                     recv_len + rx_fifo->get_index - serial->config.bufsz);
         }
         rt_dma_recv_update_get_index(serial, recv_len);
@@ -599,7 +599,7 @@ static rt_err_t rt_serial_init(struct rt_device *dev)
     serial->serial_rx = RT_NULL;
     serial->serial_tx = RT_NULL;
 
-    rt_memset(&serial->rx_notify, 0, sizeof(struct rt_device_notify));
+    memset(&serial->rx_notify, 0, sizeof(struct rt_device_notify));
 
     /* apply configuration */
     if (serial->ops->configure)
@@ -646,7 +646,7 @@ static rt_err_t rt_serial_open(struct rt_device *dev, rt_uint16_t oflag)
                 serial->config.bufsz);
             RT_ASSERT(rx_fifo != RT_NULL);
             rx_fifo->buffer = (rt_uint8_t*) (rx_fifo + 1);
-            rt_memset(rx_fifo->buffer, 0, serial->config.bufsz);
+            memset(rx_fifo->buffer, 0, serial->config.bufsz);
             rx_fifo->put_index = 0;
             rx_fifo->get_index = 0;
             rx_fifo->is_full = RT_FALSE;
@@ -674,7 +674,7 @@ static rt_err_t rt_serial_open(struct rt_device *dev, rt_uint16_t oflag)
                     serial->config.bufsz);
                 RT_ASSERT(rx_fifo != RT_NULL);
                 rx_fifo->buffer = (rt_uint8_t*) (rx_fifo + 1);
-                rt_memset(rx_fifo->buffer, 0, serial->config.bufsz);
+                memset(rx_fifo->buffer, 0, serial->config.bufsz);
                 rx_fifo->put_index = 0;
                 rx_fifo->get_index = 0;
                 rx_fifo->is_full = RT_FALSE;
@@ -1042,7 +1042,7 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
         case RT_DEVICE_CTRL_NOTIFY_SET:
             if (args)
             {
-                rt_memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
+                memcpy(&serial->rx_notify, args, sizeof(struct rt_device_notify));
             }
             break;
 
@@ -1173,7 +1173,7 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
                     char row_s[4], col_s[4];
                     char *p;
 
-                    rt_memset(_tio_buf, 0, _TIO_BUFLEN);
+                    memset(_tio_buf, 0, _TIO_BUFLEN);
 
                     /* send the command to terminal for getting the window size of the terminal */
                     rt_kprintf("\033[18t");
@@ -1201,8 +1201,8 @@ static rt_err_t rt_serial_control(struct rt_device *dev,
                     }
 
                     /* interpreting data eg: "\033[8;1;15t" which means row is 1 and col is 15 (unit: size of ONE character) */
-                    rt_memset(row_s,0,4);
-                    rt_memset(col_s,0,4);
+                    memset(row_s,0,4);
+                    memset(col_s,0,4);
                     cnt1 = 0;
                     while(_tio_buf[cnt1] != ';' && cnt1 < _TIO_BUFLEN)
                     {

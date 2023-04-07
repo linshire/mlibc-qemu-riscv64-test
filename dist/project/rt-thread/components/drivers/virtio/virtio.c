@@ -120,7 +120,7 @@ rt_err_t virtio_queue_init(struct virtio_device *dev, rt_uint32_t queue_index, r
         return -RT_ENOMEM;
     }
 
-    rt_memset(pages, 0, pages_total_size);
+    memset(pages, 0, pages_total_size);
 
     dev->mmio_config->guest_page_size = VIRTIO_PAGE_SIZE;
     dev->mmio_config->queue_sel = queue_index;

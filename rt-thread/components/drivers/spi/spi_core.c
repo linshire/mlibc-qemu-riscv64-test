@@ -69,7 +69,7 @@ rt_err_t rt_spi_bus_attach_device_cspin(struct rt_spi_device *device,
             rt_pin_mode(cs_pin, PIN_MODE_OUTPUT);
         }
 
-        rt_memset(&device->config, 0, sizeof(device->config));
+        memset(&device->config, 0, sizeof(device->config));
         device->parent.user_data = user_data;
         device->cs_pin = cs_pin;
         return RT_EOK;
@@ -470,7 +470,7 @@ rt_err_t rt_spi_take(struct rt_spi_device *device)
     RT_ASSERT(device != RT_NULL);
     RT_ASSERT(device->bus != RT_NULL);
 
-    rt_memset(&message, 0, sizeof(message));
+    memset(&message, 0, sizeof(message));
     message.cs_take = 1;
 
     result = device->bus->ops->xfer(device, &message);
@@ -490,7 +490,7 @@ rt_err_t rt_spi_release(struct rt_spi_device *device)
     RT_ASSERT(device != RT_NULL);
     RT_ASSERT(device->bus != RT_NULL);
 
-    rt_memset(&message, 0, sizeof(message));
+    memset(&message, 0, sizeof(message));
     message.cs_release = 1;
 
     result = device->bus->ops->xfer(device, &message);

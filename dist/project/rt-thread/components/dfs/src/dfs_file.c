@@ -782,11 +782,11 @@ void ls(const char *pathname)
         rt_kprintf("Directory %s:\n", path);
         do
         {
-            rt_memset(&dirent, 0, sizeof(struct dirent));
+            memset(&dirent, 0, sizeof(struct dirent));
             length = dfs_file_getdents(&fd, &dirent, sizeof(struct dirent));
             if (length > 0)
             {
-                rt_memset(&stat, 0, sizeof(struct stat));
+                memset(&stat, 0, sizeof(struct stat));
 
                 /* build full path for each file */
                 fullpath = dfs_normalize_path(path, dirent.d_name);
@@ -848,7 +848,7 @@ void cat(const char *filename)
 
     do
     {
-        rt_memset(buffer, 0x0, sizeof(buffer));
+        memset(buffer, 0x0, sizeof(buffer));
         length = dfs_file_read(&fd, (void *)buffer, sizeof(buffer) - 1);
         if (length > 0)
         {
@@ -937,7 +937,7 @@ static void copydir(const char *src, const char *dst)
 
     do
     {
-        rt_memset(&dirent, 0, sizeof(struct dirent));
+        memset(&dirent, 0, sizeof(struct dirent));
 
         length = dfs_file_getdents(&cpfd, &dirent, sizeof(struct dirent));
         if (length > 0)
@@ -961,7 +961,7 @@ static void copydir(const char *src, const char *dst)
                 break;
             }
 
-            rt_memset(&stat, 0, sizeof(struct stat));
+            memset(&stat, 0, sizeof(struct stat));
             if (dfs_file_stat(src_entry_full, &stat) != 0)
             {
                 rt_kprintf("open file: %s failed\n", dirent.d_name);

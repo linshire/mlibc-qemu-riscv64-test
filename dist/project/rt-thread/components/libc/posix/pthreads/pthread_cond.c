@@ -136,7 +136,7 @@ __retry:
     }
 
     /* clean condition */
-    rt_memset(cond, 0, sizeof(pthread_cond_t));
+    memset(cond, 0, sizeof(pthread_cond_t));
     cond->attr = -1;
 
     return 0;

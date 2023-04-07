@@ -47,7 +47,7 @@ void *lwp_copy_return_code_to_user_stack()
     {
         rt_size_t size = (rt_size_t)lwp_thread_return_end - (rt_size_t)lwp_thread_return;
         rt_size_t userstack = (rt_size_t)tid->user_stack + tid->user_stack_size - size;
-        rt_memcpy((void *)userstack, lwp_thread_return, size);
+        memcpy((void *)userstack, lwp_thread_return, size);
         return (void *)userstack;
     }
 
@@ -99,7 +99,7 @@ int arch_user_space_init(struct rt_lwp *lwp)
 
     lwp->end_heap = USER_HEAP_VADDR;
 
-    rt_memcpy(mmu_table, rt_kernel_space.page_table, ARCH_PAGE_SIZE);
+    memcpy(mmu_table, rt_kernel_space.page_table, ARCH_PAGE_SIZE);
     rt_hw_cpu_dcache_ops(RT_HW_CACHE_FLUSH, mmu_table, ARCH_PAGE_SIZE);
 
     lwp->aspace = rt_aspace_create(

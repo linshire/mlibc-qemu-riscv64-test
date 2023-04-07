@@ -183,7 +183,7 @@ void rt_system_scheduler_init(void)
 
 #if RT_THREAD_PRIORITY_MAX > 32
     /* initialize ready table */
-    rt_memset(rt_thread_ready_table, 0, sizeof(rt_thread_ready_table));
+    memset(rt_thread_ready_table, 0, sizeof(rt_thread_ready_table));
 #endif /* RT_THREAD_PRIORITY_MAX > 32 */
 }
 

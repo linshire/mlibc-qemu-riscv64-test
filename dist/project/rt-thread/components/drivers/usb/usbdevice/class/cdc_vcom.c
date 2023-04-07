@@ -585,11 +585,11 @@ ufunction_t rt_usbd_function_cdc_create(udevice_t device)
     /* parameter check */
     RT_ASSERT(device != RT_NULL);
 
-    rt_memset(serno, 0, _SER_NO_LEN + 1);
+    memset(serno, 0, _SER_NO_LEN + 1);
     if(vcom_get_stored_serno(serno, _SER_NO_LEN) != RT_EOK)
     {
-        rt_memset(serno, 0, _SER_NO_LEN + 1);
-        rt_memcpy(serno, _SER_NO, rt_strlen(_SER_NO));
+        memset(serno, 0, _SER_NO_LEN + 1);
+        memcpy(serno, _SER_NO, rt_strlen(_SER_NO));
     }
 #ifdef RT_USB_DEVICE_COMPOSITE
     rt_usbd_device_set_interface_string(device, VCOM_INTF_STR_INDEX, _ustring[2]);
@@ -606,7 +606,7 @@ ufunction_t rt_usbd_function_cdc_create(udevice_t device)
     /* allocate memory for cdc vcom data */
     data = (struct vcom*)rt_malloc(sizeof(struct vcom));
     RT_ASSERT(data != RT_NULL);
-    rt_memset(data, 0, sizeof(struct vcom));
+    memset(data, 0, sizeof(struct vcom));
     func->user_data = (void*)data;
 
     /* initilize vcom */

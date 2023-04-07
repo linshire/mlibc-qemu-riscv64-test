@@ -196,7 +196,7 @@ struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **argv, char
     {
         len = rt_strlen(argv[i]) + 1;
         new_argve[i] = str;
-        rt_memcpy(str_k, argv[i], len);
+        memcpy(str_k, argv[i], len);
         str += len;
         str_k += len;
     }
@@ -212,7 +212,7 @@ struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **argv, char
         {
             len = rt_strlen(envp[j]) + 1;
             new_argve[i] = str;
-            rt_memcpy(str_k, envp[j], len);
+            memcpy(str_k, envp[j], len);
             str += len;
             str_k += len;
             i++;
@@ -294,7 +294,7 @@ static struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **arg
     {
         len = rt_strlen(argv[i]) + 1;
         new_argve[i] = str;
-        rt_memcpy(str, argv[i], len);
+        memcpy(str, argv[i], len);
         str += len;
     }
     new_argve[i] = 0;
@@ -308,7 +308,7 @@ static struct process_aux *lwp_argscopy(struct rt_lwp *lwp, int argc, char **arg
         {
             len = rt_strlen(envp[j]) + 1;
             new_argve[i] = str;
-            rt_memcpy(str, envp[j], len);
+            memcpy(str, envp[j], len);
             str += len;
             i++;
         }
@@ -646,10 +646,10 @@ static int load_elf(int fd, int len, struct rt_lwp *lwp, uint8_t *load_addr, str
 
             krandom = (uint8_t *)lwp_v2p(lwp, random);
             krandom = (uint8_t *)krandom - PV_OFFSET;
-            rt_memcpy(krandom, &random_value, sizeof random_value);
+            memcpy(krandom, &random_value, sizeof random_value);
 #else
             random = (uint8_t *)(process_header + process_header_size);
-            rt_memcpy(random, &random_value, sizeof random_value);
+            memcpy(random, &random_value, sizeof random_value);
 #endif
             aux->item[2].value = (size_t)random;
         }
@@ -1297,9 +1297,9 @@ pid_t lwp_execve(char *filename, int debug, int argc, char **argv, char **envp)
                                        (uint32_t)lwp->data_entry) : RT_NULL;
             thread->user_stack_size = app_head->stack_size;
             /* init data area */
-            rt_memset(lwp->data_entry, 0, lwp->data_size);
+            memset(lwp->data_entry, 0, lwp->data_size);
             /* init user stack */
-            rt_memset(thread->user_stack, '#', thread->user_stack_size);
+            memset(thread->user_stack, '#', thread->user_stack_size);
 #endif /* not defined ARCH_MM_MMU */
             rt_list_insert_after(&lwp->t_grp, &thread->sibling);
 
